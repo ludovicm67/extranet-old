@@ -33,7 +33,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- page content -->
     <main role="main" class="container">
-      <?= (isset($content)) ? $content : ''; ?>
+      <?php echo (isset($content)) ? $content : ''; ?>
     </main>
 
     <!-- footer -->
