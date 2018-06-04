@@ -1,4 +1,8 @@
 <?php
 // API keys for Sellsy
-define('API_SELLSY_CONSUMER_TOKEN', '');
-define('API_SELLSY_CONSUMER_SECRET', '');
+$config['api'] = [
+  'ACCESS_TOKEN' => '',
+  'ACCESS_TOKEN_SECRET' => '',
+  'API_SELLSY_CONSUMER_TOKEN' => '',
+  'API_SELLSY_CONSUMER_SECRET' => ''
+];
