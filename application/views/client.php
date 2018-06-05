@@ -33,6 +33,40 @@ ob_start();
 </ul>
 <?php endif; ?>
 
+
+<?php if (count($client->orders)): ?>
+<h2>Commandes</h2>
+<ul>
+  <?php foreach ($client->orders as $order): ?>
+  <li>
+    <ul>
+      <li><strong>Sujet :</strong> <?php echo $order->subject; ?></li>
+      <li><strong>Statut :</strong> <span style="color: <?php echo $order->step_hex; ?>;"><?php echo $order->step_label; ?></span></li>
+      <li><strong>Montant total :</strong> <?php echo $order->formatted_totalAmount; ?></li>
+      <li><strong>Contact :</strong> <?php echo $order->contactName; ?></li>
+    </ul>
+  </li>
+  <?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
+
+<?php if (count($client->invoices)): ?>
+<h2>Factures</h2>
+<ul>
+  <?php foreach ($client->invoices as $invoice): ?>
+  <li>
+    <ul>
+      <li><strong>Sujet :</strong> <?php echo $invoice->subject; ?></li>
+      <li><strong>Statut :</strong> <span style="color: <?php echo $invoice->step_hex; ?>;"><?php echo $invoice->step_label; ?></span></li>
+      <li><strong>Montant total :</strong> <?php echo $invoice->formatted_totalAmount; ?></li>
+      <li><strong>Contact :</strong> <?php echo $invoice->contactName; ?></li>
+    </ul>
+  </li>
+  <?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
 <?php
 $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

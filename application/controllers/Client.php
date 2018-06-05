@@ -26,6 +26,12 @@ class Client extends CI_Controller
     $client->contacts = $this->db
       ->get_where('sellsy_contacts', ['thirdid' => $client->sellsy_id])
       ->result();
+    $client->orders = $this->db
+      ->get_where('sellsy_orders', ['thirdid' => $client->sellsy_id])
+      ->result();
+    $client->invoices = $this->db
+      ->get_where('sellsy_invoices', ['thirdid' => $client->sellsy_id])
+      ->result();
 
     $this->load->view('client', ['client' => $client]);
   }
