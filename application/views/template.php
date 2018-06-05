@@ -14,17 +14,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <header>
       <!-- navbar -->
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Adipso</a>
+        <a class="navbar-brand" href="/">Adipso</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Accueil <span class="sr-only">(courrant)</span></a>
+            <li class="nav-item">
+              <a class="nav-link" href="/">Accueil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Lien</a>
+              <a class="nav-link" href="/clients">Clients</a>
             </li>
           </ul>
         </div>
