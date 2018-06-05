@@ -206,8 +206,58 @@ class Cron extends CI_Controller
           'owner' => isset($client['owner']) ? $client['owner'] : '',
           'webUrl' => isset($client['webUrl']) ? $client['webUrl'] : ''
         ]);
+        if (isset($client['contacts'])) {
+          foreach ($client['contacts'] as $contact) {
+            if (isset($contact['peopleid'])) {
+              $this->addOrUpdateDB('sellsy_contacts', $contact['peopleid'], [
+                'pic' => isset($contact['pic']) ? $contact['pic'] : '',
+                'name' => isset($contact['name']) ? $contact['name'] : '',
+                'forename' =>
+                  isset($contact['forename']) ? $contact['forename'] : '',
+                'tel' => isset($contact['tel']) ? $contact['tel'] : '',
+                'email' => isset($contact['email']) ? $contact['email'] : '',
+                'mobile' => isset($contact['mobile']) ? $contact['mobile'] : '',
+                'civil' => isset($contact['civil']) ? $contact['civil'] : '',
+                'position' =>
+                  isset($contact['position']) ? $contact['position'] : '',
+                'birthdate' =>
+                  (
+                    isset($contact['birthdate']) &&
+                      $contact['birthdate'] !== 'NC.'
+                  )
+                    ? $contact['birthdate']
+                    : '',
+                'thirdid' =>
+                  isset($contact['thirdid']) ? $contact['thirdid'] : null,
+                'fullName' =>
+                  isset($contact['fullName']) ? $contact['fullName'] : '',
+                'corpid' =>
+                  isset($contact['corpid']) ? $contact['corpid'] : null,
+                'formatted_tel' =>
+                  isset($contact['formatted_tel'])
+                    ? $contact['formatted_tel']
+                    : '',
+                'formatted_mobile' =>
+                  isset($contact['formatted_mobile'])
+                    ? $contact['formatted_mobile']
+                    : '',
+                'formatted_fax' =>
+                  (
+                    isset($contact['formatted_fax']) &&
+                      $contact['formatted_fax'] !== 'N/C'
+                  )
+                    ? $contact['formatted_fax']
+                    : '',
+                'formatted_birthdate' =>
+                  isset($contact['formatted_birthdate'])
+                    ? $contact['formatted_birthdate']
+                    : ''
+              ]);
+            }
+          }
+        }
       }
-      var_dump($clientsRequest);
+      // var_dump($clientsRequest);
     } while ($pagenum++ < $nbpages);
 
     echo json_encode(['success' => true]);
@@ -236,10 +286,10 @@ class Cron extends CI_Controller
           'civil' => isset($contact['civil']) ? $contact['civil'] : '',
           'position' => isset($contact['position']) ? $contact['position'] : '',
           'birthdate' =>
-            isset($contact['birthdate']) ? $contact['birthdate'] : '',
+            (isset($contact['birthdate']) && $contact['birthdate'] !== 'NC.')
+              ? $contact['birthdate']
+              : '',
           'thirdid' => isset($contact['thirdid']) ? $contact['thirdid'] : null,
-          'peopleid' =>
-            isset($contact['peopleid']) ? $contact['peopleid'] : null,
           'fullName' => isset($contact['fullName']) ? $contact['fullName'] : '',
           'corpid' => isset($contact['corpid']) ? $contact['corpid'] : null,
           'formatted_tel' =>
@@ -249,14 +299,19 @@ class Cron extends CI_Controller
               ? $contact['formatted_mobile']
               : '',
           'formatted_fax' =>
-            isset($contact['formatted_fax']) ? $contact['formatted_fax'] : '',
+            (
+              isset($contact['formatted_fax']) &&
+                $contact['formatted_fax'] !== 'N/C'
+            )
+              ? $contact['formatted_fax']
+              : '',
           'formatted_birthdate' =>
             isset($contact['formatted_birthdate'])
               ? $contact['formatted_birthdate']
               : ''
         ]);
       }
-      var_dump($contactsRequest);
+      // var_dump($contactsRequest);
     } while ($pagenum++ < $nbpages);
 
     echo json_encode(['success' => true]);

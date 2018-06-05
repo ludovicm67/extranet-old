@@ -17,7 +17,6 @@ CREATE TABLE `sellsy_contacts` (
   `position` varchar(255) COLLATE utf8mb4_unicode_ci,
   `birthdate` varchar(255) COLLATE utf8mb4_unicode_ci,
   `thirdid` int(11),
-  `peopleid` int(11),
   `fullName` varchar(255) COLLATE utf8mb4_unicode_ci,
   `corpid` int(11),
   `formatted_tel` varchar(255) COLLATE utf8mb4_unicode_ci,
