@@ -67,6 +67,16 @@ ob_start();
 </ul>
 <?php endif; ?>
 
+
+<?php if (count($client->projects)): ?>
+<h2>Projets</h2>
+<ul>
+  <?php foreach ($client->projects as $project): ?>
+    <li><a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a></li>
+  <?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
 <?php
 $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

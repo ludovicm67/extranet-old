@@ -33,6 +33,9 @@ class Clients extends CI_Controller
     $client->invoices = $this->db
       ->get_where('sellsy_invoices', ['thirdid' => $client->sellsy_id])
       ->result();
+    $client->projects = $this->db
+      ->get_where('projects', ['client_id' => $client->id])
+      ->result();
 
     $this->load->view('clients/show', ['client' => $client]);
   }
