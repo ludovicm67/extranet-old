@@ -5,7 +5,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `sellsy_contacts` (
   `id` int (11) NOT NULL AUTO_INCREMENT,
-  `sellsy_id` int (11) NOT NULL,
+  `sellsy_id` int (11),
   `pic` varchar(255),
   `name` varchar(255),
   `forename` varchar(255),

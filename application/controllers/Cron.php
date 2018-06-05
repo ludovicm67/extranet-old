@@ -68,6 +68,7 @@ class Cron extends CI_Controller
     $this->execSqlFile(ROOTPATH . 'database/sellsy_contacts.sql');
     $this->execSqlFile(ROOTPATH . 'database/sellsy_orders.sql');
     $this->execSqlFile(ROOTPATH . 'database/sellsy_invoices.sql');
+    $this->execSqlFile(ROOTPATH . 'database/projects.sql');
     echo json_encode(['success' => true]);
   }
 

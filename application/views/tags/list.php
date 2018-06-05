@@ -3,14 +3,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
 ?>
 
-<h1 class="mt-5">Liste des clients</h1>
-<p class="lead">Page listant les différents clients</p>
+<h1 class="mt-5">Liste des tags <a class="btn btn-outline-primary" href="/tags/new" role="button">Ajouter</a></h1>
+<p class="lead">Page listant les différents tags</p>
 
-<h2>Clients récupérés depuis Sellsy</h2>
 <ul>
-  <?php foreach ($clients as $client): ?>
+  <?php foreach ($tags as $tag): ?>
   <li>
-    <a href="/client/<?php echo $client->id; ?>"><?php echo $client->fullName; ?></a>
+    <a href="/tag/<?php echo $tag->id; ?>"><?php echo $tag->name; ?></a>
   </li>
 <?php endforeach; ?>
 </ul>

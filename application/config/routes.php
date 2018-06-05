@@ -54,3 +54,4 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = false;
 
 $route['client/(:num)'] = "clients/show/$1";
+$route['tag/(:num)'] = "tags/show/$1";
