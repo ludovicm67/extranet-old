@@ -28,6 +28,7 @@ class Cron extends CI_Controller
     $this->sellsy = $sellsy;
   }
 
+  // useful function to add or update a data in the database
   private function addOrUpdateDB($table, $id, $data)
   {
     $this->db->where('id', $id);
@@ -58,7 +59,7 @@ class Cron extends CI_Controller
           'fullname' => $client['fullName']
         ]);
       }
-      // var_dump($clientsRequest);
+      var_dump($clientsRequest);
     } while ($pagenum++ < $nbpages);
 
     echo json_encode(['success' => true]);
@@ -86,7 +87,7 @@ class Cron extends CI_Controller
           'thirdid' => $contact['thirdid']
         ]);
       }
-      // var_dump($contactsRequest);
+      var_dump($contactsRequest);
     } while ($pagenum++ < $nbpages);
 
     echo json_encode(['success' => true]);
