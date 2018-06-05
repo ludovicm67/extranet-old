@@ -153,6 +153,6 @@ CREATE TABLE IF NOT EXISTS `sellsy_orders` (
   `weightFormattedDisplayed` text,
   `thirdStatus` text,
    PRIMARY KEY (`id`, `sellsy_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 COMMIT;

@@ -26,6 +26,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <li class="nav-item">
               <a class="nav-link" href="/clients">Clients</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/tags">Tags</a>
+            </li>
           </ul>
         </div>
       </nav>

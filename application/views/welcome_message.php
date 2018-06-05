@@ -8,7 +8,8 @@ ob_start();
 
 <h2>Pages pour tester</h2>
 <ul>
-  <li><a href="/clients" target="_blank">/clients</a> : liste les différents clients et leurs contacts associés</li>
+  <li><a href="/clients">/clients</a> : liste les différents clients et leurs contacts associés</li>
+  <li><a href="/tags">/tags</a> : liste les différents tags</li>
 </ul>
 
 <h2>Pages à appeler depuis des tâches cron</h2>

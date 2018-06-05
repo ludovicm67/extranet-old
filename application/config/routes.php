@@ -53,4 +53,4 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = false;
 
-$route['client/(:num)'] = "client/show/$1";
+$route['client/(:num)'] = "clients/show/$1";
