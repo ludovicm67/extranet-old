@@ -42,6 +42,30 @@ class Cron extends CI_Controller
     }
   }
 
+  private function execSqlFile($filename)
+  {
+    if (file_exists($filename)) {
+      $content = file_get_contents($filename);
+      if (empty($content)) {
+        return;
+      }
+      $queries = explode(';', $content);
+      foreach ($queries as $query) {
+        $q = trim($query);
+        if (!empty($q)) {
+          $this->db->query($q);
+        }
+      }
+    }
+  }
+
+  public function reset_database()
+  {
+    $this->execSqlFile(ROOTPATH . 'database/sellsy_clients.sql');
+    $this->execSqlFile(ROOTPATH . 'database/sellsy_contacts.sql');
+    echo json_encode(['success' => true]);
+  }
+
   public function sellsy_clients()
   {
     $pagenum = 1;

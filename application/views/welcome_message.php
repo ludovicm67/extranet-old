@@ -13,6 +13,7 @@ ob_start();
 
 <h2>Pages à appeler depuis des tâches cron</h2>
 <ul>
+  <li><a href="/cron/reset_database" target="_blank">/cron/reset_database</a></li>
   <li><a href="/cron/sellsy_clients" target="_blank">/cron/sellsy_clients</a></li>
   <li><a href="/cron/sellsy_contacts" target="_blank">/cron/sellsy_contacts</a></li>
 </ul>

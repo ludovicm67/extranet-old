@@ -233,6 +233,7 @@ define('BASEPATH', $system_path);
 
 // Path to the front controller (this file) directory
 define('FCPATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);
+define('ROOTPATH', dirname(FCPATH) . DIRECTORY_SEPARATOR);
 
 // Name of the "system" directory
 define('SYSDIR', basename(BASEPATH));
