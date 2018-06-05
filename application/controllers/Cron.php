@@ -61,24 +61,49 @@ class Cron extends CI_Controller
           'logo' => isset($client['logo']) ? $client['logo'] : '',
           'joindate' => isset($client['joindate']) ? $client['joindate'] : '',
           'auxCode' => isset($client['auxCode']) ? $client['auxCode'] : '',
-          'accountingCode' => isset($client['accountingCode']) ? $client['accountingCode'] : '',
-          'stickyNote' => isset($client['stickyNote']) ? $client['stickyNote'] : '',
+          'accountingCode' =>
+            isset($client['accountingCode']) ? $client['accountingCode'] : '',
+          'stickyNote' =>
+            isset($client['stickyNote']) ? $client['stickyNote'] : '',
           'ident' => isset($client['ident']) ? $client['ident'] : '',
-          'rateCategory' => isset($client['rateCategory']) ? $client['rateCategory'] : '',
-          'massmailingUnsubscribed' => isset($client['massmailingUnsubscribed']) ? $client['massmailingUnsubscribed'] : '',
-          'massmailingUnsubscribedSMS' => isset($client['massmailingUnsubscribedSMS']) ? $client['massmailingUnsubscribedSMS'] : '',
-          'phoningUnsubscribed' => isset($client['phoningUnsubscribed']) ? $client['phoningUnsubscribed'] : '',
-          'massmailingUnsubscribedMail' => isset($client['massmailingUnsubscribedMail']) ? $client['massmailingUnsubscribedMail'] : '',
-          'massmailingUnsubscribedCustom' => isset($client['massmailingUnsubscribedCustom']) ? $client['massmailingUnsubscribedCustom'] : '',
-          'lastactivity' => isset($client['lastactivity']) ? $client['lastactivity'] : '',
+          'rateCategory' =>
+            isset($client['rateCategory']) ? $client['rateCategory'] : '',
+          'massmailingUnsubscribed' =>
+            isset($client['massmailingUnsubscribed'])
+              ? $client['massmailingUnsubscribed']
+              : '',
+          'massmailingUnsubscribedSMS' =>
+            isset($client['massmailingUnsubscribedSMS'])
+              ? $client['massmailingUnsubscribedSMS']
+              : '',
+          'phoningUnsubscribed' =>
+            isset($client['phoningUnsubscribed'])
+              ? $client['phoningUnsubscribed']
+              : '',
+          'massmailingUnsubscribedMail' =>
+            isset($client['massmailingUnsubscribedMail'])
+              ? $client['massmailingUnsubscribedMail']
+              : '',
+          'massmailingUnsubscribedCustom' =>
+            isset($client['massmailingUnsubscribedCustom'])
+              ? $client['massmailingUnsubscribedCustom']
+              : '',
+          'lastactivity' =>
+            isset($client['lastactivity']) ? $client['lastactivity'] : '',
           'ownerid' => isset($client['ownerid']) ? $client['ownerid'] : null,
           'type' => isset($client['type']) ? $client['type'] : '',
-          'maincontactid' => isset($client['maincontactid']) ? $client['maincontactid'] : null,
-          'relationType' => isset($client['relationType']) ? $client['relationType'] : '',
+          'maincontactid' =>
+            isset($client['maincontactid']) ? $client['maincontactid'] : null,
+          'relationType' =>
+            isset($client['relationType']) ? $client['relationType'] : '',
           'actif' => isset($client['actif']) ? $client['actif'] : '',
           'pic' => isset($client['pic']) ? $client['pic'] : '',
-          'dateTransformProspect' => isset($client['dateTransformProspect']) ? $client['dateTransformProspect'] : '',
-          'mainContactName' => isset($client['mainContactName']) ? $client['mainContactName'] : '',
+          'dateTransformProspect' =>
+            isset($client['dateTransformProspect'])
+              ? $client['dateTransformProspect']
+              : '',
+          'mainContactName' =>
+            isset($client['mainContactName']) ? $client['mainContactName'] : '',
           'name' => isset($client['name']) ? $client['name'] : '',
           'tel' => isset($client['tel']) ? $client['tel'] : '',
           'fax' => isset($client['fax']) ? $client['fax'] : '',
@@ -89,44 +114,95 @@ class Cron extends CI_Controller
           'siret' => isset($client['siret']) ? $client['siret'] : '',
           'siren' => isset($client['siren']) ? $client['siren'] : '',
           'vat' => isset($client['vat']) ? $client['vat'] : '',
-          'mainaddressid' => isset($client['mainaddressid']) ? $client['mainaddressid'] : '',
-          'maindelivaddressid' => isset($client['maindelivaddressid']) ? $client['maindelivaddressid'] : '',
+          'mainaddressid' =>
+            isset($client['mainaddressid']) ? $client['mainaddressid'] : '',
+          'maindelivaddressid' =>
+            isset($client['maindelivaddressid'])
+              ? $client['maindelivaddressid']
+              : '',
           'web' => isset($client['web']) ? $client['web'] : '',
           'corpType' => isset($client['corpType']) ? $client['corpType'] : '',
-          'addr_name' => isset($client['addr_name']) ? $client['addr_name'] : '',
-          'addr_part1' => isset($client['addr_part1']) ? $client['addr_part1'] : '',
-          'addr_part2' => isset($client['addr_part2']) ? $client['addr_part2'] : '',
+          'addr_name' =>
+            isset($client['addr_name']) ? $client['addr_name'] : '',
+          'addr_part1' =>
+            isset($client['addr_part1']) ? $client['addr_part1'] : '',
+          'addr_part2' =>
+            isset($client['addr_part2']) ? $client['addr_part2'] : '',
           'addr_zip' => isset($client['addr_zip']) ? $client['addr_zip'] : '',
-          'addr_town' => isset($client['addr_town']) ? $client['addr_town'] : '',
-          'addr_state' => isset($client['addr_state']) ? $client['addr_state'] : '',
+          'addr_town' =>
+            isset($client['addr_town']) ? $client['addr_town'] : '',
+          'addr_state' =>
+            isset($client['addr_state']) ? $client['addr_state'] : '',
           'addr_lat' => isset($client['addr_lat']) ? $client['addr_lat'] : '',
           'addr_lng' => isset($client['addr_lng']) ? $client['addr_lng'] : '',
-          'addr_countrycode' => isset($client['addr_countrycode']) ? $client['addr_countrycode'] : '',
-          'delivaddr_name' => isset($client['delivaddr_name']) ? $client['delivaddr_name'] : '',
-          'delivaddr_part1' => isset($client['delivaddr_part1']) ? $client['delivaddr_part1'] : '',
-          'delivaddr_part2' => isset($client['delivaddr_part2']) ? $client['delivaddr_part2'] : '',
-          'delivaddr_zip' => isset($client['delivaddr_zip']) ? $client['delivaddr_zip'] : '',
-          'delivaddr_town' => isset($client['delivaddr_town']) ? $client['delivaddr_town'] : '',
-          'delivaddr_state' => isset($client['delivaddr_state']) ? $client['delivaddr_state'] : '',
-          'delivaddr_lat' => isset($client['delivaddr_lat']) ? $client['delivaddr_lat'] : '',
-          'delivaddr_lng' => isset($client['delivaddr_lng']) ? $client['delivaddr_lng'] : '',
-          'delivaddr_countrycode' => isset($client['delivaddr_countrycode']) ? $client['delivaddr_countrycode'] : '',
-          'formated_joindate' => isset($client['formated_joindate']) ? $client['formated_joindate'] : '',
-          'formated_transformprospectdate' => isset($client['formated_transformprospectdate']) ? $client['formated_transformprospectdate'] : '',
+          'addr_countrycode' =>
+            isset($client['addr_countrycode'])
+              ? $client['addr_countrycode']
+              : '',
+          'delivaddr_name' =>
+            isset($client['delivaddr_name']) ? $client['delivaddr_name'] : '',
+          'delivaddr_part1' =>
+            isset($client['delivaddr_part1']) ? $client['delivaddr_part1'] : '',
+          'delivaddr_part2' =>
+            isset($client['delivaddr_part2']) ? $client['delivaddr_part2'] : '',
+          'delivaddr_zip' =>
+            isset($client['delivaddr_zip']) ? $client['delivaddr_zip'] : '',
+          'delivaddr_town' =>
+            isset($client['delivaddr_town']) ? $client['delivaddr_town'] : '',
+          'delivaddr_state' =>
+            isset($client['delivaddr_state']) ? $client['delivaddr_state'] : '',
+          'delivaddr_lat' =>
+            isset($client['delivaddr_lat']) ? $client['delivaddr_lat'] : '',
+          'delivaddr_lng' =>
+            isset($client['delivaddr_lng']) ? $client['delivaddr_lng'] : '',
+          'delivaddr_countrycode' =>
+            isset($client['delivaddr_countrycode'])
+              ? $client['delivaddr_countrycode']
+              : '',
+          'formated_joindate' =>
+            isset($client['formated_joindate'])
+              ? $client['formated_joindate']
+              : '',
+          'formated_transformprospectdate' =>
+            isset($client['formated_transformprospectdate'])
+              ? $client['formated_transformprospectdate']
+              : '',
           'corpid' => isset($client['corpid']) ? $client['corpid'] : null,
-          'lastactivity_formatted' => isset($client['lastactivity_formatted']) ? $client['lastactivity_formatted'] : '',
-          'addr_countryname' => isset($client['addr_countryname']) ? $client['addr_countryname'] : '',
-          'mainAddress' => isset($client['mainAddress']) ? $client['mainAddress'] : '',
-          'addr_geocode' => isset($client['addr_geocode']) ? $client['addr_geocode'] : '',
-          'delivaddr_countryname' => isset($client['delivaddr_countryname']) ? $client['delivaddr_countryname'] : '',
-          'delivAddress' => isset($client['delivAddress']) ? $client['delivAddress'] : '',
-          'delivaddr_geocode' => isset($client['delivaddr_geocode']) ? $client['delivaddr_geocode'] : '',
+          'lastactivity_formatted' =>
+            isset($client['lastactivity_formatted'])
+              ? $client['lastactivity_formatted']
+              : '',
+          'addr_countryname' =>
+            isset($client['addr_countryname'])
+              ? $client['addr_countryname']
+              : '',
+          'mainAddress' =>
+            isset($client['mainAddress']) ? $client['mainAddress'] : '',
+          'addr_geocode' =>
+            isset($client['addr_geocode']) ? $client['addr_geocode'] : '',
+          'delivaddr_countryname' =>
+            isset($client['delivaddr_countryname'])
+              ? $client['delivaddr_countryname']
+              : '',
+          'delivAddress' =>
+            isset($client['delivAddress']) ? $client['delivAddress'] : '',
+          'delivaddr_geocode' =>
+            isset($client['delivaddr_geocode'])
+              ? $client['delivaddr_geocode']
+              : '',
           'fullName' => isset($client['fullName']) ? $client['fullName'] : '',
-          'contactId' => isset($client['contactId']) ? $client['contactId'] : '',
-          'contactDetails' => isset($client['contactDetails']) ? $client['contactDetails'] : '',
-          'formatted_tel' => isset($client['formatted_tel']) ? $client['formatted_tel'] : '',
-          'formatted_mobile' => isset($client['formatted_mobile']) ? $client['formatted_mobile'] : '',
-          'formatted_fax' => isset($client['formatted_fax']) ? $client['formatted_fax'] : '',
+          'contactId' =>
+            isset($client['contactId']) ? $client['contactId'] : '',
+          'contactDetails' =>
+            isset($client['contactDetails']) ? $client['contactDetails'] : '',
+          'formatted_tel' =>
+            isset($client['formatted_tel']) ? $client['formatted_tel'] : '',
+          'formatted_mobile' =>
+            isset($client['formatted_mobile'])
+              ? $client['formatted_mobile']
+              : '',
+          'formatted_fax' =>
+            isset($client['formatted_fax']) ? $client['formatted_fax'] : '',
           'owner' => isset($client['owner']) ? $client['owner'] : '',
           'webUrl' => isset($client['webUrl']) ? $client['webUrl'] : ''
         ]);
@@ -159,15 +235,25 @@ class Cron extends CI_Controller
           'mobile' => isset($contact['mobile']) ? $contact['mobile'] : '',
           'civil' => isset($contact['civil']) ? $contact['civil'] : '',
           'position' => isset($contact['position']) ? $contact['position'] : '',
-          'birthdate' => isset($contact['birthdate']) ? $contact['birthdate'] : '',
+          'birthdate' =>
+            isset($contact['birthdate']) ? $contact['birthdate'] : '',
           'thirdid' => isset($contact['thirdid']) ? $contact['thirdid'] : null,
-          'peopleid' => isset($contact['peopleid']) ? $contact['peopleid'] : null,
+          'peopleid' =>
+            isset($contact['peopleid']) ? $contact['peopleid'] : null,
           'fullName' => isset($contact['fullName']) ? $contact['fullName'] : '',
           'corpid' => isset($contact['corpid']) ? $contact['corpid'] : null,
-          'formatted_tel' => isset($contact['formatted_tel']) ? $contact['formatted_tel'] : '',
-          'formatted_mobile' => isset($contact['formatted_mobile']) ? $contact['formatted_mobile'] : '',
-          'formatted_fax' => isset($contact['formatted_fax']) ? $contact['formatted_fax'] : '',
-          'formatted_birthdate' => isset($contact['formatted_birthdate']) ? $contact['formatted_birthdate'] : ''
+          'formatted_tel' =>
+            isset($contact['formatted_tel']) ? $contact['formatted_tel'] : '',
+          'formatted_mobile' =>
+            isset($contact['formatted_mobile'])
+              ? $contact['formatted_mobile']
+              : '',
+          'formatted_fax' =>
+            isset($contact['formatted_fax']) ? $contact['formatted_fax'] : '',
+          'formatted_birthdate' =>
+            isset($contact['formatted_birthdate'])
+              ? $contact['formatted_birthdate']
+              : ''
         ]);
       }
       var_dump($contactsRequest);
