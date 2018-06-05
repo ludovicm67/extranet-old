@@ -10,15 +10,16 @@ ob_start();
   <?php foreach ($clients as $client): ?>
   <li>
     <ul>
-      <li><strong>Nom complet :</strong> <?php echo $client->fullname; ?></li>
+      <li><strong>Nom complet :</strong> <?php echo $client->fullName; ?></li>
+      <?php if (count($client->contacts)): ?>
       <li>
         <strong>Contacts :</strong>
         <ul>
           <?php foreach ($client->contacts as $contact): ?>
           <li>
             <ul>
-              <?php if (!empty($contact->fullname)): ?>
-                <li><strong>Nom complet :</strong> <?php echo $contact->fullname; ?></li>
+              <?php if (!empty($contact->fullName)): ?>
+                <li><strong>Nom complet :</strong> <?php echo $contact->fullName; ?></li>
               <?php endif; ?>
               <?php if (!empty($contact->email)): ?>
                 <li><strong>Email :</strong> <?php echo $contact->email; ?></li>
@@ -37,6 +38,7 @@ ob_start();
           <?php endforeach; ?>
         </ul>
       </li>
+      <?php endif; ?>
     </ul>
   </li>
 <?php endforeach; ?>
