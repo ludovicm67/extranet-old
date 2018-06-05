@@ -13,9 +13,11 @@ ob_start();
 
 <h2>Pages à appeler depuis des tâches cron</h2>
 <ul>
-  <li><a href="/cron/reset_database" target="_blank">/cron/reset_database</a> : à appeler pour vider complètement la base de données (pour toutes les tables ayant des informations de Sellsy) et reconstruire l'architecture des différentes tables</li>
+  <li><a href="/cron/init_database" target="_blank">/cron/init_database</a> : à appeler pour générer la base de données (créer l'ensemble des tables requises)</li>
   <li><a href="/cron/sellsy_clients" target="_blank">/cron/sellsy_clients</a> : à appeler pour récupérer l'ensemble des clients avec leurs contacts associés</li>
   <li><a href="/cron/sellsy_contacts" target="_blank">/cron/sellsy_contacts</a> : à appeler pour mettre à jour les informations sur l'ensemble des contacts</li>
+  <li><a href="/cron/sellsy_orders" target="_blank">/cron/sellsy_orders</a> : à appeler pour mettre à jour les informations sur l'ensemble des commandes</li>
+  <li><a href="/cron/sellsy_invoices" target="_blank">/cron/sellsy_invoices</a> : à appeler pour mettre à jour les informations sur l'ensemble des factures</li>
 </ul>
 
 <?php

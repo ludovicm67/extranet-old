@@ -3,11 +3,9 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-DROP TABLE IF EXISTS `sellsy_clients`;
-
-CREATE TABLE `sellsy_clients` (
-  `id` int (11) NOT NULL,
-  `thirdid` int (11),
+CREATE TABLE IF NOT EXISTS `sellsy_clients` (
+  `id` int (11) NOT NULL AUTO_INCREMENT,
+  `sellsy_id` int (11) NOT NULL,
   `capital` text COLLATE utf8mb4_unicode_ci,
   `logo` text COLLATE utf8mb4_unicode_ci,
   `joindate` text COLLATE utf8mb4_unicode_ci,
@@ -79,11 +77,8 @@ CREATE TABLE `sellsy_clients` (
   `formatted_mobile` text COLLATE utf8mb4_unicode_ci,
   `formatted_fax` text COLLATE utf8mb4_unicode_ci,
   `owner` text COLLATE utf8mb4_unicode_ci,
-  `webUrl` text COLLATE utf8mb4_unicode_ci
+  `webUrl` text COLLATE utf8mb4_unicode_ci,
+   PRIMARY KEY (`id`, `sellsy_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-ALTER TABLE `sellsy_clients` ADD PRIMARY KEY (`id`);
 COMMIT;
-
-
-
