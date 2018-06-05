@@ -11,7 +11,7 @@
 		"source": "https://github.com/bcit-ci/CodeIgniter"
 	},
 	"require": {
-		"php": ">=5.3.7",
+		"php": ">=7.0.0",
 		"teknoo/sellsy-client": "^2.0",
 		"guzzlehttp/guzzle": "^6.3"
 	},
