@@ -10,6 +10,8 @@ ob_start();
   <?php foreach ($tags as $tag): ?>
   <li>
     <a href="/tag/<?php echo $tag->id; ?>"><?php echo $tag->name; ?></a>
+    &middot;
+    (<a href="/tag/delete/<?php echo $tag->id; ?>">Supprimer</a>)
   </li>
 <?php endforeach; ?>
 </ul>
