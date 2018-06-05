@@ -8,8 +8,6 @@ ob_start();
 
 <form method="post">
   <div class="form-group row">
-  </div>
-  <div class="form-group row">
     <label for="tagName" class="col-sm-2 col-form-label">Nom</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" name="name" id="tagName" placeholder="Nom du tag...">
