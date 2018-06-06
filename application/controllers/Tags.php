@@ -71,4 +71,43 @@ class Tags extends CI_Controller
 
     $this->load->view('tags/new');
   }
+
+  public function edit($id)
+  {
+    // check if tag exists
+    $this->db->where('id', $id);
+    $q = $this->db->get('tags');
+    if ($q->num_rows() <= 0) {
+      redirect('/tags', 'refresh');
+    }
+    $tag = $q->result()[0];
+
+    if (isset($_POST['name'])) {
+      $tagName = strtolower(
+        str_replace(
+          ' ',
+          '_',
+          preg_replace("/[^A-Za-z0-9 ]/", '', $this->input->post('name'))
+        )
+      );
+      $this->db->where('name', $tagName);
+      $q = $this->db->get('tags');
+      if ($q->num_rows() > 0) {
+        $this->session->set_flashdata(
+          'error',
+          "Le tag n'as pas été modifié : un autre porte déjà le même nom !"
+        );
+      } else {
+        $this->db->where('id', $id);
+        $this->db->update('tags', ['name' => $tagName]);
+        $this->session->set_flashdata(
+          'success',
+          'Le tag a bien été modifié avec succès !'
+        );
+        redirect('/tags', 'refresh');
+      }
+    }
+
+    $this->load->view('tags/edit', ['tag' => $tag]);
+  }
 }

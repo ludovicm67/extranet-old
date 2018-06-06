@@ -11,7 +11,11 @@ ob_start();
   <li>
     <a href="/tag/<?php echo $tag->id; ?>"><?php echo $tag->name; ?></a>
     &middot;
-    (<a href="/tag/delete/<?php echo $tag->id; ?>">Supprimer</a>)
+    (
+      <a href="/tag/edit/<?php echo $tag->id; ?>">Modifier</a>
+      -
+      <a href="/tag/delete/<?php echo $tag->id; ?>">Supprimer</a>
+    )
   </li>
 <?php endforeach; ?>
 </ul>

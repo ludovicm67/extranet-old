@@ -15,25 +15,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <header>
     <!-- navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="/">Adipso</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Accueil</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/clients">Clients</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/projects">Projets</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/tags">Tags</a>
-          </li>
-        </ul>
+      <div class="container">
+        <a class="navbar-brand" href="/">Adipso</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/clients">Clients</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/projects">Projets</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/tags">Tags</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   </header>

@@ -9,6 +9,8 @@ ob_start();
     <small><?php echo strip_tags($this->input->get('value')); ?></small>
     <a class="btn btn-outline-secondary" href="/tag/<?php echo $tag->id; ?>" role="button">Enlever le filtre</a>
   <?php endif; ?>
+  <a class="btn btn-outline-primary" href="/tag/edit/<?php echo $tag->id; ?>" role="button">Modifier</a>
+  <a class="btn btn-outline-danger" href="/tag/delete/<?php echo $tag->id; ?>" role="button">Supprimer</a>
 </h1>
 <p class="lead">Affichage des projets utilisant ce tag</p>
 

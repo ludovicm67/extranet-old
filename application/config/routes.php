@@ -55,7 +55,8 @@ $route['translate_uri_dashes'] = false;
 
 $route['client/(:num)'] = "clients/show/$1";
 $route['tag/(:num)'] = "tags/show/$1";
+$route['tag/edit/(:num)'] = "tags/edit/$1";
 $route['tag/delete/(:num)'] = "tags/delete/$1";
 $route['project/(:num)'] = "projects/show/$1";
-$route['project/delete/(:num)'] = "projects/delete/$1";
 $route['project/edit/(:num)'] = "projects/edit/$1";
+$route['project/delete/(:num)'] = "projects/delete/$1";
