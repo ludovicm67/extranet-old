@@ -16,4 +16,13 @@ $(document).ready(function () {
 
     $('select').select2();
   });
+
+  $('#searcher').on('keyup change', function (e) {
+    const target = e.target;
+    if (target.value) {
+      $('.searcher-item').not('[data-searcher*="' + target.value.replace(/"/g, '&quot;').toLowerCase() + '"]').hide();
+    } else {
+      $('.searcher-item').show();
+    }
+  });
 });

@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Tags extends CI_Controller
+class Contacts extends CI_Controller
 {
   public function index()
   {
     $this->db->order_by('name');
     $tags = $this->db->get('tags')->result();
-    $this->load->view('tags/list', ['tags' => $tags]);
+    $this->load->view('contacts/list', ['tags' => $tags]);
   }
 
   public function show($id)
@@ -29,7 +29,7 @@ class Tags extends CI_Controller
     $this->db->where('tag_id', $tag->id);
     $tag->projects = $this->db->get()->result();
 
-    $this->load->view('tags/show', ['tag' => $tag]);
+    $this->load->view('contacts/show', ['tag' => $tag]);
   }
 
   public function delete($id)
@@ -55,10 +55,6 @@ class Tags extends CI_Controller
           preg_replace("/[^A-Za-z0-9 ]/", '', $this->input->post('name'))
         )
       );
-      if (empty($tagName)) {
-        $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
-        redirect('/tags/new', 'refresh');
-      }
       $this->db->where('name', $tagName);
       $q = $this->db->get('tags');
       if ($q->num_rows() > 0) {
@@ -73,7 +69,7 @@ class Tags extends CI_Controller
       }
     }
 
-    $this->load->view('tags/new');
+    $this->load->view('contacts/new');
   }
 
   public function edit($id)
@@ -94,10 +90,6 @@ class Tags extends CI_Controller
           preg_replace("/[^A-Za-z0-9 ]/", '', $this->input->post('name'))
         )
       );
-      if (empty($tagName)) {
-        $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
-        redirect('/tags/new', 'refresh');
-      }
       $this->db->where('name', $tagName);
       $q = $this->db->get('tags');
       if ($q->num_rows() > 0) {
@@ -116,6 +108,6 @@ class Tags extends CI_Controller
       }
     }
 
-    $this->load->view('tags/edit', ['tag' => $tag]);
+    $this->load->view('contacts/edit', ['tag' => $tag]);
   }
 }

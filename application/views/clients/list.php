@@ -8,7 +8,7 @@ ob_start();
 
 <ul>
   <?php foreach ($clients as $client): ?>
-  <li>
+  <li class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($client->fullName)); ?>">
     <a href="/client/<?php echo $client->id; ?>"><?php echo $client->fullName; ?></a>
   </li>
 <?php endforeach; ?>

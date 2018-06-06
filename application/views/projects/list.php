@@ -15,7 +15,7 @@ ob_start();
   </thead>
   <tbody>
     <?php foreach ($projects as $project): ?>
-    <tr>
+    <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($project->name)); ?>">
       <td><a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a></td>
       <td>
         <a href="/project/edit/<?php echo $project->id; ?>">Modifier</a>

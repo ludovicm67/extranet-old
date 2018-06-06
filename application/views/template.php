@@ -29,10 +29,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
               <a class="nav-link" href="/projects">Projets</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="/contacts">Contacts</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/types">Types</a>
             </li>
           </ul>
         </div>
+        <form class="form-inline" action="/" method="get">
+          <input id="searcher" class="form-control mr-sm-2" type="search" name="q" placeholder="Rechercher..." aria-label="Rechercher">
+          <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Rechercher</button>
+        </form>
       </div>
     </nav>
   </header>
