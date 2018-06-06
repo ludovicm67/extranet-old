@@ -18,7 +18,18 @@ class Tags extends CI_Controller
       redirect('/tags', 'refresh');
     }
     $tag = $q->result()[0];
-    $this->load->view('tags/show', ['tag' => ['name' => $tag->name]]);
+
+    $this->db->select('*');
+    $this->db->from('project_tags');
+    $this->db->join('projects', 'projects.id = project_tags.project_id');
+    $value = $this->input->get('value');
+    if (isset($_GET['value'])) {
+      $this->db->where('value', $value);
+    }
+    $this->db->where('tag_id', $tag->id);
+    $tag->projects = $this->db->get()->result();
+
+    $this->load->view('tags/show', ['tag' => $tag]);
   }
 
   public function delete($id)

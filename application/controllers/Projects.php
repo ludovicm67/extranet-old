@@ -21,6 +21,7 @@ class Projects extends CI_Controller
     $project->client = null;
     $project->contacts = [];
     $project->orders = [];
+    $project->tags = [];
 
     $clientDB = $this->db
       ->get_where('sellsy_clients', ['id' => $project->client_id], 1, 0)
@@ -51,6 +52,15 @@ class Projects extends CI_Controller
     $ordersDB = $this->db->get()->result();
     if (count($ordersDB) > 0) {
       $project->orders = $ordersDB;
+    }
+
+    $this->db->select('*');
+    $this->db->from('project_tags');
+    $this->db->join('tags', 'tags.id = project_tags.tag_id');
+    $this->db->where('project_id', $project->id);
+    $tagsDB = $this->db->get()->result();
+    if (count($tagsDB) > 0) {
+      $project->tags = $tagsDB;
     }
 
     $this->load->view('projects/show', ['project' => $project]);

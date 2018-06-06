@@ -9,6 +9,14 @@ ob_start();
   <a class="btn btn-outline-danger" href="/project/delete/<?php echo $project->id; ?>" role="button">Supprimer</a>
 </h1>
 <p class="lead">Affichages d'informations concernant le projet</p>
+<p>
+  <?php foreach ($project->tags as $tag): ?>
+    <a href="/tag/<?php echo $tag->id; echo (!empty($tag->value)) ? '?value=' . urlencode($tag->value) : ''; ?>" class="badge badge-secondary">
+      <?php echo $tag->name; ?>
+      <?php echo (!empty($tag->value)) ? ': ' . $tag->value : ''; ?>
+    </a>
+  <?php endforeach; ?>
+</p>
 
 <h2>Client principal</h2>
 <?php if (!empty($project->client)): ?>
