@@ -21,3 +21,7 @@ body > .container {
 .footer p {
   margin-bottom: -20px;
 }
+
+.dupplicate-item {
+  display: none;
+}

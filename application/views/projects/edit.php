@@ -50,6 +50,52 @@ ob_start();
       </select>
     </div>
   </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Tags</label>
+    <div class="col-sm-10">
+      <div>
+
+        <div class="row dupplicate-item">
+          <div class="col-sm-6">
+            <select class="form-control" name="tagName[]">
+              <option value="">Aucun tag</option>
+              <?php foreach ($tags as $tag): ?>
+              <option value="<?php echo $tag->id; ?>">
+                <?php echo $tag->name; ?>
+              </option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" name="tagValue[]" placeholder="Valeur du tag (si nécessaire)...">
+          </div>
+        </div>
+
+        <?php foreach ($project->tags as $pTag): ?>
+          <div class="row">
+            <div class="col-sm-6">
+              <select class="form-control" name="tagName[]">
+                <option value="">Aucun tag</option>
+                <?php foreach ($tags as $tag): ?>
+                <option value="<?php echo $tag->id; ?>"<?php echo ($tag->id == $pTag->tag_id) ? ' selected="selected"' : ''; ?>>
+                  <?php echo $tag->name; ?>
+                </option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="tagValue[]" value="<?php echo htmlspecialchars($pTag->value); ?>" placeholder="Valeur du tag (si nécessaire)...">
+            </div>
+          </div>
+        <?php endforeach; ?>
+
+        <button class="btn btn-outline-primary dupplicate-action" type="button">Ajouter un nouveau tag</button>
+
+      </div>
+    </div>
+  </div>
+
   <button type="submit" class="btn btn-primary">Modifier</button>
 </form>
 

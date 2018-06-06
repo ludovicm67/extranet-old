@@ -105,6 +105,26 @@ class Projects extends CI_Controller
           }
         }
 
+        if (
+          isset($_POST['tagName']) &&
+          isset($_POST['tagName']) &&
+          is_array($_POST['tagName']) == is_array($_POST['tagValue']) &&
+          count($_POST['tagName']) &&
+          count($_POST['tagValue'])
+        ) {
+          for ($i = 0; $i < count($_POST['tagName']); $i++) {
+            $tagId = intval($this->input->post('tagName')[$i]);
+            $tagVal = strip_tags(trim($this->input->post('tagValue')[$i]));
+            if (!empty($tagId)) {
+              $this->db->insert('project_tags', [
+                'project_id' => $projectId,
+                'tag_id' => $tagId,
+                'value' => $tagVal
+              ]);
+            }
+          }
+        }
+
         $this->session->set_flashdata(
           'success',
           'Le projet a bien été créé avec succès !'
@@ -127,10 +147,14 @@ class Projects extends CI_Controller
     $this->db->select(['id', 'thirdname', 'subject']);
     $orders = $this->db->get('sellsy_orders')->result();
 
+    $this->db->select(['id', 'name']);
+    $tags = $this->db->get('tags')->result();
+
     $this->load->view('projects/new', [
       'clients' => $clients,
       'contacts' => $contacts,
-      'orders' => $orders
+      'orders' => $orders,
+      'tags' => $tags
     ]);
   }
 
@@ -178,6 +202,27 @@ class Projects extends CI_Controller
           }
         }
 
+        $this->db->delete('project_tags', ['project_id' => $id]);
+        if (
+          isset($_POST['tagName']) &&
+          isset($_POST['tagName']) &&
+          is_array($_POST['tagName']) == is_array($_POST['tagValue']) &&
+          count($_POST['tagName']) &&
+          count($_POST['tagValue'])
+        ) {
+          for ($i = 0; $i < count($_POST['tagName']); $i++) {
+            $tagId = intval($this->input->post('tagName')[$i]);
+            $tagVal = strip_tags(trim($this->input->post('tagValue')[$i]));
+            if (!empty($tagId)) {
+              $this->db->insert('project_tags', [
+                'project_id' => $projectId,
+                'tag_id' => $tagId,
+                'value' => $tagVal
+              ]);
+            }
+          }
+        }
+
         $this->session->set_flashdata(
           'success',
           'Le projet a bien été modifié avec succès !'
@@ -194,6 +239,7 @@ class Projects extends CI_Controller
     $project = $q->result()[0];
     $project->contacts = [];
     $project->orders = [];
+    $project->tags = [];
 
     $this->db->select('contact_id');
     $contactsDB = $this->db
@@ -215,6 +261,14 @@ class Projects extends CI_Controller
       }, $ordersDB);
     }
 
+    $this->db->select(['tag_id', 'value']);
+    $tagsDB = $this->db
+      ->get_where('project_tags', ['project_id' => $project->id])
+      ->result();
+    if (count($tagsDB) > 0) {
+      $project->tags = $tagsDB;
+    }
+
     $this->db->select(['id', 'fullName']);
     $clients = $this->db->get('sellsy_clients')->result();
 
@@ -224,11 +278,15 @@ class Projects extends CI_Controller
     $this->db->select(['id', 'thirdname', 'subject']);
     $orders = $this->db->get('sellsy_orders')->result();
 
+    $this->db->select(['id', 'name']);
+    $tags = $this->db->get('tags')->result();
+
     $this->load->view('projects/edit', [
       'project' => $project,
       'clients' => $clients,
       'contacts' => $contacts,
-      'orders' => $orders
+      'orders' => $orders,
+      'tags' => $tags
     ]);
   }
 }

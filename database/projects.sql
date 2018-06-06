@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS `project_tags` (
   `project_id` int (11) NOT NULL,
   `tag_id` int (11) NOT NULL,
   `value` varchar(255),
-  PRIMARY KEY (`project_id`, `tag_id`),
   FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
   FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
