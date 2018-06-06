@@ -19,9 +19,6 @@ class Projects extends CI_Controller
     }
     $project = $q->result()[0];
     $project->client = null;
-    $project->contacts = [];
-    $project->orders = [];
-    $project->tags = [];
 
     $clientDB = $this->db
       ->get_where('sellsy_clients', ['id' => $project->client_id], 1, 0)
@@ -37,10 +34,7 @@ class Projects extends CI_Controller
       'sellsy_contacts.id = project_contacts.contact_id'
     );
     $this->db->where('project_id', $project->id);
-    $contactsDB = $this->db->get()->result();
-    if (count($contactsDB) > 0) {
-      $project->contacts = $contactsDB;
-    }
+    $project->contacts = $this->db->get()->result();
 
     $this->db->select('*');
     $this->db->from('project_orders');
@@ -49,19 +43,13 @@ class Projects extends CI_Controller
       'sellsy_orders.id = project_orders.order_id'
     );
     $this->db->where('project_id', $project->id);
-    $ordersDB = $this->db->get()->result();
-    if (count($ordersDB) > 0) {
-      $project->orders = $ordersDB;
-    }
+    $project->orders = $this->db->get()->result();
 
     $this->db->select('*');
     $this->db->from('project_tags');
     $this->db->join('tags', 'tags.id = project_tags.tag_id');
     $this->db->where('project_id', $project->id);
-    $tagsDB = $this->db->get()->result();
-    if (count($tagsDB) > 0) {
-      $project->tags = $tagsDB;
-    }
+    $project->tags = $this->db->get()->result();
 
     $this->load->view('projects/show', ['project' => $project]);
   }
@@ -247,37 +235,27 @@ class Projects extends CI_Controller
     }
 
     $project = $q->result()[0];
-    $project->contacts = [];
-    $project->orders = [];
-    $project->tags = [];
 
     $this->db->select('contact_id');
     $contactsDB = $this->db
       ->get_where('project_contacts', ['project_id' => $project->id])
       ->result();
-    if (count($contactsDB) > 0) {
-      $project->contacts = array_map(function ($c) {
-        return $c->contact_id;
-      }, $contactsDB);
-    }
+    $project->contacts = array_map(function ($c) {
+      return $c->contact_id;
+    }, $contactsDB);
 
     $this->db->select('order_id');
     $ordersDB = $this->db
       ->get_where('project_orders', ['project_id' => $project->id])
       ->result();
-    if (count($ordersDB) > 0) {
-      $project->orders = array_map(function ($c) {
-        return $c->order_id;
-      }, $ordersDB);
-    }
+    $project->orders = array_map(function ($c) {
+      return $c->order_id;
+    }, $ordersDB);
 
     $this->db->select(['tag_id', 'value']);
-    $tagsDB = $this->db
+    $project->tags = $this->db
       ->get_where('project_tags', ['project_id' => $project->id])
       ->result();
-    if (count($tagsDB) > 0) {
-      $project->tags = $tagsDB;
-    }
 
     $this->db->select(['id', 'fullName']);
     $clients = $this->db->get('sellsy_clients')->result();
