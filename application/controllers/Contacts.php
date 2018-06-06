@@ -6,66 +6,58 @@ class Contacts extends CI_Controller
   public function index()
   {
     $this->db->order_by('name');
-    $tags = $this->db->get('tags')->result();
-    $this->load->view('contacts/list', ['tags' => $tags]);
+    $contacts = $this->db->get('contacts')->result();
+    $this->load->view('contacts/list', ['contacts' => $contacts]);
   }
 
   public function show($id)
   {
     $this->db->where('id', $id);
-    $q = $this->db->get('tags');
+    $q = $this->db->get('contacts');
     if ($q->num_rows() <= 0) {
-      redirect('/tags', 'refresh');
+      redirect('/contacts', 'refresh');
     }
-    $tag = $q->result()[0];
+    $contact = $q->result()[0];
 
-    $this->db->select('*');
-    $this->db->from('project_tags');
-    $this->db->join('projects', 'projects.id = project_tags.project_id');
-    $value = $this->input->get('value');
-    if (isset($_GET['value'])) {
-      $this->db->where('value', $value);
-    }
-    $this->db->where('tag_id', $tag->id);
-    $tag->projects = $this->db->get()->result();
-
-    $this->load->view('contacts/show', ['tag' => $tag]);
+    $this->load->view('contacts/show', ['contact' => $contact]);
   }
 
   public function delete($id)
   {
     $this->db->where('id', $id);
-    $q = $this->db->get('tags');
+    $q = $this->db->get('contacts');
     if ($q->num_rows() > 0) {
-      $this->db->delete('tags', ['id' => $id]);
-      $this->session->set_flashdata('success', 'Le tag a bien été supprimé !');
+      $this->db->delete('contacts', ['id' => $id]);
+      $this->session->set_flashdata(
+        'success',
+        'Le contact a bien été supprimé !'
+      );
     } else {
-      $this->session->set_flashdata('error', "Le tag n'existe pas.");
+      $this->session->set_flashdata('error', "Le contact n'existe pas.");
     }
-    redirect('/tags', 'refresh');
+    redirect('/contacts', 'refresh');
   }
 
   public function new()
   {
     if (isset($_POST['name'])) {
-      $tagName = strtolower(
-        str_replace(
-          ' ',
-          '_',
-          preg_replace("/[^A-Za-z0-9 ]/", '', $this->input->post('name'))
-        )
-      );
-      $this->db->where('name', $tagName);
-      $q = $this->db->get('tags');
+      $contactName = strip_tags(trim($this->input->post('name')));
+
+      if (empty($contactName)) {
+        $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
+        redirect('/contacts/new', 'refresh');
+      }
+      $this->db->where('name', $contactName);
+      $q = $this->db->get('contacts');
       if ($q->num_rows() > 0) {
-        $this->session->set_flashdata('error', 'Le tag existe déjà !');
+        $this->session->set_flashdata('error', 'Le contact existe déjà !');
       } else {
-        $this->db->insert('tags', ['name' => $tagName]);
+        $this->db->insert('contacts', ['name' => $contactName]);
         $this->session->set_flashdata(
           'success',
-          'Le tag a bien été créé avec succès !'
+          'Le contact a bien été créé avec succès !'
         );
-        redirect('/tags', 'refresh');
+        redirect('/contacts', 'refresh');
       }
     }
 
@@ -74,40 +66,39 @@ class Contacts extends CI_Controller
 
   public function edit($id)
   {
-    // check if tag exists
+    // check if contact exists
     $this->db->where('id', $id);
-    $q = $this->db->get('tags');
+    $q = $this->db->get('contacts');
     if ($q->num_rows() <= 0) {
-      redirect('/tags', 'refresh');
+      redirect('/contacts', 'refresh');
     }
-    $tag = $q->result()[0];
+    $contact = $q->result()[0];
 
     if (isset($_POST['name'])) {
-      $tagName = strtolower(
-        str_replace(
-          ' ',
-          '_',
-          preg_replace("/[^A-Za-z0-9 ]/", '', $this->input->post('name'))
-        )
-      );
-      $this->db->where('name', $tagName);
-      $q = $this->db->get('tags');
+      $contactName = strip_tags(trim($this->input->post('name')));
+
+      if (empty($contactName)) {
+        $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
+        redirect('/contacts/new', 'refresh');
+      }
+      $this->db->where('name', $contactName);
+      $q = $this->db->get('contacts');
       if ($q->num_rows() > 0) {
         $this->session->set_flashdata(
           'error',
-          "Le tag n'as pas été modifié : un autre porte déjà le même nom !"
+          "Le contact n'as pas été modifié : un autre porte déjà le même nom !"
         );
       } else {
         $this->db->where('id', $id);
-        $this->db->update('tags', ['name' => $tagName]);
+        $this->db->update('contacts', ['name' => $contactName]);
         $this->session->set_flashdata(
           'success',
-          'Le tag a bien été modifié avec succès !'
+          'Le contact a bien été modifié avec succès !'
         );
-        redirect('/tags', 'refresh');
+        redirect('/contacts', 'refresh');
       }
     }
 
-    $this->load->view('contacts/edit', ['tag' => $tag]);
+    $this->load->view('contacts/edit', ['contact' => $contact]);
   }
 }

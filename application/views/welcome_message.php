@@ -10,7 +10,9 @@ ob_start();
 <ul>
   <li><a href="/clients">/clients</a> : liste les différents clients et leurs contacts associés</li>
   <li><a href="/projects">/projects</a> : liste les différents projets</li>
+  <li><a href="/contacts">/contacts</a> : liste les différents contacts</li>
   <li><a href="/tags">/tags</a> : liste les différents tags</li>
+  <li><a href="/types">/types</a> : liste les différents types de contacts</li>
 </ul>
 
 <h2>Pages à appeler depuis des tâches cron</h2>

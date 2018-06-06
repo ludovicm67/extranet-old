@@ -3,8 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
 ?>
 
-<h1 class="mt-5">Liste des tags <a class="btn btn-outline-primary" href="/tags/new" role="button">Ajouter</a></h1>
-<p class="lead">Page listant les différents tags</p>
+<h1 class="mt-5">Liste des contacts <a class="btn btn-outline-primary" href="/contacts/new" role="button">Ajouter</a></h1>
+<p class="lead">Page listant les différents contacts</p>
 
 <table class="table table-hover">
   <thead class="thead-dark">
@@ -14,13 +14,13 @@ ob_start();
     </tr>
   </thead>
   <tbody>
-    <?php foreach ($tags as $tag): ?>
-    <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($tag->name)); ?>">
-      <td><a href="/tag/<?php echo $tag->id; ?>"><?php echo $tag->name; ?></a></td>
+    <?php foreach ($contacts as $contact): ?>
+    <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($contact->name)); ?>">
+      <td><a href="/contact/<?php echo $contact->id; ?>"><?php echo $contact->name; ?></a></td>
       <td>
-        <a href="/tag/edit/<?php echo $tag->id; ?>">Modifier</a>
+        <a href="/contact/edit/<?php echo $contact->id; ?>">Modifier</a>
         -
-        <a href="/tag/delete/<?php echo $tag->id; ?>">Supprimer</a>
+        <a href="/contact/delete/<?php echo $contact->id; ?>">Supprimer</a>
       </td>
     </tr>
     <?php endforeach; ?>
