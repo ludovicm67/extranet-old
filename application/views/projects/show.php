@@ -46,6 +46,25 @@ ob_start();
   <p>Le projet n'est assigné à aucun contacts.</p>
 <?php endif; ?>
 
+<h2>Commandes pour ce projet</h2>
+<?php if (!empty($project->orders)): ?>
+  <ul>
+    <?php foreach ($project->orders as $order): ?>
+    <li>
+      <ul>
+        <li><strong>Client :</strong> <?php echo $order->thirdname; ?></li>
+        <li><strong>Sujet :</strong> <?php echo $order->subject; ?></li>
+        <li><strong>Statut :</strong> <span style="color: <?php echo $order->step_hex; ?>;"><?php echo $order->step_label; ?></span></li>
+        <li><strong>Montant total :</strong> <?php echo $order->formatted_totalAmount; ?></li>
+        <li><strong>Contact :</strong> <?php echo $order->contactName; ?></li>
+      </ul>
+    </li>
+    <?php endforeach; ?>
+  </ul>
+<?php else: ?>
+  <p>Le projet n'est assigné à aucune commande.</p>
+<?php endif; ?>
+
 <?php
 $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

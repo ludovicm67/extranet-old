@@ -20,6 +20,7 @@ class Projects extends CI_Controller
     $project = $q->result()[0];
     $project->client = null;
     $project->contacts = [];
+    $project->orders = [];
 
     $clientDB = $this->db
       ->get_where('sellsy_clients', ['id' => $project->client_id], 1, 0)
@@ -38,6 +39,18 @@ class Projects extends CI_Controller
     $contactsDB = $this->db->get()->result();
     if (count($contactsDB) > 0) {
       $project->contacts = $contactsDB;
+    }
+
+    $this->db->select('*');
+    $this->db->from('project_orders');
+    $this->db->join(
+      'sellsy_orders',
+      'sellsy_orders.id = project_orders.order_id'
+    );
+    $this->db->where('project_id', $project->id);
+    $ordersDB = $this->db->get()->result();
+    if (count($ordersDB) > 0) {
+      $project->orders = $ordersDB;
     }
 
     $this->load->view('projects/show', ['project' => $project]);
@@ -82,11 +95,21 @@ class Projects extends CI_Controller
           }
         }
 
+        if (isset($_POST['orders'])) {
+          foreach (array_unique($this->input->post('orders')) as $order) {
+            $orderId = intval($order, 10);
+            $this->db->insert('project_orders', [
+              'project_id' => $projectId,
+              'order_id' => $orderId
+            ]);
+          }
+        }
+
         $this->session->set_flashdata(
           'success',
           'Le projet a bien été créé avec succès !'
         );
-        redirect('/project/edit/' . $projectId, 'refresh');
+        redirect('/project/' . $projectId, 'refresh');
       }
 
       $this->session->set_flashdata(
@@ -101,9 +124,13 @@ class Projects extends CI_Controller
     $this->db->select(['id', 'fullName']);
     $contacts = $this->db->get('sellsy_contacts')->result();
 
+    $this->db->select(['id', 'thirdname', 'subject']);
+    $orders = $this->db->get('sellsy_orders')->result();
+
     $this->load->view('projects/new', [
       'clients' => $clients,
-      'contacts' => $contacts
+      'contacts' => $contacts,
+      'orders' => $orders
     ]);
   }
 
@@ -140,6 +167,17 @@ class Projects extends CI_Controller
           }
         }
 
+        $this->db->delete('project_orders', ['project_id' => $id]);
+        if (isset($_POST['orders'])) {
+          foreach (array_unique($this->input->post('orders')) as $order) {
+            $orderId = intval($order, 10);
+            $this->db->insert('project_orders', [
+              'project_id' => $projectId,
+              'order_id' => $orderId
+            ]);
+          }
+        }
+
         $this->session->set_flashdata(
           'success',
           'Le projet a bien été modifié avec succès !'
@@ -155,6 +193,7 @@ class Projects extends CI_Controller
 
     $project = $q->result()[0];
     $project->contacts = [];
+    $project->orders = [];
 
     $this->db->select('contact_id');
     $contactsDB = $this->db
@@ -166,16 +205,30 @@ class Projects extends CI_Controller
       }, $contactsDB);
     }
 
+    $this->db->select('order_id');
+    $ordersDB = $this->db
+      ->get_where('project_orders', ['project_id' => $project->id])
+      ->result();
+    if (count($ordersDB) > 0) {
+      $project->orders = array_map(function ($c) {
+        return $c->order_id;
+      }, $ordersDB);
+    }
+
     $this->db->select(['id', 'fullName']);
     $clients = $this->db->get('sellsy_clients')->result();
 
     $this->db->select(['id', 'fullName']);
     $contacts = $this->db->get('sellsy_contacts')->result();
 
+    $this->db->select(['id', 'thirdname', 'subject']);
+    $orders = $this->db->get('sellsy_orders')->result();
+
     $this->load->view('projects/edit', [
       'project' => $project,
       'clients' => $clients,
-      'contacts' => $contacts
+      'contacts' => $contacts,
+      'orders' => $orders
     ]);
   }
 }

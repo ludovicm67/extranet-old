@@ -34,6 +34,16 @@ ob_start();
       </select>
     </div>
   </div>
+  <div class="form-group row">
+    <label for="projectOrder" class="col-sm-2 col-form-label">Commandes</label>
+    <div class="col-sm-10">
+      <select class="form-control" name="orders[]" id="projectOrder" multiple="multiple">
+        <?php foreach ($orders as $order): ?>
+        <option value="<?php echo $order->id; ?>"><?php echo $order->thirdname . ' :: ' . $order->subject; ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+  </div>
   <button type="submit" class="btn btn-primary">Créer</button>
 </form>
 
