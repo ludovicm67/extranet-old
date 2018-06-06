@@ -19,10 +19,9 @@ $(document).ready(function () {
 
   $('#searcher').on('keyup change', function (e) {
     const target = e.target;
+    $('.searcher-item').show();
     if (target.value) {
       $('.searcher-item').not('[data-searcher*="' + target.value.replace(/"/g, '&quot;').toLowerCase() + '"]').hide();
-    } else {
-      $('.searcher-item').show();
     }
   });
 });
