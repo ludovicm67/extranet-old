@@ -148,7 +148,13 @@ class Projects extends CI_Controller
     $this->db->select(['id', 'name']);
     $tags = $this->db->get('tags')->result();
 
+    $clientId = (isset($_GET['client_id']) && intval($_GET['client_id']) != 0)
+      ? intval($_GET['client_id'])
+      : null;
+    $project = (object) ['client_id' => $clientId];
+
     $this->load->view('projects/new', [
+      'project' => $project,
       'clients' => $clients,
       'contacts' => $contacts,
       'orders' => $orders,

@@ -19,7 +19,9 @@ ob_start();
       <select class="form-control" name="client" id="projectClient">
         <option value="0">Aucun client</option>
         <?php foreach ($clients as $client): ?>
-        <option value="<?php echo $client->id; ?>"><?php echo $client->fullName; ?></option>
+        <option value="<?php echo $client->id; ?>"<?php echo ($project->client_id == $client->id) ? ' selected="selected"' : ''; ?>>
+          <?php echo $client->fullName; ?>
+        </option>
         <?php endforeach; ?>
       </select>
     </div>
