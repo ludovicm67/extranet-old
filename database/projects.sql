@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `mail` varchar(255),
   `phone` varchar(255),
   `address` varchar(255),
+  `other` text,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`type_id`) REFERENCES types(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

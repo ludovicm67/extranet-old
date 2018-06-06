@@ -42,26 +42,39 @@ class Contacts extends CI_Controller
   {
     if (isset($_POST['name'])) {
       $contactName = strip_tags(trim($this->input->post('name')));
+      $contactType = intval($this->input->post('type'));
+      $contactMail = strip_tags(trim($this->input->post('mail')));
+      $contactPhone = strip_tags(trim($this->input->post('phone')));
+      $contactAddress = strip_tags(trim($this->input->post('address')));
+      $contactOther = strip_tags(trim($this->input->post('other')));
+      if ($contactType == 0) {
+        $contactType = null;
+      }
 
       if (empty($contactName)) {
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
         redirect('/contacts/new', 'refresh');
       }
-      $this->db->where('name', $contactName);
-      $q = $this->db->get('contacts');
-      if ($q->num_rows() > 0) {
-        $this->session->set_flashdata('error', 'Le contact existe déjà !');
-      } else {
-        $this->db->insert('contacts', ['name' => $contactName]);
-        $this->session->set_flashdata(
-          'success',
-          'Le contact a bien été créé avec succès !'
-        );
-        redirect('/contacts', 'refresh');
-      }
+
+      $this->db->insert('contacts', [
+        'name' => $contactName,
+        'type_id' => $contactType,
+        'mail' => $contactMail,
+        'phone' => $contactPhone,
+        'address' => $contactAddress,
+        'other' => $contactOther
+      ]);
+      $this->session->set_flashdata(
+        'success',
+        'Le contact a bien été créé avec succès !'
+      );
+      redirect('/contacts', 'refresh');
     }
 
-    $this->load->view('contacts/new');
+    $this->db->select(['id', 'name']);
+    $types = $this->db->get('types')->result();
+
+    $this->load->view('contacts/new', ['types' => $types]);
   }
 
   public function edit($id)
@@ -76,29 +89,42 @@ class Contacts extends CI_Controller
 
     if (isset($_POST['name'])) {
       $contactName = strip_tags(trim($this->input->post('name')));
+      $contactType = intval($this->input->post('type'));
+      $contactMail = strip_tags(trim($this->input->post('mail')));
+      $contactPhone = strip_tags(trim($this->input->post('phone')));
+      $contactAddress = strip_tags(trim($this->input->post('address')));
+      $contactOther = strip_tags(trim($this->input->post('other')));
+      if ($contactType == 0) {
+        $contactType = null;
+      }
 
       if (empty($contactName)) {
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
         redirect('/contacts/new', 'refresh');
       }
-      $this->db->where('name', $contactName);
-      $q = $this->db->get('contacts');
-      if ($q->num_rows() > 0) {
-        $this->session->set_flashdata(
-          'error',
-          "Le contact n'as pas été modifié : un autre porte déjà le même nom !"
-        );
-      } else {
-        $this->db->where('id', $id);
-        $this->db->update('contacts', ['name' => $contactName]);
-        $this->session->set_flashdata(
-          'success',
-          'Le contact a bien été modifié avec succès !'
-        );
-        redirect('/contacts', 'refresh');
-      }
+
+      $this->db->where('id', $id);
+      $this->db->update('contacts', [
+        'name' => $contactName,
+        'type_id' => $contactType,
+        'mail' => $contactMail,
+        'phone' => $contactPhone,
+        'address' => $contactAddress,
+        'other' => $contactOther
+      ]);
+      $this->session->set_flashdata(
+        'success',
+        'Le contact a bien été modifié avec succès !'
+      );
+      redirect('/contacts', 'refresh');
     }
 
-    $this->load->view('contacts/edit', ['contact' => $contact]);
+    $this->db->select(['id', 'name']);
+    $types = $this->db->get('types')->result();
+
+    $this->load->view('contacts/edit', [
+      'contact' => $contact,
+      'types' => $types
+    ]);
   }
 }
