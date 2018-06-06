@@ -6,7 +6,6 @@ ob_start();
 <h1 class="mt-5">Liste des clients</h1>
 <p class="lead">Page listant les différents clients</p>
 
-<h2>Clients récupérés depuis Sellsy</h2>
 <ul>
   <?php foreach ($clients as $client): ?>
   <li>

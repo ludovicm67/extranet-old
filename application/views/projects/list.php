@@ -11,7 +11,11 @@ ob_start();
   <li>
     <a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a>
     &middot;
-    (<a href="/project/delete/<?php echo $project->id; ?>">Supprimer</a>)
+    (
+      <a href="/project/edit/<?php echo $project->id; ?>">Modifier</a>
+      -
+      <a href="/project/delete/<?php echo $project->id; ?>">Supprimer</a>
+    )
   </li>
 <?php endforeach; ?>
 </ul>

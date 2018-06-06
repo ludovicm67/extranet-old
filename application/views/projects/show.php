@@ -3,7 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
 ?>
 
-<h1 class="mt-5"><?php echo $project->name; ?></h1>
+<h1 class="mt-5">
+  <?php echo $project->name; ?>
+  <a class="btn btn-outline-primary" href="/project/edit/<?php echo $project->id; ?>" role="button">Modifier</a>
+  <a class="btn btn-outline-danger" href="/project/delete/<?php echo $project->id; ?>" role="button">Supprimer</a>
+</h1>
 <p class="lead">Affichages d'informations concernant le projet</p>
 
 <h2>Client principal</h2>
@@ -11,6 +15,35 @@ ob_start();
   <p>Le client principal de ce projet est <a href="/client/<?php echo $project->client->id; ?>"><?php echo $project->client->fullName; ?></a>.</p>
 <?php else: ?>
   <p>Le projet n'est assigné à aucun client principal.</p>
+<?php endif; ?>
+
+<h2>Contacts pour ce projet</h2>
+<?php if (!empty($project->contacts)): ?>
+  <ul>
+    <?php foreach ($project->contacts as $contact): ?>
+    <li>
+      <ul>
+        <?php if (!empty($contact->fullName)): ?>
+          <li><strong>Nom complet :</strong> <?php echo $contact->fullName; ?></li>
+        <?php endif; ?>
+        <?php if (!empty($contact->email)): ?>
+          <li><strong>Email :</strong> <?php echo $contact->email; ?></li>
+        <?php endif; ?>
+        <?php if (!empty($contact->tel)): ?>
+          <li><strong>Téléphone :</strong> <?php echo $contact->tel; ?></li>
+        <?php endif; ?>
+        <?php if (!empty($contact->mobile)): ?>
+          <li><strong>Mobile :</strong> <?php echo $contact->mobile; ?></li>
+        <?php endif; ?>
+        <?php if (!empty($contact->position)): ?>
+          <li><strong>Position :</strong> <?php echo $contact->position; ?></li>
+        <?php endif; ?>
+      </ul>
+    </li>
+    <?php endforeach; ?>
+  </ul>
+<?php else: ?>
+  <p>Le projet n'est assigné à aucun contacts.</p>
 <?php endif; ?>
 
 <?php

@@ -36,10 +36,10 @@ class Cron extends CI_Controller
     $q = $this->db->get($table);
     if ($q->num_rows() > 0) {
       $this->db->where($idField, $id);
-      $this->db->update($table, (object) $data);
+      $this->db->update($table, $data);
     } else {
       $this->db->set($idField, $id);
-      $this->db->insert($table, (object) $data);
+      $this->db->insert($table, $data);
     }
   }
 

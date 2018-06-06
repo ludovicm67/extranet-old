@@ -18,7 +18,7 @@ class Tags extends CI_Controller
       redirect('/tags', 'refresh');
     }
     $tag = $q->result()[0];
-    $this->load->view('tags/show', ['tag' => (object) ['name' => $tag->name]]);
+    $this->load->view('tags/show', ['tag' => ['name' => $tag->name]]);
   }
 
   public function delete($id)
@@ -49,7 +49,7 @@ class Tags extends CI_Controller
       if ($q->num_rows() > 0) {
         $this->session->set_flashdata('error', 'Le tag existe déjà !');
       } else {
-        $this->db->insert('tags', (object) ['name' => $tagName]);
+        $this->db->insert('tags', ['name' => $tagName]);
         $this->session->set_flashdata(
           'success',
           'Le tag a bien été créé avec succès !'
