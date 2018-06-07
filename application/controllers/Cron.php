@@ -19,10 +19,10 @@ class Cron extends CI_Controller
 
     $sellsy = new Sellsy(
       'https://apifeed.sellsy.com/0/',
-      $this->config->item('api')['ACCESS_TOKEN'],
-      $this->config->item('api')['ACCESS_TOKEN_SECRET'],
-      $this->config->item('api')['API_SELLSY_CONSUMER_TOKEN'],
-      $this->config->item('api')['API_SELLSY_CONSUMER_SECRET']
+      $this->db->dc->getConfValueDefault('access_token', 'sellsy'),
+      $this->db->dc->getConfValueDefault('access_token_secret', 'sellsy'),
+      $this->db->dc->getConfValueDefault('consumer_token', 'sellsy'),
+      $this->db->dc->getConfValueDefault('consumer_token_secret', 'sellsy')
     );
 
     $sellsy->setTransport($transportBridge);
@@ -1121,19 +1121,6 @@ class Cron extends CI_Controller
       }
       // var_dump($invoicesRequest);
     } while ($pagenum++ < $nbpages);
-
-    echo json_encode(['success' => true]);
-  }
-
-  public function all()
-  {
-    ob_start();
-    $this->init_database();
-    $this->sellsy_clients();
-    $this->sellsy_contacts();
-    $this->sellsy_orders();
-    $this->sellsy_invoices();
-    ob_end_clean();
 
     echo json_encode(['success' => true]);
   }

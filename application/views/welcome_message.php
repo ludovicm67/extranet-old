@@ -17,7 +17,6 @@ ob_start();
 
 <h2>Pages à appeler depuis des tâches cron</h2>
 <ul>
-  <li><a href="/cron/all" target="_blank">/cron/all</a> : à appeler pour lancer toutes les tâches suivantes en une fois</li>
   <li><a href="/cron/init_database" target="_blank">/cron/init_database</a> : à appeler pour générer la base de données (créer l'ensemble des tables requises; ne supprime rien)</li>
   <li><a href="/cron/sellsy_clients" target="_blank">/cron/sellsy_clients</a> : à appeler pour récupérer l'ensemble des clients avec leurs contacts associés</li>
   <li><a href="/cron/sellsy_contacts" target="_blank">/cron/sellsy_contacts</a> : à appeler pour mettre à jour les informations sur l'ensemble des contacts</li>

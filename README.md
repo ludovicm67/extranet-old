@@ -3,7 +3,7 @@ Extranet
 
 Site réalisé avec CodeIgniter (https://www.codeigniter.com/).
 
-Ce site nécessite une version de PHP supérieure ou égale à 7.0.
+Ce site nécessite une version de PHP supérieure ou égale à 7.1.
 
 ## Mise en route
 
@@ -14,11 +14,11 @@ Il faudra également mettre à jour les informations de la base de donnée, en
 éditant le fichier `application/config/database.php`.
 
 Une fois cela fait, il ne restera plus qu'à copier le fichier
-`application/config/api.example.php` en `application/config/api.php`, et de
-compléter le fichier avec les clés d'API.
+`config.example.yml` en `config.yml`, et de compléter le fichier avec les
+domaines supportés et les clés d'API.
 
-Pour lancer le site, un simple coup de `make serve` depuis un système linux
-lancera un serveur de développement sur http://localhost:8008.
+Pour lancer le site en local, un simple coup de `make serve` depuis un système
+linux lancera un serveur de développement sur http://localhost:8008.
 
 Lors du déploiement du site, il faudra configurer nginx ou Apache pour servir
 le dossier `public` uniquement.

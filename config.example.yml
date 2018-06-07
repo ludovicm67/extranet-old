@@ -1,4 +1,14 @@
 site_title: My website
-fallback_utl: http://localhost/
+fallback_url: http://localhost/
 supported_domains:
-  - localhost
+  localhost:
+    database:
+      hostname: localhost
+      username: root
+      password:
+      database:
+    sellsy:
+      access_token:
+      access_token_secret:
+      consumer_token:
+      consumer_token_secret:

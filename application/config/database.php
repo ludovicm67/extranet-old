@@ -73,36 +73,89 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = true;
 
-
 $configurationFile = ROOTPATH . 'config.yml';
 if (!file_exists($configurationFile)) {
   die('Please copy the config.example.yml file to config.yml');
 }
 
-$value = Symfony\Component\Yaml\Yaml::parseFile($configurationFile);
-var_dump($value);
-die();
-// header("Refresh:0; url=http://adipso.com");
-// die();
+$configValues = Symfony\Component\Yaml\Yaml::parseFile($configurationFile);
 
-$db['default'] = array(
+// are some supported domains defined?
+if (
+  !isset($configValues['supported_domains']) ||
+  count($configValues['supported_domains']) <= 0
+) {
+  die('No supported domains defined in config.yml file');
+}
+
+$askedHost = explode(':', $_SERVER['HTTP_HOST'])[0];
+
+// check if host is defined in configuration file
+if (!in_array($askedHost, array_keys($configValues['supported_domains']))) {
+  if (
+    !isset($configValues['fallback_url']) ||
+    empty($configValues['fallback_url'])
+  ) {
+    die('This domain is not configured for the moment.');
+  } else {
+    header('Refresh:0; url=' . $configValues['fallback_url']);
+  }
+}
+
+class DomainConfig
+{
+  private $conf;
+
+  public function __construct($conf = [])
+  {
+    $this->conf = $conf;
+  }
+
+  public function getConfValue($key, $item = null)
+  {
+    if (!is_null($item)) {
+      $i = $this->getConfValue($item);
+      if (!isset($i[$key])) {
+        return null;
+      }
+      return $i[$key];
+    }
+    if (!isset($this->conf[$key])) {
+      return null;
+    }
+    return $this->conf[$key];
+  }
+
+  public function getConfValueDefault($key, $item = null, $default = '')
+  {
+    $val = $this->getConfValue($key, $item);
+    if (is_null($val)) {
+      return $default;
+    }
+    return $val;
+  }
+}
+$dc = new DomainConfig($configValues['supported_domains'][$askedHost]);
+
+$db['default'] = [
+  'dc' => $dc,
   'dsn' => '',
-  'hostname' => 'localhost',
-  'username' => 'adipso',
-  'password' => 'adipso',
-  'database' => 'adipso',
+  'hostname' => $dc->getConfValueDefault('hostname', 'database'),
+  'username' => $dc->getConfValueDefault('username', 'database'),
+  'password' => $dc->getConfValueDefault('password', 'database'),
+  'database' => $dc->getConfValueDefault('database', 'database'),
   'dbdriver' => 'mysqli',
   'dbprefix' => '',
   'pconnect' => false,
   'db_debug' => (ENVIRONMENT !== 'production'),
   'cache_on' => false,
   'cachedir' => '',
-  'char_set' => 'utf8',
-  'dbcollat' => 'utf8_general_ci',
+  'char_set' => 'utf8mb4',
+  'dbcollat' => 'utf8mb4_general_ci',
   'swap_pre' => '',
   'encrypt' => false,
   'compress' => false,
   'stricton' => false,
-  'failover' => array(),
+  'failover' => [],
   'save_queries' => true
-);
+];
