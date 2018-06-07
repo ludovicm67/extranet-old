@@ -27,10 +27,12 @@ class Projects extends CI_Controller
       $project->client = $clientDB[0];
     }
 
-    $this->db->select('*, contacts.name AS name, types.name AS type');
+    $this->db->select(
+      '*, contacts.id AS id, contacts.name AS name, types.name AS type'
+    );
     $this->db->from('project_contacts');
     $this->db->join('contacts', 'contacts.id = project_contacts.contact_id');
-    $this->db->join('types', 'types.id = contacts.type_id');
+    $this->db->join('types', 'types.id = contacts.type_id', 'left');
     $this->db->where('project_id', $project->id);
     $project->contacts = $this->db->get()->result();
 

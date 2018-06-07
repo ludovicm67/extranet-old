@@ -105,6 +105,6 @@ class Identifiers extends CI_Controller
     }
     $project = $q->result()[0];
 
-    var_dump($project);
+    $this->load->view('identifiers/show', ['project' => $project]);
   }
 }

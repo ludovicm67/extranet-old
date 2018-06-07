@@ -19,6 +19,24 @@ class Contacts extends CI_Controller
     }
     $contact = $q->result()[0];
 
+    $this->db->select(
+      '*, contacts.id AS id, contacts.name AS name, types.name AS type'
+    );
+    $this->db->from('contacts');
+    $this->db->join('types', 'types.id = contacts.type_id', 'left');
+    $this->db->where('contacts.id', $id);
+    $contact = $this->db->get()->result()[0];
+
+    $this->db->select('*');
+    $this->db->from('project_contacts');
+    $this->db->join('projects', 'projects.id = project_contacts.project_id');
+    $value = $this->input->get('value');
+    if (isset($_GET['value'])) {
+      $this->db->where('value', $value);
+    }
+    $this->db->where('contact_id', $contact->id);
+    $contact->projects = $this->db->get()->result();
+
     $this->load->view('contacts/show', ['contact' => $contact]);
   }
 

@@ -30,22 +30,12 @@ ob_start();
 <?php if (!empty($project->contacts)): ?>
   <ul>
     <?php foreach ($project->contacts as $contact): ?>
-    <li>
-      <ul>
-        <?php if (!empty($contact->name)): ?>
-          <li><strong>Nom complet :</strong> <?php echo $contact->name; ?></li>
-        <?php endif; ?>
-        <?php if (!empty($contact->mail)): ?>
-          <li><strong>Email :</strong> <?php echo $contact->mail; ?></li>
-        <?php endif; ?>
-        <?php if (!empty($contact->phone)): ?>
-          <li><strong>Téléphone :</strong> <?php echo $contact->phone; ?></li>
-        <?php endif; ?>
-        <?php if (!empty($contact->type)): ?>
-          <li><strong>Type de contact :</strong> <?php echo $contact->type; ?></li>
-        <?php endif; ?>
-      </ul>
-    </li>
+      <li>
+        <a href="/contact/<?php echo $contact->id; ?>">
+          <?php echo $contact->name; ?>
+          <?php echo (!empty($contact->type)) ? ' (' . $contact->type . ')' : ''; ?>
+        </a>
+      </li>
     <?php endforeach; ?>
   </ul>
 <?php else: ?>

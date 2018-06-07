@@ -12,14 +12,24 @@ ob_start();
 
 <h2>Informations générales</h2>
 <ul>
-  <?php if (!empty($contact->name)): ?>
-    <li><strong>Nom :</strong> <?php echo $contact->name; ?></li>
+  <?php if (!empty($contact->type)): ?>
+    <li><strong>Type :</strong> <?php echo $contact->type; ?></li>
   <?php endif; ?>
   <?php if (!empty($contact->mail)): ?>
-    <li><strong>Adresse mail :</strong> <?php echo $contact->mail; ?></li>
+    <li>
+      <strong>Adresse mail :</strong>
+      <a href="mailto:<?php echo htmlspecialchars($contact->mail); ?>">
+        <?php echo $contact->mail; ?>
+      </a>
+    </li>
   <?php endif; ?>
   <?php if (!empty($contact->phone)): ?>
-    <li><strong>Téléphone :</strong> <?php echo $contact->phone; ?></li>
+    <li>
+      <strong>Téléphone :</strong>
+      <a href="tel:<?php echo htmlspecialchars($contact->phone); ?>">
+        <?php echo $contact->phone; ?>
+      </a>
+    </li>
   <?php endif; ?>
   <?php if (!empty($contact->address)): ?>
     <li><strong>Adresse :</strong> <?php echo $contact->address; ?></li>
@@ -33,6 +43,13 @@ ob_start();
 </ul>
 
 <h2>Projets dans lequel ce contact est impliqué</h2>
+<ul>
+  <?php foreach ($contact->projects as $project): ?>
+  <li>
+    <a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a>
+  </li>
+<?php endforeach; ?>
+</ul>
 
 <?php
 $content = ob_get_clean();
