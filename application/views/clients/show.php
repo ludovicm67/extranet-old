@@ -60,6 +60,7 @@ ob_start();
       <li><strong>Sujet :</strong> <?php echo $invoice->subject; ?></li>
       <li><strong>Statut :</strong> <span style="color: <?php echo $invoice->step_hex; ?>;"><?php echo $invoice->step_label; ?></span></li>
       <li><strong>Montant total :</strong> <?php echo $invoice->formatted_totalAmount; ?></li>
+      <li><strong>Reste à payer :</strong> <?php echo $invoice->formatted_dueAmount; ?></li>
       <li><strong>Contact :</strong> <?php echo $invoice->contactName; ?></li>
     </ul>
   </li>

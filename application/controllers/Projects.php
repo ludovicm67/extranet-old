@@ -46,6 +46,8 @@ class Projects extends CI_Controller
     foreach ($ordersDB as $o) {
       $orders[$o->sellsy_id] = $o;
       $orders[$o->sellsy_id]->invoices = [];
+      $orders[$o->sellsy_id]->remainingOrderAmount = floatval($o->totalAmount);
+      $orders[$o->sellsy_id]->remainingDueAmount = 0;
     }
 
     $ordersIds = array_keys($orders);
@@ -60,6 +62,12 @@ class Projects extends CI_Controller
           continue;
         }
         $orders[$invoice->parentid]->invoices[] = $invoice;
+        $orders[$invoice->parentid]->remainingOrderAmount -= floatval(
+          $invoice->totalAmount
+        );
+        $orders[$invoice->parentid]->remainingDueAmount += floatval(
+          $invoice->dueAmount
+        );
       }
     }
 

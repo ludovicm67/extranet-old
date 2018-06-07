@@ -53,10 +53,26 @@ ob_start();
 
 <h2>Commandes pour ce projet</h2>
 <?php if (!empty($project->orders)): ?>
-  <ul>
-    <?php foreach ($project->orders as $order): ?>
-    <li>
-      <ul>
+<div id="accordion">
+  <?php foreach ($project->orders as $order): ?>
+  <div class="card">
+    <div class="card-header" id="heading<?php echo $order->id; ?>">
+      <h5 class="mb-0">
+        <button class="btn btn-light" data-toggle="collapse" data-target="#collapse<?php echo $order->id; ?>" aria-expanded="false" aria-controls="collapse<?php echo $order->id; ?>">
+          <?php echo $order->subject; ?>
+        </button>
+        <span class="float-right" style="color: <?php echo $order->step_hex; ?>;">
+          <?php echo number_format($order->remainingOrderAmount, 2, ',', ' ') . ' ' . $order->currencysymbol; ?>
+          <?php if ($order->remainingDueAmount > 0): ?>
+            + <?php echo number_format($order->remainingDueAmount, 2, ',', ' ') . ' ' . $order->currencysymbol; ?> en attente de paiement
+          <?php endif; ?>
+        </span>
+      </h5>
+    </div>
+
+    <div id="collapse<?php echo $order->id; ?>" class="collapse" aria-labelledby="heading<?php echo $order->id; ?>" data-parent="#accordion">
+      <div class="card-body">
+        <ul>
         <li><strong>Client :</strong> <?php echo $order->thirdname; ?></li>
         <li><strong>Sujet :</strong> <?php echo $order->subject; ?></li>
         <li><strong>Statut :</strong> <span style="color: <?php echo $order->step_hex; ?>;"><?php echo $order->step_label; ?></span></li>
@@ -71,6 +87,7 @@ ob_start();
                 <li><strong>Sujet :</strong> <?php echo $invoice->subject; ?></li>
                 <li><strong>Statut :</strong> <span style="color: <?php echo $invoice->step_hex; ?>;"><?php echo $invoice->step_label; ?></span></li>
                 <li><strong>Montant total :</strong> <?php echo $invoice->formatted_totalAmount; ?></li>
+                <li><strong>Reste à payer :</strong> <?php echo $invoice->formatted_dueAmount; ?></li>
                 <li><strong>Contact :</strong> <?php echo $invoice->contactName; ?></li>
               </ul>
             </li>
@@ -78,9 +95,12 @@ ob_start();
           </ul>
         </li>
       </ul>
-    </li>
-    <?php endforeach; ?>
-  </ul>
+      </div>
+    </div>
+  </div>
+  <?php endforeach; ?>
+</div>
+
 <?php else: ?>
   <p>Le projet n'est assigné à aucune commande.</p>
 <?php endif; ?>
