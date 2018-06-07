@@ -16,7 +16,7 @@ ob_start();
   <tbody>
     <?php foreach ($types as $type): ?>
     <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($type->name)); ?>">
-      <td><a href="/type/<?php echo $type->id; ?>"><?php echo $type->name; ?></a></td>
+      <td><?php echo $type->name; ?></td>
       <td>
         <a href="/type/edit/<?php echo $type->id; ?>">Modifier</a>
         -

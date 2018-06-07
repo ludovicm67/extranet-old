@@ -57,7 +57,6 @@ $route['client/(:num)'] = "clients/show/$1";
 $route['tag/(:num)'] = "tags/show/$1";
 $route['tag/edit/(:num)'] = "tags/edit/$1";
 $route['tag/delete/(:num)'] = "tags/delete/$1";
-$route['type/(:num)'] = "types/show/$1";
 $route['type/edit/(:num)'] = "types/edit/$1";
 $route['type/delete/(:num)'] = "types/delete/$1";
 $route['contact/(:num)'] = "contacts/show/$1";

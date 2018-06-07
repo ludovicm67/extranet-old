@@ -10,18 +10,6 @@ class Types extends CI_Controller
     $this->load->view('types/list', ['types' => $types]);
   }
 
-  public function show($id)
-  {
-    $this->db->where('id', $id);
-    $q = $this->db->get('types');
-    if ($q->num_rows() <= 0) {
-      redirect('/types', 'refresh');
-    }
-    $type = $q->result()[0];
-
-    $this->load->view('types/show', ['type' => $type]);
-  }
-
   public function delete($id)
   {
     $this->db->where('id', $id);
