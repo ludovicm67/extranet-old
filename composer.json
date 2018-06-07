@@ -13,7 +13,8 @@
 	"require": {
 		"php": ">=7.0.0",
 		"teknoo/sellsy-client": "^2.0",
-		"guzzlehttp/guzzle": "^6.3"
+		"guzzlehttp/guzzle": "^6.3",
+		"symfony/yaml": "^4.1"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

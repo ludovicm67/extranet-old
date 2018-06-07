@@ -1,0 +1,4 @@
+site_title: My website
+fallback_utl: http://localhost/
+supported_domains:
+  - localhost

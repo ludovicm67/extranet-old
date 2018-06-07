@@ -73,6 +73,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = true;
 
+
+$configurationFile = ROOTPATH . 'config.yml';
+if (!file_exists($configurationFile)) {
+  die('Please copy the config.example.yml file to config.yml');
+}
+
+$value = Symfony\Component\Yaml\Yaml::parseFile($configurationFile);
+var_dump($value);
+die();
+// header("Refresh:0; url=http://adipso.com");
+// die();
+
 $db['default'] = array(
   'dsn' => '',
   'hostname' => 'localhost',
