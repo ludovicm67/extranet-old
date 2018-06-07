@@ -16,7 +16,7 @@ ob_start();
   <tbody>
     <?php foreach ($identifiers as $identifier): ?>
     <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($identifier->name)); ?>">
-      <td><a href="/identifier/<?php echo $identifier->id; ?>"><?php echo $identifier->name; ?></a></td>
+      <td><?php echo $identifier->name; ?></td>
       <td>
         <a href="/identifier/edit/<?php echo $identifier->id; ?>">Modifier</a>
         -

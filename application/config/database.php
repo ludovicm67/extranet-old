@@ -98,7 +98,8 @@ if (!in_array($askedHost, array_keys($configValues['supported_domains']))) {
   ) {
     die('This domain is not configured for the moment.');
   } else {
-    header('Refresh:0; url=' . $configValues['fallback_url']);
+    header('Location: ' . $configValues['fallback_url']);
+    die();
   }
 }
 

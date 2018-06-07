@@ -5,6 +5,7 @@ ob_start();
 
 <h1 class="mt-5">
   <?php echo $project->name; ?>
+  <a class="btn btn-outline-primary" href="/identifiers/show/<?php echo $project->id; ?>" role="button">Identifiants</a>
   <a class="btn btn-outline-primary" href="/project/edit/<?php echo $project->id; ?>" role="button">Modifier</a>
   <a class="btn btn-outline-danger" href="/project/delete/<?php echo $project->id; ?>" role="button">Supprimer</a>
 </h1>
