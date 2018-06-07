@@ -25,17 +25,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <li class="nav-item">
               <a class="nav-link" href="/clients">Clients</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/projects">Projets</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Projets</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/projects">Liste</a>
+                <a class="dropdown-item" href="/tags">Tags</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/identifiers">Types d'identifiants</a>
+              </div>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contacts">Contacts</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/tags">Tags</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/types">Types</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Contacts</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/contacts">Liste</a>
+                <a class="dropdown-item" href="/types">Types</a>
+              </div>
             </li>
           </ul>
         </div>
