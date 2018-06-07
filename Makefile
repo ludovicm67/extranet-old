@@ -7,3 +7,7 @@ format:
 serve:
 	@echo 'Homepage URL: http://localhost:8008'
 	php -S 0.0.0.0:8008 -t ./public/
+
+.PHONY: deploy
+deploy:
+	composer install
