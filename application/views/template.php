@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-<title>Adipso</title>
+<title><?php echo $this->db->gc->getConfValueDefault('site_name', null, 'Gestion'); ?></title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 <link rel="stylesheet" href="/css/style.css">
@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="/">Adipso</a>
+        <a class="navbar-brand" href="/"><?php echo $this->db->gc->getConfValueDefault('site_name', null, 'Gestion'); ?></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>

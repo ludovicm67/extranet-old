@@ -1,4 +1,4 @@
-site_title: My website
+site_name: Gestion
 fallback_url: http://localhost/
 supported_domains:
   localhost:

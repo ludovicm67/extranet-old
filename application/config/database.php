@@ -102,7 +102,7 @@ if (!in_array($askedHost, array_keys($configValues['supported_domains']))) {
   }
 }
 
-class DomainConfig
+class ConfigHelper
 {
   private $conf;
 
@@ -135,10 +135,14 @@ class DomainConfig
     return $val;
   }
 }
-$dc = new DomainConfig($configValues['supported_domains'][$askedHost]);
+// domain configuration
+$dc = new ConfigHelper($configValues['supported_domains'][$askedHost]);
+// global configuration
+$gc = new ConfigHelper($configValues);
 
 $db['default'] = [
   'dc' => $dc,
+  'gc' => $gc,
   'dsn' => '',
   'hostname' => $dc->getConfValueDefault('hostname', 'database'),
   'username' => $dc->getConfValueDefault('username', 'database'),
