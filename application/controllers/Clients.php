@@ -27,12 +27,41 @@ class Clients extends CI_Controller
     $client->contacts = $this->db
       ->get_where('sellsy_contacts', ['thirdid' => $client->sellsy_id])
       ->result();
-    $client->orders = $this->db
+    $ordersDB = $this->db
       ->get_where('sellsy_orders', ['thirdid' => $client->sellsy_id])
       ->result();
-    $client->invoices = $this->db
-      ->get_where('sellsy_invoices', ['thirdid' => $client->sellsy_id])
-      ->result();
+
+    $orders = [];
+    foreach ($ordersDB as $o) {
+      $orders[$o->sellsy_id] = $o;
+      $orders[$o->sellsy_id]->invoices = [];
+      $orders[$o->sellsy_id]->remainingOrderAmount = floatval($o->totalAmount);
+      $orders[$o->sellsy_id]->remainingDueAmount = 0;
+    }
+
+    $ordersIds = array_keys($orders);
+
+    if (count($ordersIds) > 0) {
+      $invoices = $this->db
+        ->where_in('parentid', $ordersIds)
+        ->get('sellsy_invoices')
+        ->result();
+      foreach ($invoices as $invoice) {
+        if (!isset($orders[$invoice->parentid])) {
+          continue;
+        }
+        $orders[$invoice->parentid]->invoices[] = $invoice;
+        $orders[$invoice->parentid]->remainingOrderAmount -= floatval(
+          $invoice->totalAmount
+        );
+        $orders[$invoice->parentid]->remainingDueAmount += floatval(
+          $invoice->dueAmount
+        );
+      }
+    }
+
+    $client->orders = $orders;
+
     $client->projects = $this->db
       ->get_where('projects', ['client_id' => $client->id])
       ->result();
