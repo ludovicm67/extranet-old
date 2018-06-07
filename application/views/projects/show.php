@@ -62,6 +62,21 @@ ob_start();
         <li><strong>Statut :</strong> <span style="color: <?php echo $order->step_hex; ?>;"><?php echo $order->step_label; ?></span></li>
         <li><strong>Montant total :</strong> <?php echo $order->formatted_totalAmount; ?></li>
         <li><strong>Contact :</strong> <?php echo $order->contactName; ?></li>
+        <li>
+          <p><strong>Factures associées :</strong></p>
+          <ul>
+            <?php foreach ($order->invoices as $invoice): ?>
+            <li>
+              <ul>
+                <li><strong>Sujet :</strong> <?php echo $invoice->subject; ?></li>
+                <li><strong>Statut :</strong> <span style="color: <?php echo $invoice->step_hex; ?>;"><?php echo $invoice->step_label; ?></span></li>
+                <li><strong>Montant total :</strong> <?php echo $invoice->formatted_totalAmount; ?></li>
+                <li><strong>Contact :</strong> <?php echo $invoice->contactName; ?></li>
+              </ul>
+            </li>
+            <?php endforeach; ?>
+          </ul>
+        </li>
       </ul>
     </li>
     <?php endforeach; ?>

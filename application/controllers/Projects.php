@@ -41,7 +41,29 @@ class Projects extends CI_Controller
       'sellsy_orders.id = project_orders.order_id'
     );
     $this->db->where('project_id', $project->id);
-    $project->orders = $this->db->get()->result();
+    $ordersDB = $this->db->get()->result();
+    $orders = [];
+    foreach ($ordersDB as $o) {
+      $orders[$o->sellsy_id] = $o;
+      $orders[$o->sellsy_id]->invoices = [];
+    }
+
+    $ordersIds = array_keys($orders);
+
+    if (count($ordersIds) > 0) {
+      $invoices = $this->db
+        ->where_in('parentid', $ordersIds)
+        ->get('sellsy_invoices')
+        ->result();
+      foreach ($invoices as $invoice) {
+        if (!isset($orders[$invoice->parentid])) {
+          continue;
+        }
+        $orders[$invoice->parentid]->invoices[] = $invoice;
+      }
+    }
+
+    $project->orders = $orders;
 
     $this->db->select('*');
     $this->db->from('project_tags');
