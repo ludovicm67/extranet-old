@@ -27,12 +27,10 @@ class Projects extends CI_Controller
       $project->client = $clientDB[0];
     }
 
-    $this->db->select('*');
+    $this->db->select('*, contacts.name AS name, types.name AS type');
     $this->db->from('project_contacts');
-    $this->db->join(
-      'sellsy_contacts',
-      'sellsy_contacts.id = project_contacts.contact_id'
-    );
+    $this->db->join('contacts', 'contacts.id = project_contacts.contact_id');
+    $this->db->join('types', 'types.id = contacts.type_id');
     $this->db->where('project_id', $project->id);
     $project->contacts = $this->db->get()->result();
 
@@ -139,8 +137,8 @@ class Projects extends CI_Controller
     $this->db->select(['id', 'fullName']);
     $clients = $this->db->get('sellsy_clients')->result();
 
-    $this->db->select(['id', 'fullName']);
-    $contacts = $this->db->get('sellsy_contacts')->result();
+    $this->db->select(['id', 'name']);
+    $contacts = $this->db->get('contacts')->result();
 
     $this->db->select(['id', 'thirdname', 'subject']);
     $orders = $this->db->get('sellsy_orders')->result();
@@ -266,8 +264,8 @@ class Projects extends CI_Controller
     $this->db->select(['id', 'fullName']);
     $clients = $this->db->get('sellsy_clients')->result();
 
-    $this->db->select(['id', 'fullName']);
-    $contacts = $this->db->get('sellsy_contacts')->result();
+    $this->db->select(['id', 'name']);
+    $contacts = $this->db->get('contacts')->result();
 
     $this->db->select(['id', 'thirdname', 'subject']);
     $orders = $this->db->get('sellsy_orders')->result();

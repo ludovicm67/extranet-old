@@ -31,7 +31,7 @@ ob_start();
     <div class="col-sm-10">
       <select class="form-control" name="contacts[]" id="projectContact" multiple="multiple">
         <?php foreach ($contacts as $contact): ?>
-        <option value="<?php echo $contact->id; ?>"><?php echo $contact->fullName; ?></option>
+        <option value="<?php echo $contact->id; ?>"><?php echo $contact->name; ?></option>
         <?php endforeach; ?>
       </select>
     </div>

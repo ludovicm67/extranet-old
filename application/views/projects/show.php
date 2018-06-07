@@ -31,20 +31,17 @@ ob_start();
     <?php foreach ($project->contacts as $contact): ?>
     <li>
       <ul>
-        <?php if (!empty($contact->fullName)): ?>
-          <li><strong>Nom complet :</strong> <?php echo $contact->fullName; ?></li>
+        <?php if (!empty($contact->name)): ?>
+          <li><strong>Nom complet :</strong> <?php echo $contact->name; ?></li>
         <?php endif; ?>
-        <?php if (!empty($contact->email)): ?>
-          <li><strong>Email :</strong> <?php echo $contact->email; ?></li>
+        <?php if (!empty($contact->mail)): ?>
+          <li><strong>Email :</strong> <?php echo $contact->mail; ?></li>
         <?php endif; ?>
-        <?php if (!empty($contact->tel)): ?>
-          <li><strong>Téléphone :</strong> <?php echo $contact->tel; ?></li>
+        <?php if (!empty($contact->phone)): ?>
+          <li><strong>Téléphone :</strong> <?php echo $contact->phone; ?></li>
         <?php endif; ?>
-        <?php if (!empty($contact->mobile)): ?>
-          <li><strong>Mobile :</strong> <?php echo $contact->mobile; ?></li>
-        <?php endif; ?>
-        <?php if (!empty($contact->position)): ?>
-          <li><strong>Position :</strong> <?php echo $contact->position; ?></li>
+        <?php if (!empty($contact->type)): ?>
+          <li><strong>Type de contact :</strong> <?php echo $contact->type; ?></li>
         <?php endif; ?>
       </ul>
     </li>

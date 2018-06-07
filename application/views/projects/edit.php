@@ -32,7 +32,7 @@ ob_start();
       <select class="form-control" name="contacts[]" id="projectContact" multiple="multiple">
         <?php foreach ($contacts as $contact): ?>
         <option value="<?php echo $contact->id; ?>"<?php echo (in_array($contact->id, $project->contacts)) ? ' selected="selected"' : ''; ?>>
-          <?php echo $contact->fullName; ?>
+          <?php echo $contact->name; ?>
         </option>
         <?php endforeach; ?>
       </select>
