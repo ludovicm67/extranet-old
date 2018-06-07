@@ -59,4 +59,19 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   FOREIGN KEY (`type_id`) REFERENCES types(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE IF NOT EXISTS `identifiers` (
+  `id` int (11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) UNIQUE,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `project_identifiers` (
+  `id` int (11) NOT NULL AUTO_INCREMENT,
+  `identifier_id` int(11),
+  `value` text,
+  `confidential` tinyint(1),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`identifier_id`) REFERENCES identifiers(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;
