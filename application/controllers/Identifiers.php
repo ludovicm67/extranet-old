@@ -107,4 +107,23 @@ class Identifiers extends CI_Controller
 
     $this->load->view('identifiers/show', ['project' => $project]);
   }
+
+  public function assign($id)
+  {
+    $this->db->where('id', $id);
+    $q = $this->db->get('projects');
+    if ($q->num_rows() <= 0) {
+      redirect('/identifiers', 'refresh');
+    }
+    $project = $q->result()[0];
+
+
+    $this->db->select(['id', 'name']);
+    $identifiers = $this->db->get('identifiers')->result();
+
+    $this->load->view('identifiers/assign', [
+      'project' => $project,
+      'identifiers' => $identifiers
+    ]);
+  }
 }
