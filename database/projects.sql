@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `name` varchar(255),
   `client_id` int (11),
   PRIMARY KEY (`id`),
-  FOREIGN KEY (client_id) REFERENCES sellsy_clients(id)
+  FOREIGN KEY (client_id) REFERENCES sellsy_clients(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `tags` (
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `address` varchar(255),
   `other` text,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`type_id`) REFERENCES types(id)
+  FOREIGN KEY (`type_id`) REFERENCES types(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `identifiers` (
@@ -67,11 +67,13 @@ CREATE TABLE IF NOT EXISTS `identifiers` (
 
 CREATE TABLE IF NOT EXISTS `project_identifiers` (
   `id` int (11) NOT NULL AUTO_INCREMENT,
+  `project_id` int(11),
   `identifier_id` int(11),
   `value` text,
   `confidential` tinyint(1),
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`identifier_id`) REFERENCES identifiers(id)
+  FOREIGN KEY (`project_id`) REFERENCES projects(id) ON DELETE CASCADE,
+  FOREIGN KEY (`identifier_id`) REFERENCES identifiers(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 COMMIT;
