@@ -10,27 +10,21 @@ class Identifiers extends CI_Controller
     $this->load->view('identifiers/list', ['identifiers' => $identifiers]);
   }
 
-  public function show($id)
-  {
-    $this->db->where('id', $id);
-    $q = $this->db->get('identifiers');
-    if ($q->num_rows() <= 0) {
-      redirect('/identifiers', 'refresh');
-    }
-    $identifier = $q->result()[0];
-
-    $this->load->view('identifiers/show', ['identifier' => $identifier]);
-  }
-
   public function delete($id)
   {
     $this->db->where('id', $id);
     $q = $this->db->get('identifiers');
     if ($q->num_rows() > 0) {
       $this->db->delete('identifiers', ['id' => $id]);
-      $this->session->set_flashdata('success', "Le type d'identifiant a bien été supprimé !");
+      $this->session->set_flashdata(
+        'success',
+        "Le type d'identifiant a bien été supprimé !"
+      );
     } else {
-      $this->session->set_flashdata('error', "Le type d'indentifiant n'existe pas.");
+      $this->session->set_flashdata(
+        'error',
+        "Le type d'indentifiant n'existe pas."
+      );
     }
     redirect('/identifiers', 'refresh');
   }
@@ -47,7 +41,10 @@ class Identifiers extends CI_Controller
       $this->db->where('name', $identifierName);
       $q = $this->db->get('identifiers');
       if ($q->num_rows() > 0) {
-        $this->session->set_flashdata('error', "Le type d'indentifiant existe déjà !");
+        $this->session->set_flashdata(
+          'error',
+          "Le type d'indentifiant existe déjà !"
+        );
       } else {
         $this->db->insert('identifiers', ['name' => $identifierName]);
         $this->session->set_flashdata(

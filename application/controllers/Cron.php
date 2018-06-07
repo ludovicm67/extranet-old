@@ -1125,7 +1125,8 @@ class Cron extends CI_Controller
     echo json_encode(['success' => true]);
   }
 
-  public function all() {
+  public function all()
+  {
     ob_start();
     $this->init_database();
     $this->sellsy_clients();
