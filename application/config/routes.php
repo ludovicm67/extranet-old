@@ -53,6 +53,7 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = false;
 
+$route['logout'] = "welcome/logout";
 $route['client/(:num)'] = "clients/show/$1";
 $route['tag/(:num)'] = "tags/show/$1";
 $route['tag/edit/(:num)'] = "tags/edit/$1";

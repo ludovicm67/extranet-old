@@ -5,10 +5,15 @@ use Teknoo\Sellsy\Sellsy;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Welcome extends MY_Controller
+class Welcome extends MY_AuthController
 {
   public function index()
   {
     $this->load->view('welcome_message');
+  }
+
+  public function logout()
+  {
+    $this->userLogout();
   }
 }

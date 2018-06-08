@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Clients extends MY_Controller
+class Clients extends MY_AuthController
 {
   public function index()
   {
