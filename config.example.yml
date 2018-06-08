@@ -1,7 +1,7 @@
-site_name: Gestion
 fallback_url: http://localhost/
 supported_domains:
   localhost:
+    site_name: Gestion
     database:
       hostname: localhost
       username: root

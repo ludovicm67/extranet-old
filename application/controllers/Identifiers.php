@@ -117,7 +117,6 @@ class Identifiers extends CI_Controller
     }
     $project = $q->result()[0];
 
-
     $this->db->select(['id', 'name']);
     $identifiers = $this->db->get('identifiers')->result();
 

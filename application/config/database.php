@@ -138,12 +138,9 @@ class ConfigHelper
 }
 // domain configuration
 $dc = new ConfigHelper($configValues['supported_domains'][$askedHost]);
-// global configuration
-$gc = new ConfigHelper($configValues);
 
 $db['default'] = [
   'dc' => $dc,
-  'gc' => $gc,
   'dsn' => '',
   'hostname' => $dc->getConfValueDefault('hostname', 'database'),
   'username' => $dc->getConfValueDefault('username', 'database'),
