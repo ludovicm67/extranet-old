@@ -105,7 +105,16 @@ class Identifiers extends CI_Controller
     }
     $project = $q->result()[0];
 
-    $this->load->view('identifiers/show', ['project' => $project]);
+    $this->db->select('*, project_identifiers.id AS id, identifiers.name AS type');
+    $this->db->join('identifiers', 'identifiers.id = project_identifiers.identifier_id', 'left');
+    $identifiers = $this->db->get_where('project_identifiers', [
+      'project_id' => $id
+    ])->result();
+
+    $this->load->view('identifiers/show', [
+      'project' => $project,
+      'identifiers' => $identifiers
+    ]);
   }
 
   public function assign($id)
@@ -113,9 +122,28 @@ class Identifiers extends CI_Controller
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
     if ($q->num_rows() <= 0) {
-      redirect('/identifiers', 'refresh');
+      redirect('/projects', 'refresh');
     }
     $project = $q->result()[0];
+
+    // if form was submitted
+    if (count($_POST) > 0) {
+      $type = ($this->input->post('type') == 0) ? null : $this->input->post('type');
+      $value = htmlspecialchars(trim($this->input->post('value')));
+      $confidential = (empty($this->input->post('confidential'))) ? 0 : 1;
+
+      $this->db->insert('project_identifiers', [
+        'project_id' => $id,
+        'identifier_id' => $type,
+        'value' => $value,
+        'confidential' => $confidential
+      ]);
+      $this->session->set_flashdata(
+        'success',
+        "L'identifiant a bien été ajouté avec succès !"
+      );
+      redirect('/identifiers/show/' . $id, 'refresh');
+    }
 
     $this->db->select(['id', 'name']);
     $identifiers = $this->db->get('identifiers')->result();
@@ -124,5 +152,70 @@ class Identifiers extends CI_Controller
       'project' => $project,
       'identifiers' => $identifiers
     ]);
+  }
+
+  public function project_edit($id)
+  {
+    $this->db->where('id', $id);
+    $q = $this->db->get('project_identifiers');
+    if ($q->num_rows() <= 0) {
+      redirect('/projects', 'refresh');
+    }
+    $ident = $q->result()[0];
+
+    $this->db->where('id', $ident->project_id);
+    $q = $this->db->get('projects');
+    if ($q->num_rows() <= 0) {
+      redirect('/projects', 'refresh');
+    }
+    $project = $q->result()[0];
+
+    // if form was submitted
+    if (count($_POST) > 0) {
+      $type = ($this->input->post('type') == 0) ? null : $this->input->post('type');
+      $value = htmlspecialchars(trim($this->input->post('value')));
+      $confidential = (empty($this->input->post('confidential'))) ? 0 : 1;
+
+      $this->db->where('id', $id);
+      $this->db->update('project_identifiers', [
+        'identifier_id' => $type,
+        'value' => $value,
+        'confidential' => $confidential
+      ]);
+      $this->session->set_flashdata(
+        'success',
+        "L'identifiant a bien été modifié avec succès !"
+      );
+      redirect('/identifiers/show/' . $ident->project_id, 'refresh');
+    }
+
+    $this->db->select(['id', 'name']);
+    $identifiers = $this->db->get('identifiers')->result();
+
+    $this->load->view('identifiers/modify', [
+      'project' => $project,
+      'identifiers' => $identifiers,
+      'values' => $ident
+    ]);
+  }
+
+  public function project_delete($id)
+  {
+    $this->db->where('id', $id);
+    $q = $this->db->get('project_identifiers');
+    if ($q->num_rows() > 0) {
+      $this->db->delete('project_identifiers', ['id' => $id]);
+      $this->session->set_flashdata(
+        'success',
+        "L'identifiant a bien été supprimé !"
+      );
+      redirect('/identifiers/show/' . $q->result()[0]->project_id, 'refresh');
+    } else {
+      $this->session->set_flashdata(
+        'error',
+        "L'indentifiant n'existe pas."
+      );
+      redirect('/projects', 'refresh');
+    }
   }
 }
