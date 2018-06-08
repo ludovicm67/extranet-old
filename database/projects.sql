@@ -76,4 +76,14 @@ CREATE TABLE IF NOT EXISTS `project_identifiers` (
   FOREIGN KEY (`identifier_id`) REFERENCES identifiers(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE IF NOT EXISTS `project_urls` (
+  `id` int (11) NOT NULL AUTO_INCREMENT,
+  `project_id` int(11),
+  `name` varchar(255),
+  `value` varchar(255),
+  `order` int(11),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`project_id`) REFERENCES projects(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;
