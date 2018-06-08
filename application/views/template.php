@@ -22,6 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
+            <?php if ($this->session->logged): ?>
             <li class="nav-item">
               <a class="nav-link" href="/clients">Clients</a>
             </li>
@@ -50,12 +51,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <a class="dropdown-item" href="/permissions">Permissions</a>
               </div>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Déconnexion</a>
+            </li>
+            <?php else: ?>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Connexion</a>
+            </li>
+            <?php endif; ?>
           </ul>
         </div>
+        <?php if ($this->session->logged): ?>
         <form class="form-inline" action="/" method="get">
           <input id="searcher" class="form-control mr-sm-2" type="search" name="q" placeholder="Rechercher..." aria-label="Rechercher">
           <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Rechercher</button>
         </form>
+        <?php endif; ?>
       </div>
     </nav>
   </header>
