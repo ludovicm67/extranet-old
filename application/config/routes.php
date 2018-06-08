@@ -68,3 +68,5 @@ $route['project/delete/(:num)'] = "projects/delete/$1";
 $route['identifiers/(:num)/new'] = "identifiers/assign/$1";
 $route['identifier/edit/(:num)'] = "identifiers/edit/$1";
 $route['identifier/delete/(:num)'] = "identifiers/delete/$1";
+$route['role/edit/(:num)'] = "roles/edit/$1";
+$route['role/delete/(:num)'] = "roles/delete/$1";

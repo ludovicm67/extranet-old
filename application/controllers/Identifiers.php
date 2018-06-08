@@ -23,7 +23,7 @@ class Identifiers extends CI_Controller
     } else {
       $this->session->set_flashdata(
         'error',
-        "Le type d'indentifiant n'existe pas."
+        "Le type d'identifiant n'existe pas."
       );
     }
     redirect('/identifiers', 'refresh');
@@ -43,13 +43,13 @@ class Identifiers extends CI_Controller
       if ($q->num_rows() > 0) {
         $this->session->set_flashdata(
           'error',
-          "Le type d'indentifiant existe déjà !"
+          "Le type d'identifiant existe déjà !"
         );
       } else {
         $this->db->insert('identifiers', ['name' => $identifierName]);
         $this->session->set_flashdata(
           'success',
-          "Le type d'indentifiant a bien été créé avec succès !"
+          "Le type d'identifiant a bien été créé avec succès !"
         );
         redirect('/identifiers', 'refresh');
       }
@@ -81,14 +81,14 @@ class Identifiers extends CI_Controller
       if ($q->num_rows() > 0) {
         $this->session->set_flashdata(
           'error',
-          "Le type d'indentifiant n'as pas été modifié : un autre porte déjà le même nom !"
+          "Le type d'identifiant n'as pas été modifié : un autre porte déjà le même nom !"
         );
       } else {
         $this->db->where('id', $id);
         $this->db->update('identifiers', ['name' => $identifierName]);
         $this->session->set_flashdata(
           'success',
-          "Le type d'indentifiant a bien été modifié avec succès !"
+          "Le type d'identifiant a bien été modifié avec succès !"
         );
         redirect('/identifiers', 'refresh');
       }
@@ -222,7 +222,7 @@ class Identifiers extends CI_Controller
       );
       redirect('/identifiers/show/' . $q->result()[0]->project_id, 'refresh');
     } else {
-      $this->session->set_flashdata('error', "L'indentifiant n'existe pas.");
+      $this->session->set_flashdata('error', "L'identifiant n'existe pas.");
       redirect('/projects', 'refresh');
     }
   }

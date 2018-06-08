@@ -41,6 +41,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <a class="dropdown-item" href="/types">Types</a>
               </div>
             </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Utilisateurs</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/users">Liste</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/roles">Rôles</a>
+                <a class="dropdown-item" href="/permissions">Permissions</a>
+              </div>
+            </li>
           </ul>
         </div>
         <form class="form-inline" action="/" method="get">
