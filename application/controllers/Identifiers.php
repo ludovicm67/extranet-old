@@ -75,6 +75,7 @@ class Identifiers extends CI_Controller
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
         redirect('/identifiers/new', 'refresh');
       }
+      $this->db->where('id !=', $id);
       $this->db->where('name', $identifierName);
       $q = $this->db->get('identifiers');
       if ($q->num_rows() > 0) {

@@ -66,6 +66,7 @@ class Types extends CI_Controller
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
         redirect('/types/new', 'refresh');
       }
+      $this->db->where('id !=', $id);
       $this->db->where('name', $typeName);
       $q = $this->db->get('types');
       if ($q->num_rows() > 0) {
