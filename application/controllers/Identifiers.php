@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Identifiers extends CI_Controller
+class Identifiers extends MY_Controller
 {
   public function index()
   {

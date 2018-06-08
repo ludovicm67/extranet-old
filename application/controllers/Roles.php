@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Roles extends CI_Controller
+class Roles extends MY_Controller
 {
   public function index()
   {
@@ -16,15 +16,9 @@ class Roles extends CI_Controller
     $q = $this->db->get('roles');
     if ($q->num_rows() > 0) {
       $this->db->delete('roles', ['id' => $id]);
-      $this->session->set_flashdata(
-        'success',
-        "Le rôle a bien été supprimé !"
-      );
+      $this->session->set_flashdata('success', "Le rôle a bien été supprimé !");
     } else {
-      $this->session->set_flashdata(
-        'error',
-        "Le rôle n'existe pas."
-      );
+      $this->session->set_flashdata('error', "Le rôle n'existe pas.");
     }
     redirect('/roles', 'refresh');
   }
@@ -41,10 +35,7 @@ class Roles extends CI_Controller
       $this->db->where('name', $roleName);
       $q = $this->db->get('roles');
       if ($q->num_rows() > 0) {
-        $this->session->set_flashdata(
-          'error',
-          "Le rôle existe déjà !"
-        );
+        $this->session->set_flashdata('error', "Le rôle existe déjà !");
       } else {
         $this->db->insert('roles', ['name' => $roleName]);
         $this->session->set_flashdata(
