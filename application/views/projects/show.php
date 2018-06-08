@@ -91,9 +91,30 @@ ob_start();
   </div>
   <?php endforeach; ?>
 </div>
-
 <?php else: ?>
   <p>Le projet n'est assigné à aucune commande.</p>
+<?php endif; ?>
+
+<h2>URLs pour ce projet</h2>
+<?php if (!empty($project->urls)): ?>
+  <ul>
+    <?php foreach ($project->urls as $url): ?>
+      <li>
+        <?php echo (!empty($url->name)) ? $url->name . ' :' : ''; ?>
+        <?php if (strpos($url->value, '://') === false): ?>
+          <a href="http://<?php echo htmlspecialchars($url->value); ?>" target="_blank">
+            http://<?php echo $url->value; ?>
+          </a>
+        <?php else: ?>
+          <a href="<?php echo htmlspecialchars($url->value); ?>" target="_blank">
+            <?php echo $url->value; ?>
+          </a>
+        <?php endif; ?>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+<?php else: ?>
+  <p>Aucune URL spécifiée pour ce projet.</p>
 <?php endif; ?>
 
 <?php

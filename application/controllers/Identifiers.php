@@ -105,11 +105,17 @@ class Identifiers extends CI_Controller
     }
     $project = $q->result()[0];
 
-    $this->db->select('*, project_identifiers.id AS id, identifiers.name AS type');
-    $this->db->join('identifiers', 'identifiers.id = project_identifiers.identifier_id', 'left');
-    $identifiers = $this->db->get_where('project_identifiers', [
-      'project_id' => $id
-    ])->result();
+    $this->db->select(
+      '*, project_identifiers.id AS id, identifiers.name AS type'
+    );
+    $this->db->join(
+      'identifiers',
+      'identifiers.id = project_identifiers.identifier_id',
+      'left'
+    );
+    $identifiers = $this->db
+      ->get_where('project_identifiers', ['project_id' => $id])
+      ->result();
 
     $this->load->view('identifiers/show', [
       'project' => $project,
@@ -128,7 +134,9 @@ class Identifiers extends CI_Controller
 
     // if form was submitted
     if (count($_POST) > 0) {
-      $type = ($this->input->post('type') == 0) ? null : $this->input->post('type');
+      $type = ($this->input->post('type') == 0)
+        ? null
+        : $this->input->post('type');
       $value = htmlspecialchars(trim($this->input->post('value')));
       $confidential = (empty($this->input->post('confidential'))) ? 0 : 1;
 
@@ -172,7 +180,9 @@ class Identifiers extends CI_Controller
 
     // if form was submitted
     if (count($_POST) > 0) {
-      $type = ($this->input->post('type') == 0) ? null : $this->input->post('type');
+      $type = ($this->input->post('type') == 0)
+        ? null
+        : $this->input->post('type');
       $value = htmlspecialchars(trim($this->input->post('value')));
       $confidential = (empty($this->input->post('confidential'))) ? 0 : 1;
 
@@ -211,10 +221,7 @@ class Identifiers extends CI_Controller
       );
       redirect('/identifiers/show/' . $q->result()[0]->project_id, 'refresh');
     } else {
-      $this->session->set_flashdata(
-        'error',
-        "L'indentifiant n'existe pas."
-      );
+      $this->session->set_flashdata('error', "L'indentifiant n'existe pas.");
       redirect('/projects', 'refresh');
     }
   }

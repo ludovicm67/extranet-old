@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `identifiers` (
 
 CREATE TABLE IF NOT EXISTS `project_identifiers` (
   `id` int (11) NOT NULL AUTO_INCREMENT,
-  `project_id` int(11),
+  `project_id` int(11) NOT NULL,
   `identifier_id` int(11),
   `value` text,
   `confidential` tinyint(1),
@@ -77,12 +77,11 @@ CREATE TABLE IF NOT EXISTS `project_identifiers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `project_urls` (
-  `id` int (11) NOT NULL AUTO_INCREMENT,
-  `project_id` int(11),
+  `project_id` int(11) NOT NULL,
   `name` varchar(255),
   `value` varchar(255),
-  `order` int(11),
-  PRIMARY KEY (`id`),
+  `order` int(11) DEFAULT 0 NOT NULL,
+  PRIMARY KEY (`project_id`, `order`),
   FOREIGN KEY (`project_id`) REFERENCES projects(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

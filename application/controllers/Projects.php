@@ -81,6 +81,12 @@ class Projects extends CI_Controller
     $this->db->where('project_id', $project->id);
     $project->tags = $this->db->get()->result();
 
+    $this->db->order_by('order', 'asc');
+    $this->db->select(['name', 'value']);
+    $project->urls = $this->db
+      ->get_where('project_urls', ['project_id' => $project->id])
+      ->result();
+
     $this->load->view('projects/show', ['project' => $project]);
   }
 
@@ -148,6 +154,27 @@ class Projects extends CI_Controller
                 'project_id' => $projectId,
                 'tag_id' => $tagId,
                 'value' => $tagVal
+              ]);
+            }
+          }
+        }
+
+        if (
+          isset($_POST['urlName']) &&
+          isset($_POST['urlName']) &&
+          is_array($_POST['urlName']) == is_array($_POST['urlValue']) &&
+          count($_POST['urlName']) &&
+          count($_POST['urlValue'])
+        ) {
+          for ($i = 0; $i < count($_POST['urlName']); $i++) {
+            $urlName = strip_tags(trim($this->input->post('urlName')[$i]));
+            $urlValue = strip_tags(trim($this->input->post('urlValue')[$i]));
+            if (!empty($urlName) || !empty($urlValue)) {
+              $this->db->insert('project_urls', [
+                'project_id' => $projectId,
+                'name' => $urlName,
+                'value' => $urlValue,
+                'order' => $i
               ]);
             }
           }
@@ -257,6 +284,28 @@ class Projects extends CI_Controller
           }
         }
 
+        $this->db->delete('project_urls', ['project_id' => $id]);
+        if (
+          isset($_POST['urlName']) &&
+          isset($_POST['urlName']) &&
+          is_array($_POST['urlName']) == is_array($_POST['urlValue']) &&
+          count($_POST['urlName']) &&
+          count($_POST['urlValue'])
+        ) {
+          for ($i = 0; $i < count($_POST['urlName']); $i++) {
+            $urlName = strip_tags(trim($this->input->post('urlName')[$i]));
+            $urlValue = strip_tags(trim($this->input->post('urlValue')[$i]));
+            if (!empty($urlName) || !empty($urlValue)) {
+              $this->db->insert('project_urls', [
+                'project_id' => $projectId,
+                'name' => $urlName,
+                'value' => $urlValue,
+                'order' => $i
+              ]);
+            }
+          }
+        }
+
         $this->session->set_flashdata(
           'success',
           'Le projet a bien été modifié avec succès !'
@@ -291,6 +340,12 @@ class Projects extends CI_Controller
     $this->db->select(['tag_id', 'value']);
     $project->tags = $this->db
       ->get_where('project_tags', ['project_id' => $project->id])
+      ->result();
+
+    $this->db->order_by('order', 'asc');
+    $this->db->select(['name', 'value']);
+    $project->urls = $this->db
+      ->get_where('project_urls', ['project_id' => $project->id])
       ->result();
 
     $this->db->select(['id', 'fullName']);

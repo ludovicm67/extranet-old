@@ -53,7 +53,7 @@ ob_start();
       <div>
 
         <div class="row dupplicate-item">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <select class="form-control" name="tagName[]">
               <option value="">Aucun tag</option>
               <?php foreach ($tags as $tag): ?>
@@ -63,12 +63,36 @@ ob_start();
               <?php endforeach; ?>
             </select>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-8">
             <input type="text" class="form-control" name="tagValue[]" placeholder="Valeur du tag (si nécessaire)...">
           </div>
         </div>
 
         <button class="btn btn-outline-primary dupplicate-action" type="button">Ajouter un nouveau tag</button>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">URLs</label>
+    <div class="col-sm-10">
+      <div>
+
+        <div class="row move-item dupplicate-item">
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="urlName[]" placeholder="Nom de l'url">
+          </div>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" name="urlValue[]" placeholder="Url...">
+          </div>
+          <div class="col-sm-2">
+            <button class="badge move-up" type="button">↑</button>
+            <button class="badge move-down" type="button">↓</button>
+          </div>
+        </div>
+
+        <button class="btn btn-outline-primary dupplicate-action" type="button">Ajouter une nouvelle URL</button>
 
       </div>
     </div>

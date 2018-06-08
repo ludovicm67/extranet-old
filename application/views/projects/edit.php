@@ -57,7 +57,7 @@ ob_start();
       <div>
 
         <div class="row dupplicate-item">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <select class="form-control" name="tagName[]">
               <option value="">Aucun tag</option>
               <?php foreach ($tags as $tag): ?>
@@ -67,14 +67,14 @@ ob_start();
               <?php endforeach; ?>
             </select>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-8">
             <input type="text" class="form-control" name="tagValue[]" placeholder="Valeur du tag (si nécessaire)...">
           </div>
         </div>
 
         <?php foreach ($project->tags as $pTag): ?>
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
               <select class="form-control" name="tagName[]">
                 <option value="">Aucun tag</option>
                 <?php foreach ($tags as $tag): ?>
@@ -84,13 +84,52 @@ ob_start();
                 <?php endforeach; ?>
               </select>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
               <input type="text" class="form-control" name="tagValue[]" value="<?php echo htmlspecialchars($pTag->value); ?>" placeholder="Valeur du tag (si nécessaire)...">
             </div>
           </div>
         <?php endforeach; ?>
 
         <button class="btn btn-outline-primary dupplicate-action" type="button">Ajouter un nouveau tag</button>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">URLs</label>
+    <div class="col-sm-10">
+      <div>
+
+        <div class="row move-item dupplicate-item">
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="urlName[]" placeholder="Nom de l'url">
+          </div>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" name="urlValue[]" placeholder="Url...">
+          </div>
+          <div class="col-sm-2">
+            <button class="badge move-up" type="button">↑</button>
+            <button class="badge move-down" type="button">↓</button>
+          </div>
+        </div>
+
+        <?php foreach ($project->urls as $url): ?>
+          <div class="row move-item">
+            <div class="col-sm-4">
+              <input type="text" class="form-control" name="urlName[]" value="<?php echo htmlspecialchars($url->name); ?>" placeholder="Nom de l'url">
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="urlValue[]" value="<?php echo htmlspecialchars($url->value); ?>" placeholder="Url...">
+            </div>
+            <div class="col-sm-2">
+              <button class="badge move-up" type="button">↑</button>
+              <button class="badge move-down" type="button">↓</button>
+            </div>
+          </div>
+        <?php endforeach; ?>
+
+        <button class="btn btn-outline-primary dupplicate-action" type="button">Ajouter une nouvelle URL</button>
 
       </div>
     </div>
