@@ -2,6 +2,7 @@ fallback_url: http://localhost/
 supported_domains:
   localhost:
     site_name: Gestion
+    https: false
     database:
       hostname: localhost
       username: root
