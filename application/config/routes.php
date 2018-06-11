@@ -74,3 +74,5 @@ $route['role/delete/(:num)'] = "roles/delete/$1";
 $route['user/(:num)'] = "users/show/$1";
 $route['user/edit/(:num)'] = "users/edit/$1";
 $route['user/delete/(:num)'] = "users/delete/$1";
+$route['project/fav/(:num)'] = "projects/fav/$1";
+$route['project/unfav/(:num)'] = "projects/unfav/$1";

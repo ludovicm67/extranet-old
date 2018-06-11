@@ -9,6 +9,7 @@ ob_start();
 <table class="table table-hover">
   <thead class="thead-dark">
     <tr>
+      <th scope="col"></th>
       <th scope="col">Nom</th>
       <th scope="col">Actions</th>
     </tr>
@@ -16,6 +17,11 @@ ob_start();
   <tbody>
     <?php foreach ($projects as $project): ?>
     <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($project->name)); ?>">
+      <td>
+        <span data-project-fav="<?php echo $project->id; ?>" data-project-favorited="<?php echo ($project->favorite == 0) ? 0 : 1; ?>">
+          <i class="<?php echo ($project->favorite == 0) ? 'far' : 'fas'; ?> fa-star"></i>
+        </span>
+      </td>
       <td><a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a></td>
       <td>
         <a href="/project/edit/<?php echo $project->id; ?>">Modifier</a>

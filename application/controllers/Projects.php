@@ -5,7 +5,13 @@ class Projects extends MY_AuthController
 {
   public function index()
   {
-    $this->db->order_by('updated_at', 'desc');
+    $myId = $this->session->id;
+    if (empty($myId)) $myId = null;
+    $this->db->order_by('favorite, updated_at', 'desc');
+    $this->db->select('*, COALESCE(project_favorites.user_id, 0) AS favorite');
+    $this->db->join('project_favorites', 'projects.id = project_favorites.project_id', 'left');
+    $this->db->where('user_id', $myId);
+    $this->db->or_where('user_id', null);
     $projects = $this->db->get('projects')->result();
     $this->load->view('projects/list', ['projects' => $projects]);
   }
@@ -367,5 +373,68 @@ class Projects extends MY_AuthController
       'orders' => $orders,
       'tags' => $tags
     ]);
+  }
+
+  public function fav($id)
+  {
+    // check if project exists
+    $this->db->where('id', $id);
+    $q = $this->db->get('projects');
+    if ($q->num_rows() <= 0) {
+      echo json_encode([
+        'success' => false,
+        'message' => 'projet inexistant'
+      ]);
+      die();
+    }
+
+    if (empty($this->session->id)) {
+      echo json_encode([
+        'success' => false,
+        'message' => 'utilisateur non connecté'
+      ]);
+      die();
+    }
+
+    $this->db->delete('project_favorites', [
+      'project_id' => $id,
+      'user_id' => $this->session->id
+    ]);
+
+    $this->db->insert('project_favorites', [
+      'project_id' => $id,
+      'user_id' => $this->session->id
+    ]);
+
+    echo json_encode(['success' => true]);
+  }
+
+  public function unfav($id)
+  {
+    // check if project exists
+    $this->db->where('id', $id);
+    $q = $this->db->get('projects');
+    if ($q->num_rows() <= 0) {
+      echo json_encode([
+        'success' => false,
+        'message' => 'projet inexistant'
+      ]);
+      die();
+    }
+
+    if (empty($this->session->id)) {
+      echo json_encode([
+        'success' => false,
+        'message' => 'utilisateur non connecté'
+      ]);
+      die();
+    }
+
+    $this->db->delete('project_favorites', [
+      'project_id' => $id,
+      'user_id' => $this->session->id
+    ]);
+
+    echo json_encode(['success' => true]);
   }
 }

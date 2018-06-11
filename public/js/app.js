@@ -61,4 +61,25 @@ $(document).ready(function () {
         .hide();
     }
   });
+
+  $('[data-project-fav]').click(function (e) {
+    let favoritedData = $(this).data('project-favorited') || 0;
+    let favorited = favoritedData == '1' ? true : false;
+    let projectId = $(this).data('project-fav') || false;
+
+    if (!projectId) return;
+
+    let self = this;
+    if (favorited) {
+      $.get('/project/unfav/' + projectId, function() {
+        $(self).data('project-favorited', '0');
+        $(self).html('<i class="far fa-star"></i>');
+      });
+    } else {
+      $.get('/project/fav/' + projectId, function() {
+        $(self).data('project-favorited', '1');
+        $(self).html('<i class="fas fa-star"></i>');
+      });
+    }
+  });
 });
