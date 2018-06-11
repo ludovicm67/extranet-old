@@ -5,7 +5,7 @@ class Projects extends MY_AuthController
 {
   public function index()
   {
-    $this->db->order_by('name');
+    $this->db->order_by('updated_at', 'desc');
     $projects = $this->db->get('projects')->result();
     $this->load->view('projects/list', ['projects' => $projects]);
   }

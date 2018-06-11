@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `id` int (11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255),
   `client_id` int (11),
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   FOREIGN KEY (client_id) REFERENCES sellsy_clients(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
