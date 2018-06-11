@@ -12,6 +12,20 @@ class Users extends MY_AuthController
     $this->load->view('users/list', ['users' => $users]);
   }
 
+  public function show($id)
+  {
+    $this->db->select('*, roles.name AS role, users.id AS id');
+    $this->db->order_by('users.id', 'desc');
+    $this->db->join('roles', 'roles.id = users.role_id', 'left');
+    $this->db->where('users.id', $id);
+    $q = $this->db->get('users');
+    if ($q->num_rows() <= 0) {
+      redirect('/users', 'refresh');
+    }
+    $user = $q->result()[0];
+    $this->load->view('users/show', ['user' => $user]);
+  }
+
   public function delete($id)
   {
     $this->db->where('id', $id);
@@ -147,7 +161,7 @@ class Users extends MY_AuthController
           'success',
           "L'utilisateur a bien été modifié avec succès !"
         );
-        redirect('/users', 'refresh');
+        redirect('/user/' . $id, 'refresh');
       }
     }
 

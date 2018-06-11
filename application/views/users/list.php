@@ -19,8 +19,8 @@ ob_start();
   <tbody>
     <?php foreach ($users as $user): ?>
     <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($user->firstname . ' ' . $user->lastname . ' ' . $user->firstname . ' ' . $user->mail)); ?>">
-      <td><?php echo $user->firstname; ?> <?php echo $user->lastname; ?></td>
-      <td><?php echo $user->mail; ?></td>
+      <td><a href="/user/<?php echo $user->id; ?>"><?php echo $user->firstname; ?> <?php echo $user->lastname; ?></a></td>
+      <td><a href="mailto:<?php echo htmlspecialchars($user->mail); ?>"><?php echo $user->mail; ?></a></td>
       <td><?php echo ($user->role) ? $user->role : 'Aucun rôle'; ?></td>
       <td><?php echo ($user->is_admin) ? 'Oui' : 'Non'; ?></td>
       <td>
