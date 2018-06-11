@@ -6,10 +6,18 @@ class Projects extends MY_AuthController
   public function index()
   {
     $myId = $this->session->id;
-    if (empty($myId)) $myId = null;
-    $this->db->order_by('favorite, updated_at', 'desc');
+    if (empty($myId)) {
+      $myId = null;
+    }
+    $this->db->order_by('favorite', 'desc');
+    $this->db->order_by('updated_at', 'desc');
+    $this->db->order_by('id', 'desc');
     $this->db->select('*, COALESCE(project_favorites.user_id, 0) AS favorite');
-    $this->db->join('project_favorites', 'projects.id = project_favorites.project_id', 'left');
+    $this->db->join(
+      'project_favorites',
+      'projects.id = project_favorites.project_id',
+      'left'
+    );
     $this->db->where('user_id', $myId);
     $this->db->or_where('user_id', null);
     $projects = $this->db->get('projects')->result();
@@ -381,10 +389,7 @@ class Projects extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
     if ($q->num_rows() <= 0) {
-      echo json_encode([
-        'success' => false,
-        'message' => 'projet inexistant'
-      ]);
+      echo json_encode(['success' => false, 'message' => 'projet inexistant']);
       die();
     }
 
@@ -415,10 +420,7 @@ class Projects extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
     if ($q->num_rows() <= 0) {
-      echo json_encode([
-        'success' => false,
-        'message' => 'projet inexistant'
-      ]);
+      echo json_encode(['success' => false, 'message' => 'projet inexistant']);
       die();
     }
 
