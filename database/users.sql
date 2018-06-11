@@ -38,4 +38,12 @@ CREATE TABLE IF NOT EXISTS `project_favorites` (
   FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE IF NOT EXISTS `project_users` (
+  `project_id` int (11) NOT NULL,
+  `user_id` int (11) NOT NULL,
+  PRIMARY KEY (`project_id`, `user_id`),
+  FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
+  FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;

@@ -50,6 +50,18 @@ ob_start();
       </select>
     </div>
   </div>
+  <div class="form-group row">
+    <label for="projectUsers" class="col-sm-2 col-form-label">Utilisateurs affectés</label>
+    <div class="col-sm-10">
+      <select class="form-control" name="users[]" id="projectUsers" multiple="multiple">
+        <?php foreach ($users as $user): ?>
+        <option value="<?php echo $user->id; ?>"<?php echo (in_array($user->id, $project->users)) ? ' selected="selected"' : ''; ?>>
+          <?php echo $user->firstname . ' ' . $user->lastname . ' (' . $user->mail . ')'; ?>
+        </option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+  </div>
 
   <div class="form-group row">
     <label class="col-sm-2 col-form-label">Tags</label>

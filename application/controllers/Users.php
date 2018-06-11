@@ -23,6 +23,13 @@ class Users extends MY_AuthController
       redirect('/users', 'refresh');
     }
     $user = $q->result()[0];
+
+    $this->db->select('*');
+    $this->db->from('project_users');
+    $this->db->join('projects', 'projects.id = project_users.project_id');
+    $this->db->where('user_id', $user->id);
+    $user->projects = $this->db->get()->result();
+
     $this->load->view('users/show', ['user' => $user]);
   }
 

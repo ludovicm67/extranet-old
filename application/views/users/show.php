@@ -20,6 +20,21 @@ ob_start();
   <?php endif; ?>
 </ul>
 
+<h2>Projets assignés à cet utilisateur</h2>
+<?php if (!empty($user->projects)): ?>
+  <ul>
+    <?php foreach ($user->projects as $project): ?>
+      <li>
+        <a href="/project/<?php echo $project->id; ?>">
+          <?php echo $project->name; ?>
+        </a>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+<?php else: ?>
+  <p>Le projet n'est assigné à aucun utilisateurs.</p>
+<?php endif; ?>
+
 <?php
 $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

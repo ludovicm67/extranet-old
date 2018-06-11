@@ -42,6 +42,21 @@ ob_start();
   <p>Le projet n'est assigné à aucun contacts.</p>
 <?php endif; ?>
 
+<h2>Utilisateurs assignés à ce projet</h2>
+<?php if (!empty($project->users)): ?>
+  <ul>
+    <?php foreach ($project->users as $user): ?>
+      <li>
+        <a href="/user/<?php echo $user->id; ?>">
+          <?php echo $user->firstname . ' ' . $user->lastname . ' (' . $user->mail . ')'; ?>
+        </a>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+<?php else: ?>
+  <p>Le projet n'est assigné à aucun utilisateurs.</p>
+<?php endif; ?>
+
 <h2>Commandes pour ce projet</h2>
 <?php if (!empty($project->orders)): ?>
 <div id="accordion">

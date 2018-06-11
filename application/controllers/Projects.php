@@ -95,6 +95,12 @@ class Projects extends MY_AuthController
     $this->db->where('project_id', $project->id);
     $project->tags = $this->db->get()->result();
 
+    $this->db->select('*');
+    $this->db->from('project_users');
+    $this->db->join('users', 'users.id = project_users.user_id');
+    $this->db->where('project_id', $project->id);
+    $project->users = $this->db->get()->result();
+
     $this->db->order_by('order', 'asc');
     $this->db->select(['name', 'value']);
     $project->urls = $this->db
@@ -149,6 +155,16 @@ class Projects extends MY_AuthController
             $this->db->insert('project_orders', [
               'project_id' => $projectId,
               'order_id' => $orderId
+            ]);
+          }
+        }
+
+        if (isset($_POST['users'])) {
+          foreach (array_unique($this->input->post('users')) as $user) {
+            $userId = intval($user, 10);
+            $this->db->insert('project_users', [
+              'project_id' => $projectId,
+              'user_id' => $userId
             ]);
           }
         }
@@ -219,6 +235,8 @@ class Projects extends MY_AuthController
     $this->db->select(['id', 'name']);
     $tags = $this->db->get('tags')->result();
 
+    $users = $this->db->get('users')->result();
+
     $clientId = (isset($_GET['client_id']) && intval($_GET['client_id']) != 0)
       ? intval($_GET['client_id'])
       : null;
@@ -229,7 +247,8 @@ class Projects extends MY_AuthController
       'clients' => $clients,
       'contacts' => $contacts,
       'orders' => $orders,
-      'tags' => $tags
+      'tags' => $tags,
+      'users' => $users
     ]);
   }
 
@@ -273,6 +292,17 @@ class Projects extends MY_AuthController
             $this->db->insert('project_orders', [
               'project_id' => $projectId,
               'order_id' => $orderId
+            ]);
+          }
+        }
+
+        $this->db->delete('project_users', ['project_id' => $id]);
+        if (isset($_POST['users'])) {
+          foreach (array_unique($this->input->post('users')) as $user) {
+            $userId = intval($user, 10);
+            $this->db->insert('project_users', [
+              'project_id' => $projectId,
+              'user_id' => $userId
             ]);
           }
         }
@@ -351,6 +381,14 @@ class Projects extends MY_AuthController
       return $c->order_id;
     }, $ordersDB);
 
+    $this->db->select('user_id');
+    $usersDB = $this->db
+      ->get_where('project_users', ['project_id' => $project->id])
+      ->result();
+    $project->users = array_map(function ($c) {
+      return $c->user_id;
+    }, $usersDB);
+
     $this->db->select(['tag_id', 'value']);
     $project->tags = $this->db
       ->get_where('project_tags', ['project_id' => $project->id])
@@ -374,12 +412,15 @@ class Projects extends MY_AuthController
     $this->db->select(['id', 'name']);
     $tags = $this->db->get('tags')->result();
 
+    $users = $this->db->get('users')->result();
+
     $this->load->view('projects/edit', [
       'project' => $project,
       'clients' => $clients,
       'contacts' => $contacts,
       'orders' => $orders,
-      'tags' => $tags
+      'tags' => $tags,
+      'users' => $users
     ]);
   }
 
