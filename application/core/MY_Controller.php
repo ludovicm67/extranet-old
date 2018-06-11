@@ -16,6 +16,13 @@ class MY_Controller extends CI_Controller
         $this->session->unset_userdata('logged');
       }
     }
+
+    if (
+      !$this->db->table_exists('users') ||
+      $this->db->count_all('users') <= 0
+    ) {
+      redirect('/setup', 'refresh');
+    }
   }
 
   public function isLoggedIn()

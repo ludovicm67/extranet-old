@@ -142,7 +142,7 @@ $dc = new ConfigHelper($configValues['supported_domains'][$askedHost]);
 // redirect to https if specified in the configuration file
 if ($dc->getConfValueDefault('https', null, false)) {
   if (!(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on")) {
-    $httpsUrl = 'https://'. $_SERVER['HTTP_HOST'] . $_SERVER["REQUEST_URI"];
+    $httpsUrl = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER["REQUEST_URI"];
     header('Location: ' . $httpsUrl);
   }
 }

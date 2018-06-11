@@ -5,7 +5,9 @@ class Users extends MY_AuthController
 {
   public function index()
   {
-    $this->db->order_by('id', 'desc');
+    $this->db->select('*, roles.name AS role, users.id AS id');
+    $this->db->order_by('users.id', 'desc');
+    $this->db->join('roles', 'roles.id = users.role_id', 'left');
     $users = $this->db->get('users')->result();
     $this->load->view('users/list', ['users' => $users]);
   }
@@ -16,7 +18,10 @@ class Users extends MY_AuthController
     $q = $this->db->get('users');
     if ($q->num_rows() > 0) {
       $this->db->delete('users', ['id' => $id]);
-      $this->session->set_flashdata('success', "L'utilisateur a bien été supprimé !");
+      $this->session->set_flashdata(
+        'success',
+        "L'utilisateur a bien été supprimé !"
+      );
     } else {
       $this->session->set_flashdata('error', "L'utilisateur n'existe pas.");
     }
@@ -25,19 +30,50 @@ class Users extends MY_AuthController
 
   public function new()
   {
-    if (isset($_POST['name'])) {
-      $userName = strip_tags(trim($this->input->post('name')));
-
-      if (empty($userName)) {
-        $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
+    if (isset($_POST['mail'])) {
+      if (empty(trim($this->input->post('password')))) {
+        $this->session->set_flashdata(
+          'error',
+          'Veuillez insérer un mot de passe !'
+        );
         redirect('/users/new', 'refresh');
       }
-      $this->db->where('name', $userName);
+
+      $userFirstname = strip_tags(trim($this->input->post('firstname')));
+      $userLastname = strip_tags(trim($this->input->post('lastname')));
+      $userPassword = password_hash(
+        trim($this->input->post('password')),
+        PASSWORD_DEFAULT
+      );
+      $userMail = strip_tags(trim($this->input->post('mail')));
+      $userRole = ($this->input->post('role') == 0)
+        ? null
+        : $this->input->post('role');
+      $userAdmin = (empty($this->input->post('is_admin'))) ? 0 : 1;
+
+      if (empty($userMail)) {
+        $this->session->set_flashdata(
+          'error',
+          'Veuillez insérer une adresse mail !'
+        );
+        redirect('/users/new', 'refresh');
+      }
+      $this->db->where('mail', $userMail);
       $q = $this->db->get('users');
       if ($q->num_rows() > 0) {
-        $this->session->set_flashdata('error', "L'utilisateur existe déjà !");
+        $this->session->set_flashdata(
+          'error',
+          "Un utilisateur existe déjà avec cette adresse mail !"
+        );
       } else {
-        $this->db->insert('users', ['name' => $userName]);
+        $this->db->insert('users', [
+          'firstname' => $userFirstname,
+          'lastname' => $userLastname,
+          'password' => $userPassword,
+          'mail' => $userMail,
+          'role_id' => $userRole,
+          'is_admin' => $userAdmin
+        ]);
         $this->session->set_flashdata(
           'success',
           "L'utilisateur a bien été créé avec succès !"
@@ -46,7 +82,10 @@ class Users extends MY_AuthController
       }
     }
 
-    $this->load->view('users/new');
+    $this->db->select(['id', 'name']);
+    $roles = $this->db->get('roles')->result();
+
+    $this->load->view('users/new', ['roles' => $roles]);
   }
 
   public function edit($id)
@@ -59,24 +98,51 @@ class Users extends MY_AuthController
     }
     $user = $q->result()[0];
 
-    if (isset($_POST['name'])) {
-      $userName = strip_tags(trim($this->input->post('name')));
+    // if form was submitted
+    if (isset($_POST['mail'])) {
+      if (empty(trim($this->input->post('password')))) {
+        $userPassword = $user->password;
+      } else {
+        $userPassword = password_hash(
+          trim($this->input->post('password')),
+          PASSWORD_DEFAULT
+        );
+      }
 
-      if (empty($userName)) {
-        $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
+      $userFirstname = strip_tags(trim($this->input->post('firstname')));
+      $userLastname = strip_tags(trim($this->input->post('lastname')));
+      $userMail = strip_tags(trim($this->input->post('mail')));
+      $userRole = ($this->input->post('role') == 0)
+        ? null
+        : $this->input->post('role');
+      $userAdmin = (empty($this->input->post('is_admin'))) ? 0 : 1;
+
+      if (empty($userMail)) {
+        $this->session->set_flashdata(
+          'error',
+          'Veuillez insérer une adresse mail !'
+        );
         redirect('/users/new', 'refresh');
       }
+
       $this->db->where('id !=', $id);
-      $this->db->where('name', $userName);
+      $this->db->where('mail', $userMail);
       $q = $this->db->get('users');
       if ($q->num_rows() > 0) {
         $this->session->set_flashdata(
           'error',
-          "L'utilisateur n'as pas été modifié : un autre porte déjà le même nom !"
+          "Un utilisateur existe déjà avec cette adresse mail !"
         );
       } else {
         $this->db->where('id', $id);
-        $this->db->update('users', ['name' => $userName]);
+        $this->db->update('users', [
+          'firstname' => $userFirstname,
+          'lastname' => $userLastname,
+          'password' => $userPassword,
+          'mail' => $userMail,
+          'role_id' => $userRole,
+          'is_admin' => $userAdmin
+        ]);
         $this->session->set_flashdata(
           'success',
           "L'utilisateur a bien été modifié avec succès !"
@@ -85,6 +151,9 @@ class Users extends MY_AuthController
       }
     }
 
-    $this->load->view('users/edit', ['user' => $user]);
+    $this->db->select(['id', 'name']);
+    $roles = $this->db->get('roles')->result();
+
+    $this->load->view('users/edit', ['user' => $user, 'roles' => $roles]);
   }
 }

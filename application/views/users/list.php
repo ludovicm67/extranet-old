@@ -21,7 +21,7 @@ ob_start();
     <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($user->firstname . ' ' . $user->lastname . ' ' . $user->firstname . ' ' . $user->mail)); ?>">
       <td><?php echo $user->firstname; ?> <?php echo $user->lastname; ?></td>
       <td><?php echo $user->mail; ?></td>
-      <td>ROLE</td>
+      <td><?php echo ($user->role) ? $user->role : 'Aucun rôle'; ?></td>
       <td><?php echo ($user->is_admin) ? 'Oui' : 'Non'; ?></td>
       <td>
         <a href="/user/edit/<?php echo $user->id; ?>">Modifier</a>

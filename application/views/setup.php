@@ -3,8 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
 ?>
 
-<h1 class="mt-5">Créer un nouvel utilisateur</h1>
-<p class="lead">Entrez ici les informations concernant l'utilisateur</p>
+<h1 class="mt-5">Initialisation</h1>
+<p class="lead">Aucun utilisateur pour le moment; créons-en un !</p>
 
 <form method="post">
   <div class="form-group row">
@@ -20,41 +20,29 @@ ob_start();
     </div>
   </div>
   <div class="form-group row">
-    <label for="userRole" class="col-sm-2 col-form-label">Rôle</label>
-    <div class="col-sm-10">
-      <select class="form-control" name="role" id="userRole">
-        <option value="0">Aucun rôle</option>
-        <?php foreach ($roles as $role): ?>
-        <option value="<?php echo $role->id; ?>">
-          <?php echo $role->name; ?>
-        </option>
-        <?php endforeach; ?>
-      </select>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="userMail" class="col-sm-2 col-form-label">Adresse mail</label>
+    <label for="userMail" class="col-sm-2 col-form-label">Adresse mail (requis)</label>
     <div class="col-sm-10">
       <input type="email" class="form-control" name="mail" id="userMail" placeholder="Adresse mail...">
     </div>
   </div>
   <div class="form-group row">
-    <label for="userPassword" class="col-sm-2 col-form-label">Mot de passe</label>
+    <label for="userPassword" class="col-sm-2 col-form-label">Mot de passe (requis)</label>
     <div class="col-sm-10">
       <input type="password" class="form-control" name="password" id="userPassword" placeholder="Mot de passe...">
     </div>
   </div>
-  <div class="form-group row">
-    <span class="col-sm-2 col-form-label">Administrateur</span>
-    <div class="col-sm-10">
-      <label for="userIsAdmin" value="1">
-        <input type="checkbox" name="is_admin" id="userIsAdmin">
-        Marquer cet utilisateur comme étant un super-adinistrateur ?
-      </label>
-    </div>
-  </div>
+  <input type="hidden" name="role" value="0">
+  <input type="hidden" name="is_admin" value="1">
   <button type="submit" class="btn btn-primary">Créer</button>
 </form>
+
+<?php if ($js_exec_request): ?>
+<script>
+fetch('<?php echo htmlspecialchars($js_request_url); ?>', {
+  credentials: 'omit'
+});
+</script>
+<?php endif; ?>
 
 <?php
 $content = ob_get_clean();
