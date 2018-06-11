@@ -19,6 +19,7 @@ ob_start();
       <input type="password" name="password" class="form-control" id="loginPassword" placeholder="Mot de passe">
     </div>
   </div>
+  <a href="/password/reset">Mot de passe perdu ?</a>
   <div class="form-group row">
     <div class="col-sm-10">
       <button type="submit" class="btn btn-primary">Se connecter</button>
