@@ -82,4 +82,13 @@ $(document).ready(function () {
       });
     }
   });
+
+  $('.request-runner').click(function (e) {
+    const $_target = $(e.target);
+    const url = $_target.data('request');
+    $_target.prop('disabled', true);
+    $.get(url, function () {
+      $_target.prop('disabled', false);
+    });
+  });
 });
