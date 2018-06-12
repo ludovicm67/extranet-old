@@ -6,6 +6,10 @@ ob_start();
 <h1 class="mt-5">Rechercher</h1>
 <p class="lead">Recherchez ce dont vous avez besoin !</p>
 
+<?php if (empty($results->has_query)): ?>
+<p><em>Effectuez une recherche en utilisant le champ de recherche. Les résultats apparaîtront ici.</em></p>
+<?php else: ?>
+<p><strong><?php echo $results->results; ?> résultats pour la requête "<em><?php echo $results->query; ?></em>".</strong></p>
 <?php if (!empty($results->clients)): ?>
 <h2>Clients</h2>
 <ul>
@@ -118,6 +122,9 @@ ob_start();
   </tbody>
 </table>
 <?php endif; ?>
+
+<?php endif; ?>
+
 
 <?php
 $content = ob_get_clean();

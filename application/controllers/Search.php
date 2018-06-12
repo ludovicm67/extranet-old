@@ -18,6 +18,7 @@ class Search extends MY_AuthController
     ];
     if (!empty($query)) {
       $res->query = $query;
+      $res->has_query = true;
 
       // clients
       $this->db->like('name', $query);
