@@ -116,6 +116,21 @@ class Identifiers extends MY_AuthController
     }
     $project = $q->result()[0];
 
+    // get all assigned users to check if has right to access to confidential datas or not
+    $this->db->select('user_id');
+    $usersDB = $this->db
+      ->get_where('project_users', ['project_id' => $project->id])
+      ->result();
+    $users = array_map(function ($c) {
+      return $c->user_id;
+    }, $usersDB);
+
+    if (
+      !in_array($this->session->id, $users) &&
+      !$this->hasPermission('project_confidential_identifiers', 'show')
+    ) {
+      $this->db->where('confidential !=', 1);
+    }
     $this->db->select(
       '*, project_identifiers.id AS id, identifiers.name AS type'
     );
