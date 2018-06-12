@@ -46,4 +46,15 @@ CREATE TABLE IF NOT EXISTS `project_users` (
   FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE IF NOT EXISTS `rights` (
+  `role_id` int (11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `show` tinyint(1) DEFAULT 0,
+  `add` tinyint(1) DEFAULT 0,
+  `edit` tinyint(1) DEFAULT 0,
+  `delete` tinyint(1) DEFAULT 0,
+  PRIMARY KEY (`role_id`, `name`),
+  FOREIGN KEY (`role_id`) REFERENCES roles(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;
