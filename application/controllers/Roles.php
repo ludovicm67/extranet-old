@@ -5,6 +5,8 @@ class Roles extends MY_AuthController
 {
   public function index()
   {
+    $this->checkPermission('roles', 'read');
+
     $this->db->order_by('name');
     $roles = $this->db->get('roles')->result();
     $this->load->view('roles/list', ['roles' => $roles]);

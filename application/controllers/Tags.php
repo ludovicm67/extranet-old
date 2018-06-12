@@ -15,7 +15,7 @@ class Tags extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('tags');
     if ($q->num_rows() <= 0) {
-      redirect('/tags', 'refresh');
+      redirect('/tags');
     }
     $tag = $q->result()[0];
 
@@ -42,7 +42,7 @@ class Tags extends MY_AuthController
     } else {
       $this->session->set_flashdata('error', "Le tag n'existe pas.");
     }
-    redirect('/tags', 'refresh');
+    redirect('/tags');
   }
 
   public function new()
@@ -57,7 +57,7 @@ class Tags extends MY_AuthController
       );
       if (empty($tagName)) {
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
-        redirect('/tags/new', 'refresh');
+        redirect('/tags/new');
       }
       $this->db->where('name', $tagName);
       $q = $this->db->get('tags');
@@ -69,7 +69,7 @@ class Tags extends MY_AuthController
           'success',
           'Le tag a bien été créé avec succès !'
         );
-        redirect('/tags', 'refresh');
+        redirect('/tags');
       }
     }
 
@@ -82,7 +82,7 @@ class Tags extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('tags');
     if ($q->num_rows() <= 0) {
-      redirect('/tags', 'refresh');
+      redirect('/tags');
     }
     $tag = $q->result()[0];
 
@@ -96,7 +96,7 @@ class Tags extends MY_AuthController
       );
       if (empty($tagName)) {
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
-        redirect('/tags/new', 'refresh');
+        redirect('/tags/new');
       }
       $this->db->where('name', $tagName);
       $q = $this->db->get('tags');
@@ -112,7 +112,7 @@ class Tags extends MY_AuthController
           'success',
           'Le tag a bien été modifié avec succès !'
         );
-        redirect('/tags', 'refresh');
+        redirect('/tags');
       }
     }
 

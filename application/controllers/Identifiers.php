@@ -26,7 +26,7 @@ class Identifiers extends MY_AuthController
         "Le type d'identifiant n'existe pas."
       );
     }
-    redirect('/identifiers', 'refresh');
+    redirect('/identifiers');
   }
 
   public function new()
@@ -36,7 +36,7 @@ class Identifiers extends MY_AuthController
 
       if (empty($identifierName)) {
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
-        redirect('/identifiers/new', 'refresh');
+        redirect('/identifiers/new');
       }
       $this->db->where('name', $identifierName);
       $q = $this->db->get('identifiers');
@@ -51,7 +51,7 @@ class Identifiers extends MY_AuthController
           'success',
           "Le type d'identifiant a bien été créé avec succès !"
         );
-        redirect('/identifiers', 'refresh');
+        redirect('/identifiers');
       }
     }
 
@@ -64,7 +64,7 @@ class Identifiers extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('identifiers');
     if ($q->num_rows() <= 0) {
-      redirect('/identifiers', 'refresh');
+      redirect('/identifiers');
     }
     $identifier = $q->result()[0];
 
@@ -73,7 +73,7 @@ class Identifiers extends MY_AuthController
 
       if (empty($identifierName)) {
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
-        redirect('/identifiers/new', 'refresh');
+        redirect('/identifiers/new');
       }
       $this->db->where('id !=', $id);
       $this->db->where('name', $identifierName);
@@ -90,7 +90,7 @@ class Identifiers extends MY_AuthController
           'success',
           "Le type d'identifiant a bien été modifié avec succès !"
         );
-        redirect('/identifiers', 'refresh');
+        redirect('/identifiers');
       }
     }
 
@@ -102,7 +102,7 @@ class Identifiers extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
     if ($q->num_rows() <= 0) {
-      redirect('/identifiers', 'refresh');
+      redirect('/identifiers');
     }
     $project = $q->result()[0];
 
@@ -129,7 +129,7 @@ class Identifiers extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
     if ($q->num_rows() <= 0) {
-      redirect('/projects', 'refresh');
+      redirect('/projects');
     }
     $project = $q->result()[0];
 
@@ -151,7 +151,7 @@ class Identifiers extends MY_AuthController
         'success',
         "L'identifiant a bien été ajouté avec succès !"
       );
-      redirect('/identifiers/show/' . $id, 'refresh');
+      redirect('/identifiers/show/' . $id);
     }
 
     $this->db->select(['id', 'name']);
@@ -168,14 +168,14 @@ class Identifiers extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('project_identifiers');
     if ($q->num_rows() <= 0) {
-      redirect('/projects', 'refresh');
+      redirect('/projects');
     }
     $ident = $q->result()[0];
 
     $this->db->where('id', $ident->project_id);
     $q = $this->db->get('projects');
     if ($q->num_rows() <= 0) {
-      redirect('/projects', 'refresh');
+      redirect('/projects');
     }
     $project = $q->result()[0];
 
@@ -197,7 +197,7 @@ class Identifiers extends MY_AuthController
         'success',
         "L'identifiant a bien été modifié avec succès !"
       );
-      redirect('/identifiers/show/' . $ident->project_id, 'refresh');
+      redirect('/identifiers/show/' . $ident->project_id);
     }
 
     $this->db->select(['id', 'name']);
@@ -220,10 +220,10 @@ class Identifiers extends MY_AuthController
         'success',
         "L'identifiant a bien été supprimé !"
       );
-      redirect('/identifiers/show/' . $q->result()[0]->project_id, 'refresh');
+      redirect('/identifiers/show/' . $q->result()[0]->project_id);
     } else {
       $this->session->set_flashdata('error', "L'identifiant n'existe pas.");
-      redirect('/projects', 'refresh');
+      redirect('/projects');
     }
   }
 }

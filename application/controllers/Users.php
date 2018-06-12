@@ -20,7 +20,7 @@ class Users extends MY_AuthController
     $this->db->where('users.id', $id);
     $q = $this->db->get('users');
     if ($q->num_rows() <= 0) {
-      redirect('/users', 'refresh');
+      redirect('/users');
     }
     $user = $q->result()[0];
 
@@ -46,7 +46,7 @@ class Users extends MY_AuthController
     } else {
       $this->session->set_flashdata('error', "L'utilisateur n'existe pas.");
     }
-    redirect('/users', 'refresh');
+    redirect('/users');
   }
 
   public function new()
@@ -57,7 +57,7 @@ class Users extends MY_AuthController
           'error',
           'Veuillez insérer un mot de passe !'
         );
-        redirect('/users/new', 'refresh');
+        redirect('/users/new');
       }
 
       $userFirstname = strip_tags(trim($this->input->post('firstname')));
@@ -77,7 +77,7 @@ class Users extends MY_AuthController
           'error',
           'Veuillez insérer une adresse mail !'
         );
-        redirect('/users/new', 'refresh');
+        redirect('/users/new');
       }
       $this->db->where('mail', $userMail);
       $q = $this->db->get('users');
@@ -99,7 +99,7 @@ class Users extends MY_AuthController
           'success',
           "L'utilisateur a bien été créé avec succès !"
         );
-        redirect('/users', 'refresh');
+        redirect('/users');
       }
     }
 
@@ -115,7 +115,7 @@ class Users extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('users');
     if ($q->num_rows() <= 0) {
-      redirect('/users', 'refresh');
+      redirect('/users');
     }
     $user = $q->result()[0];
 
@@ -143,7 +143,7 @@ class Users extends MY_AuthController
           'error',
           'Veuillez insérer une adresse mail !'
         );
-        redirect('/users/new', 'refresh');
+        redirect('/users/new');
       }
 
       $this->db->where('id !=', $id);
@@ -168,7 +168,7 @@ class Users extends MY_AuthController
           'success',
           "L'utilisateur a bien été modifié avec succès !"
         );
-        redirect('/user/' . $id, 'refresh');
+        redirect('/user/' . $id);
       }
     }
 

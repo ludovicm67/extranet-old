@@ -29,7 +29,7 @@ class Projects extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
     if ($q->num_rows() <= 0) {
-      redirect('/projects', 'refresh');
+      redirect('/projects');
     }
     $project = $q->result()[0];
     $project->client = null;
@@ -123,7 +123,7 @@ class Projects extends MY_AuthController
     } else {
       $this->session->set_flashdata('error', "Le projet n'existe pas.");
     }
-    redirect('/projects', 'refresh');
+    redirect('/projects');
   }
 
   public function new()
@@ -216,7 +216,7 @@ class Projects extends MY_AuthController
           'success',
           'Le projet a bien été créé avec succès !'
         );
-        redirect('/project/' . $projectId, 'refresh');
+        redirect('/project/' . $projectId);
       }
 
       $this->session->set_flashdata(
@@ -260,7 +260,7 @@ class Projects extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
     if ($q->num_rows() <= 0) {
-      redirect('/projects', 'refresh');
+      redirect('/projects');
     }
 
     // if form was submitted
@@ -358,7 +358,7 @@ class Projects extends MY_AuthController
           'success',
           'Le projet a bien été modifié avec succès !'
         );
-        redirect('/project/' . $projectId, 'refresh');
+        redirect('/project/' . $projectId);
       }
 
       $this->session->set_flashdata(

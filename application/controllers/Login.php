@@ -7,7 +7,7 @@ class Login extends MY_Controller
   {
     if ($this->session->has_userdata('logged')) {
       if ($this->session->userdata('logged') === true) {
-        redirect('/', 'refresh');
+        redirect('/');
       } else {
         $this->session->unset_userdata('logged');
       }
@@ -39,7 +39,7 @@ class Login extends MY_Controller
             'success',
             'Vous êtes à présents connectés !'
           );
-          redirect('/', 'refresh');
+          redirect('/');
         } else {
           // bad password
           $this->session->set_flashdata('error', 'Mauvais identifiants !');

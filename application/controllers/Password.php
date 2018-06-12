@@ -20,7 +20,7 @@ class Password extends MY_Controller
           'error',
           "Aucun compte utilisateur associé trouvé !"
         );
-        redirect('/password/reset', 'refresh');
+        redirect('/password/reset');
       }
       $user = $q->result()[0];
 
@@ -78,7 +78,7 @@ class Password extends MY_Controller
         'error',
         "Le lien a expiré ou n'est pas valide !"
       );
-      redirect('/login', 'refresh');
+      redirect('/login');
     }
     $line = $q->result()[0];
 
@@ -96,7 +96,7 @@ class Password extends MY_Controller
         'success',
         "Le mot de passe a bien été modifié avec succès, vous pouvez dès à présent vous connecter."
       );
-      redirect('/login', 'refresh');
+      redirect('/login');
     }
 
     $this->load->view('password/token');

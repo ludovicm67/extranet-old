@@ -15,7 +15,7 @@ class Clients extends MY_AuthController
       ->get_where('sellsy_clients', ['id' => $id], 1, 0)
       ->result();
     if (count($clientDB) !== 1) {
-      redirect('/clients', 'refresh');
+      redirect('/clients');
     }
     $client = $clientDB[0];
     $client->contacts = $this->db

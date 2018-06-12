@@ -8,7 +8,7 @@ class Setup extends CI_Controller
     $r = ['js_exec_request' => false, 'js_request_url' => null];
 
     if ($this->db->table_exists('users') && $this->db->count_all('users') > 0) {
-      redirect('/', 'refresh');
+      redirect('/');
     }
 
     $this->session->unset_userdata('logged');
@@ -46,7 +46,7 @@ class Setup extends CI_Controller
         'success',
         'Le compte administrateur a bien été créé, vous pouvez désormais vous connecter !'
       );
-      redirect('/login', 'refresh');
+      redirect('/login');
     }
 
     $this->load->view('setup', $r);

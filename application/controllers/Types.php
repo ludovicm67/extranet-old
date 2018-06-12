@@ -20,7 +20,7 @@ class Types extends MY_AuthController
     } else {
       $this->session->set_flashdata('error', "Le type n'existe pas.");
     }
-    redirect('/types', 'refresh');
+    redirect('/types');
   }
 
   public function new()
@@ -30,7 +30,7 @@ class Types extends MY_AuthController
 
       if (empty($typeName)) {
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
-        redirect('/types/new', 'refresh');
+        redirect('/types/new');
       }
       $this->db->where('name', $typeName);
       $q = $this->db->get('types');
@@ -42,7 +42,7 @@ class Types extends MY_AuthController
           'success',
           'Le type a bien été créé avec succès !'
         );
-        redirect('/types', 'refresh');
+        redirect('/types');
       }
     }
 
@@ -55,7 +55,7 @@ class Types extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('types');
     if ($q->num_rows() <= 0) {
-      redirect('/types', 'refresh');
+      redirect('/types');
     }
     $type = $q->result()[0];
 
@@ -64,7 +64,7 @@ class Types extends MY_AuthController
 
       if (empty($typeName)) {
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
-        redirect('/types/new', 'refresh');
+        redirect('/types/new');
       }
       $this->db->where('id !=', $id);
       $this->db->where('name', $typeName);
@@ -81,7 +81,7 @@ class Types extends MY_AuthController
           'success',
           'Le type a bien été modifié avec succès !'
         );
-        redirect('/types', 'refresh');
+        redirect('/types');
       }
     }
 

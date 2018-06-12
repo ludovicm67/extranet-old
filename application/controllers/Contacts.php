@@ -15,7 +15,7 @@ class Contacts extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('contacts');
     if ($q->num_rows() <= 0) {
-      redirect('/contacts', 'refresh');
+      redirect('/contacts');
     }
     $contact = $q->result()[0];
 
@@ -53,7 +53,7 @@ class Contacts extends MY_AuthController
     } else {
       $this->session->set_flashdata('error', "Le contact n'existe pas.");
     }
-    redirect('/contacts', 'refresh');
+    redirect('/contacts');
   }
 
   public function new()
@@ -71,7 +71,7 @@ class Contacts extends MY_AuthController
 
       if (empty($contactName)) {
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
-        redirect('/contacts/new', 'refresh');
+        redirect('/contacts/new');
       }
 
       $this->db->insert('contacts', [
@@ -86,7 +86,7 @@ class Contacts extends MY_AuthController
         'success',
         'Le contact a bien été créé avec succès !'
       );
-      redirect('/contacts', 'refresh');
+      redirect('/contacts');
     }
 
     $this->db->select(['id', 'name']);
@@ -101,7 +101,7 @@ class Contacts extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('contacts');
     if ($q->num_rows() <= 0) {
-      redirect('/contacts', 'refresh');
+      redirect('/contacts');
     }
     $contact = $q->result()[0];
 
@@ -118,7 +118,7 @@ class Contacts extends MY_AuthController
 
       if (empty($contactName)) {
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
-        redirect('/contacts/new', 'refresh');
+        redirect('/contacts/new');
       }
 
       $this->db->where('id', $id);
@@ -134,7 +134,7 @@ class Contacts extends MY_AuthController
         'success',
         'Le contact a bien été modifié avec succès !'
       );
-      redirect('/contacts', 'refresh');
+      redirect('/contacts');
     }
 
     $this->db->select(['id', 'name']);
