@@ -23,26 +23,13 @@ ob_start();
 
 <?php if (!empty($results->projects)): ?>
 <h2>Projets</h2>
-<table class="table table-hover">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Nom</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach ($results->projects as $project): ?>
-    <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($project->name)); ?>">
-      <td><a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a></td>
-      <td>
-        <a href="/project/edit/<?php echo $project->id; ?>">Modifier</a>
-        -
-        <a href="/project/delete/<?php echo $project->id; ?>">Supprimer</a>
-      </td>
-    </tr>
-    <?php endforeach; ?>
-  </tbody>
-</table>
+<ul>
+  <?php foreach ($results->projects as $project): ?>
+  <li class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($project->name)); ?>">
+    <a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a>
+  </li>
+<?php endforeach; ?>
+</ul>
 <?php endif; ?>
 
 <?php if (!empty($results->contacts)): ?>
@@ -78,7 +65,6 @@ ob_start();
       <th scope="col">Adresse mail</th>
       <th scope="col">Rôle</th>
       <th scope="col">Administrateur ?</th>
-      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -88,11 +74,6 @@ ob_start();
       <td><a href="mailto:<?php echo htmlspecialchars($user->mail); ?>"><?php echo $user->mail; ?></a></td>
       <td><?php echo ($user->role) ? $user->role : 'Aucun rôle'; ?></td>
       <td><?php echo ($user->is_admin) ? 'Oui' : 'Non'; ?></td>
-      <td>
-        <a href="/user/edit/<?php echo $user->id; ?>">Modifier</a>
-        -
-        <a href="/user/delete/<?php echo $user->id; ?>">Supprimer</a>
-      </td>
     </tr>
     <?php endforeach; ?>
   </tbody>
