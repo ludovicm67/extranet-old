@@ -61,13 +61,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </li>
             <?php endif; ?>
           </ul>
+          <?php if ($this->session->logged): ?>
+          <form class="form-inline" action="/search" method="get">
+            <input id="searcher" class="form-control mr-sm-2" type="search" name="q" placeholder="Rechercher..." aria-label="Rechercher">
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Rechercher</button>
+          </form>
+          <?php endif; ?>
         </div>
-        <?php if ($this->session->logged): ?>
-        <form class="form-inline" action="/" method="get">
-          <input id="searcher" class="form-control mr-sm-2" type="search" name="q" placeholder="Rechercher..." aria-label="Rechercher">
-          <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Rechercher</button>
-        </form>
-        <?php endif; ?>
       </div>
     </nav>
   </header>

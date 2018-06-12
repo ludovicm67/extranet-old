@@ -5,13 +5,7 @@ class Clients extends MY_AuthController
 {
   public function index()
   {
-    $clientsDB = $this->db->get('sellsy_clients')->result();
-    $clients = [];
-    foreach ($clientsDB as $k => $c) {
-      $clientsDB[$k]->contacts = [];
-      $clients[$c->id] = $clientsDB[$k];
-    }
-
+    $clients = $this->db->get('sellsy_clients')->result();
     $this->load->view('clients/list', ['clients' => $clients]);
   }
 
