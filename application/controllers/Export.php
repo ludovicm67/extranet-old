@@ -41,6 +41,8 @@ class Export extends MY_AuthController
 
   public function index()
   {
+    $this->checkPermission('export_contacts', 'show');
+
     $contacts = $this->getResults();
 
     $this->db->order_by('name');
@@ -60,6 +62,8 @@ class Export extends MY_AuthController
 
   public function download()
   {
+    $this->checkPermission('export_contacts', 'show');
+
     $contacts = $this->getResults();
     header("Content-type: text/plain");
     header("Content-Disposition: attachment; filename=contacts.csv");

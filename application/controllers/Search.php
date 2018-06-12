@@ -21,36 +21,42 @@ class Search extends MY_AuthController
       $res->has_query = true;
 
       // clients
-      $this->db->like('name', $query);
-      $res->clients = $this->db->get('sellsy_clients')->result();
+      if ($this->hasPermission('clients', 'show')) {
+        $this->db->like('name', $query);
+        $res->clients = $this->db->get('sellsy_clients')->result();
+      }
 
       // projects
-      $myId = $this->session->id;
-      if (empty($myId)) {
-        $myId = null;
+      if ($this->hasPermission('projects', 'show')) {
+        $this->db->order_by('updated_at', 'desc');
+        $this->db->order_by('id', 'desc');
+        $this->db->like('name', $query);
+        $res->projects = $this->db->get('projects')->result();
       }
-      $this->db->order_by('updated_at', 'desc');
-      $this->db->order_by('id', 'desc');
-      $this->db->like('name', $query);
-      $res->projects = $this->db->get('projects')->result();
 
       // contacts
-      $this->db->like('name', $query);
-      $res->contacts = $this->db->get('contacts')->result();
+      if ($this->hasPermission('contacts', 'show')) {
+        $this->db->like('name', $query);
+        $res->contacts = $this->db->get('contacts')->result();
+      }
 
       // users
-      $this->db->select('*, roles.name AS role, users.id AS id');
-      $this->db->order_by('users.id', 'desc');
-      $this->db->join('roles', 'roles.id = users.role_id', 'left');
-      $this->db->like("CONCAT(firstname, ' ', lastname)", $query);
-      $this->db->or_like("CONCAT(lastname, ' ', firstname)", $query);
-      $this->db->or_like('mail', $query);
-      $res->users = $this->db->get('users')->result();
+      if ($this->hasPermission('users', 'show')) {
+        $this->db->select('*, roles.name AS role, users.id AS id');
+        $this->db->order_by('users.id', 'desc');
+        $this->db->join('roles', 'roles.id = users.role_id', 'left');
+        $this->db->like("CONCAT(firstname, ' ', lastname)", $query);
+        $this->db->or_like("CONCAT(lastname, ' ', firstname)", $query);
+        $this->db->or_like('mail', $query);
+        $res->users = $this->db->get('users')->result();
+      }
 
       // tags
-      $this->db->order_by('name');
-      $this->db->like('name', $query);
-      $res->tags = $this->db->get('tags')->result();
+      if ($this->hasPermission('tags', 'show')) {
+        $this->db->order_by('name');
+        $this->db->like('name', $query);
+        $res->tags = $this->db->get('tags')->result();
+      }
 
       $res->results += count($res->clients);
       $res->results += count($res->projects);

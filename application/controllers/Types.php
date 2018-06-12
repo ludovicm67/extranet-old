@@ -5,6 +5,8 @@ class Types extends MY_AuthController
 {
   public function index()
   {
+    $this->checkPermission('types', 'show');
+
     $this->db->order_by('name');
     $types = $this->db->get('types')->result();
     $this->load->view('types/list', ['types' => $types]);
@@ -12,6 +14,8 @@ class Types extends MY_AuthController
 
   public function delete($id)
   {
+    $this->checkPermission('types', 'delete');
+
     $this->db->where('id', $id);
     $q = $this->db->get('types');
     if ($q->num_rows() > 0) {
@@ -25,6 +29,8 @@ class Types extends MY_AuthController
 
   public function new()
   {
+    $this->checkPermission('types', 'add');
+
     if (isset($_POST['name'])) {
       $typeName = strip_tags(trim($this->input->post('name')));
 
@@ -51,6 +57,8 @@ class Types extends MY_AuthController
 
   public function edit($id)
   {
+    $this->checkPermission('types', 'edit');
+
     // check if type exists
     $this->db->where('id', $id);
     $q = $this->db->get('types');

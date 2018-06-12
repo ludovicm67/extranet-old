@@ -5,12 +5,16 @@ class Clients extends MY_AuthController
 {
   public function index()
   {
+    $this->checkPermission('clients', 'show');
+
     $clients = $this->db->get('sellsy_clients')->result();
     $this->load->view('clients/list', ['clients' => $clients]);
   }
 
   public function show($id)
   {
+    $this->checkPermission('clients_details', 'show');
+
     $clientDB = $this->db
       ->get_where('sellsy_clients', ['id' => $id], 1, 0)
       ->result();
@@ -21,16 +25,20 @@ class Clients extends MY_AuthController
     $client->contacts = $this->db
       ->get_where('sellsy_contacts', ['thirdid' => $client->sellsy_id])
       ->result();
-    $ordersDB = $this->db
-      ->get_where('sellsy_orders', ['thirdid' => $client->sellsy_id])
-      ->result();
 
     $orders = [];
-    foreach ($ordersDB as $o) {
-      $orders[$o->sellsy_id] = $o;
-      $orders[$o->sellsy_id]->invoices = [];
-      $orders[$o->sellsy_id]->remainingOrderAmount = floatval($o->totalAmount);
-      $orders[$o->sellsy_id]->remainingDueAmount = 0;
+    if ($this->hasPermission('orders', 'show')) {
+      $ordersDB = $this->db
+        ->get_where('sellsy_orders', ['thirdid' => $client->sellsy_id])
+        ->result();
+      foreach ($ordersDB as $o) {
+        $orders[$o->sellsy_id] = $o;
+        $orders[$o->sellsy_id]->invoices = [];
+        $orders[$o->sellsy_id]->remainingOrderAmount = floatval(
+          $o->totalAmount
+        );
+        $orders[$o->sellsy_id]->remainingDueAmount = 0;
+      }
     }
 
     $ordersIds = array_keys($orders);
@@ -44,7 +52,9 @@ class Clients extends MY_AuthController
         if (!isset($orders[$invoice->parentid])) {
           continue;
         }
-        $orders[$invoice->parentid]->invoices[] = $invoice;
+        if ($this->hasPermission('invoices', 'show')) {
+          $orders[$invoice->parentid]->invoices[] = $invoice;
+        }
         $orders[$invoice->parentid]->remainingOrderAmount -= floatval(
           $invoice->totalAmount
         );
@@ -56,9 +66,9 @@ class Clients extends MY_AuthController
 
     $client->orders = $orders;
 
-    $client->projects = $this->db
-      ->get_where('projects', ['client_id' => $client->id])
-      ->result();
+    $client->projects = ($this->hasPermission('projects', 'show'))
+      ? $this->db->get_where('projects', ['client_id' => $client->id])->result()
+      : [];
 
     $this->load->view('clients/show', ['client' => $client]);
   }

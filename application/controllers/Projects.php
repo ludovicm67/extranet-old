@@ -5,6 +5,8 @@ class Projects extends MY_AuthController
 {
   public function index()
   {
+    $this->checkPermission('projects', 'show');
+
     $myId = $this->session->id;
     if (empty($myId)) {
       $myId = null;
@@ -26,6 +28,8 @@ class Projects extends MY_AuthController
 
   public function show($id)
   {
+    $this->checkPermission('projects', 'show');
+
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
     if ($q->num_rows() <= 0) {
@@ -37,7 +41,7 @@ class Projects extends MY_AuthController
     $clientDB = $this->db
       ->get_where('sellsy_clients', ['id' => $project->client_id], 1, 0)
       ->result();
-    if (count($clientDB) === 1) {
+    if (count($clientDB) === 1 && $this->hasPermission('clients', 'show')) {
       $project->client = $clientDB[0];
     }
 
@@ -48,22 +52,28 @@ class Projects extends MY_AuthController
     $this->db->join('contacts', 'contacts.id = project_contacts.contact_id');
     $this->db->join('types', 'types.id = contacts.type_id', 'left');
     $this->db->where('project_id', $project->id);
-    $project->contacts = $this->db->get()->result();
+    $project->contacts = ($this->hasPermission('contacts', 'show'))
+      ? $this->db->get()->result()
+      : [];
 
-    $this->db->select('*');
-    $this->db->from('project_orders');
-    $this->db->join(
-      'sellsy_orders',
-      'sellsy_orders.id = project_orders.order_id'
-    );
-    $this->db->where('project_id', $project->id);
-    $ordersDB = $this->db->get()->result();
     $orders = [];
-    foreach ($ordersDB as $o) {
-      $orders[$o->sellsy_id] = $o;
-      $orders[$o->sellsy_id]->invoices = [];
-      $orders[$o->sellsy_id]->remainingOrderAmount = floatval($o->totalAmount);
-      $orders[$o->sellsy_id]->remainingDueAmount = 0;
+    if ($this->hasPermission('orders', 'show')) {
+      $this->db->select('*');
+      $this->db->from('project_orders');
+      $this->db->join(
+        'sellsy_orders',
+        'sellsy_orders.id = project_orders.order_id'
+      );
+      $this->db->where('project_id', $project->id);
+      $ordersDB = $this->db->get()->result();
+      foreach ($ordersDB as $o) {
+        $orders[$o->sellsy_id] = $o;
+        $orders[$o->sellsy_id]->invoices = [];
+        $orders[$o->sellsy_id]->remainingOrderAmount = floatval(
+          $o->totalAmount
+        );
+        $orders[$o->sellsy_id]->remainingDueAmount = 0;
+      }
     }
 
     $ordersIds = array_keys($orders);
@@ -77,7 +87,9 @@ class Projects extends MY_AuthController
         if (!isset($orders[$invoice->parentid])) {
           continue;
         }
-        $orders[$invoice->parentid]->invoices[] = $invoice;
+        if ($this->hasPermission('invoices', 'show')) {
+          $orders[$invoice->parentid]->invoices[] = $invoice;
+        }
         $orders[$invoice->parentid]->remainingOrderAmount -= floatval(
           $invoice->totalAmount
         );
@@ -93,25 +105,33 @@ class Projects extends MY_AuthController
     $this->db->from('project_tags');
     $this->db->join('tags', 'tags.id = project_tags.tag_id');
     $this->db->where('project_id', $project->id);
-    $project->tags = $this->db->get()->result();
+    $project->tags = ($this->hasPermission('tags', 'show'))
+      ? $this->db->get()->result()
+      : [];
 
     $this->db->select('*');
     $this->db->from('project_users');
     $this->db->join('users', 'users.id = project_users.user_id');
     $this->db->where('project_id', $project->id);
-    $project->users = $this->db->get()->result();
+    $project->users = ($this->hasPermission('users', 'show'))
+      ? $this->db->get()->result()
+      : [];
 
     $this->db->order_by('order', 'asc');
     $this->db->select(['name', 'value']);
-    $project->urls = $this->db
-      ->get_where('project_urls', ['project_id' => $project->id])
-      ->result();
+    $project->urls = ($this->hasPermission('project_urls', 'show'))
+      ? $this->db
+        ->get_where('project_urls', ['project_id' => $project->id])
+        ->result()
+      : [];
 
     $this->load->view('projects/show', ['project' => $project]);
   }
 
   public function delete($id)
   {
+    $this->checkPermission('projects', 'delete');
+
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
     if ($q->num_rows() > 0) {
@@ -128,6 +148,8 @@ class Projects extends MY_AuthController
 
   public function new()
   {
+    $this->checkPermission('projects', 'add');
+
     if (isset($_POST['name'])) {
       $projectName = strip_tags(trim($this->input->post('name')));
       $projectDomain = strip_tags(trim($this->input->post('domain')));
@@ -256,6 +278,8 @@ class Projects extends MY_AuthController
 
   public function edit($id)
   {
+    $this->checkPermission('projects', 'edit');
+
     // check if project exists
     $this->db->where('id', $id);
     $q = $this->db->get('projects');

@@ -5,7 +5,7 @@ class Roles extends MY_AuthController
 {
   public function index()
   {
-    $this->checkPermission('roles', 'read');
+    $this->checkPermission('roles', 'show');
 
     $this->db->order_by('name');
     $roles = $this->db->get('roles')->result();
@@ -14,6 +14,8 @@ class Roles extends MY_AuthController
 
   public function delete($id)
   {
+    $this->checkPermission('roles', 'delete');
+
     $this->db->where('id', $id);
     $q = $this->db->get('roles');
     if ($q->num_rows() > 0) {
@@ -27,6 +29,8 @@ class Roles extends MY_AuthController
 
   public function new()
   {
+    $this->checkPermission('roles', 'add');
+
     if (isset($_POST['name'])) {
       $roleName = strip_tags(trim($this->input->post('name')));
 
@@ -53,6 +57,8 @@ class Roles extends MY_AuthController
 
   public function edit($id)
   {
+    $this->checkPermission('roles', 'edit');
+
     // check if role exists
     $this->db->where('id', $id);
     $q = $this->db->get('roles');

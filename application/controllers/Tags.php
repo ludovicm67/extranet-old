@@ -5,6 +5,8 @@ class Tags extends MY_AuthController
 {
   public function index()
   {
+    $this->checkPermission('tags', 'show');
+
     $this->db->order_by('name');
     $tags = $this->db->get('tags')->result();
     $this->load->view('tags/list', ['tags' => $tags]);
@@ -12,6 +14,8 @@ class Tags extends MY_AuthController
 
   public function show($id)
   {
+    $this->checkPermission('tags', 'show');
+
     $this->db->where('id', $id);
     $q = $this->db->get('tags');
     if ($q->num_rows() <= 0) {
@@ -27,13 +31,17 @@ class Tags extends MY_AuthController
       $this->db->where('value', $value);
     }
     $this->db->where('tag_id', $tag->id);
-    $tag->projects = $this->db->get()->result();
+    $tag->projects = ($this->hasPermission('projects', 'show'))
+      ? $this->db->get()->result()
+      : [];
 
     $this->load->view('tags/show', ['tag' => $tag]);
   }
 
   public function delete($id)
   {
+    $this->checkPermission('tags', 'delete');
+
     $this->db->where('id', $id);
     $q = $this->db->get('tags');
     if ($q->num_rows() > 0) {
@@ -47,6 +55,8 @@ class Tags extends MY_AuthController
 
   public function new()
   {
+    $this->checkPermission('tags', 'add');
+
     if (isset($_POST['name'])) {
       $tagName = strtolower(
         str_replace(
@@ -78,6 +88,8 @@ class Tags extends MY_AuthController
 
   public function edit($id)
   {
+    $this->checkPermission('tags', 'edit');
+
     // check if tag exists
     $this->db->where('id', $id);
     $q = $this->db->get('tags');

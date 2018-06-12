@@ -5,6 +5,8 @@ class Identifiers extends MY_AuthController
 {
   public function index()
   {
+    $this->checkPermission('identifiers', 'show');
+
     $this->db->order_by('name');
     $identifiers = $this->db->get('identifiers')->result();
     $this->load->view('identifiers/list', ['identifiers' => $identifiers]);
@@ -12,6 +14,8 @@ class Identifiers extends MY_AuthController
 
   public function delete($id)
   {
+    $this->checkPermission('identifiers', 'delete');
+
     $this->db->where('id', $id);
     $q = $this->db->get('identifiers');
     if ($q->num_rows() > 0) {
@@ -31,6 +35,8 @@ class Identifiers extends MY_AuthController
 
   public function new()
   {
+    $this->checkPermission('identifiers', 'add');
+
     if (isset($_POST['name'])) {
       $identifierName = strip_tags(trim($this->input->post('name')));
 
@@ -60,6 +66,8 @@ class Identifiers extends MY_AuthController
 
   public function edit($id)
   {
+    $this->checkPermission('identifiers', 'edit');
+
     // check if identifier exists
     $this->db->where('id', $id);
     $q = $this->db->get('identifiers');
@@ -99,6 +107,8 @@ class Identifiers extends MY_AuthController
 
   public function show($id)
   {
+    $this->checkPermission('project_identifiers', 'show');
+
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
     if ($q->num_rows() <= 0) {
@@ -126,6 +136,8 @@ class Identifiers extends MY_AuthController
 
   public function assign($id)
   {
+    $this->checkPermission('project_identifiers', 'add');
+
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
     if ($q->num_rows() <= 0) {
@@ -165,6 +177,8 @@ class Identifiers extends MY_AuthController
 
   public function project_edit($id)
   {
+    $this->checkPermission('project_identifiers', 'edit');
+
     $this->db->where('id', $id);
     $q = $this->db->get('project_identifiers');
     if ($q->num_rows() <= 0) {
@@ -212,6 +226,8 @@ class Identifiers extends MY_AuthController
 
   public function project_delete($id)
   {
+    $this->checkPermission('project_identifiers', 'delete');
+
     $this->db->where('id', $id);
     $q = $this->db->get('project_identifiers');
     if ($q->num_rows() > 0) {

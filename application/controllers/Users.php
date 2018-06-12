@@ -5,6 +5,8 @@ class Users extends MY_AuthController
 {
   public function index()
   {
+    $this->checkPermission('users', 'show');
+
     $this->db->select('*, roles.name AS role, users.id AS id');
     $this->db->order_by('users.id', 'desc');
     $this->db->join('roles', 'roles.id = users.role_id', 'left');
@@ -14,6 +16,8 @@ class Users extends MY_AuthController
 
   public function show($id)
   {
+    $this->checkPermission('users', 'show');
+
     $this->db->select('*, roles.name AS role, users.id AS id');
     $this->db->order_by('users.id', 'desc');
     $this->db->join('roles', 'roles.id = users.role_id', 'left');
@@ -28,13 +32,17 @@ class Users extends MY_AuthController
     $this->db->from('project_users');
     $this->db->join('projects', 'projects.id = project_users.project_id');
     $this->db->where('user_id', $user->id);
-    $user->projects = $this->db->get()->result();
+    $user->projects = ($this->hasPermission('projects', 'show'))
+      ? $this->db->get()->result()
+      : [];
 
     $this->load->view('users/show', ['user' => $user]);
   }
 
   public function delete($id)
   {
+    $this->checkPermission('users', 'delete');
+
     $this->db->where('id', $id);
     $q = $this->db->get('users');
     if ($q->num_rows() > 0) {
@@ -51,6 +59,8 @@ class Users extends MY_AuthController
 
   public function new()
   {
+    $this->checkPermission('users', 'add');
+
     if (isset($_POST['mail'])) {
       if (empty(trim($this->input->post('password')))) {
         $this->session->set_flashdata(
@@ -111,6 +121,8 @@ class Users extends MY_AuthController
 
   public function edit($id)
   {
+    $this->checkPermission('users', 'edit');
+
     // check if user exists
     $this->db->where('id', $id);
     $q = $this->db->get('users');

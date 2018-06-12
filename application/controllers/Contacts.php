@@ -5,6 +5,8 @@ class Contacts extends MY_AuthController
 {
   public function index()
   {
+    $this->checkPermission('contacts', 'show');
+
     $this->db->order_by('name');
     $contacts = $this->db->get('contacts')->result();
     $this->load->view('contacts/list', ['contacts' => $contacts]);
@@ -12,6 +14,8 @@ class Contacts extends MY_AuthController
 
   public function show($id)
   {
+    $this->checkPermission('contacts', 'show');
+
     $this->db->where('id', $id);
     $q = $this->db->get('contacts');
     if ($q->num_rows() <= 0) {
@@ -42,6 +46,8 @@ class Contacts extends MY_AuthController
 
   public function delete($id)
   {
+    $this->checkPermission('contacts', 'delete');
+
     $this->db->where('id', $id);
     $q = $this->db->get('contacts');
     if ($q->num_rows() > 0) {
@@ -58,6 +64,8 @@ class Contacts extends MY_AuthController
 
   public function new()
   {
+    $this->checkPermission('contacts', 'add');
+
     if (isset($_POST['name'])) {
       $contactName = strip_tags(trim($this->input->post('name')));
       $contactType = intval($this->input->post('type'));
@@ -97,6 +105,8 @@ class Contacts extends MY_AuthController
 
   public function edit($id)
   {
+    $this->checkPermission('contacts', 'edit');
+
     // check if contact exists
     $this->db->where('id', $id);
     $q = $this->db->get('contacts');
