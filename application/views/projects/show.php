@@ -19,6 +19,10 @@ ob_start();
   <?php endforeach; ?>
 </p>
 
+<?php if ($project->domain): ?>
+<p><strong>Nom de domaine principal :</strong> <?php echo $project->domain; ?></p>
+<?php endif; ?>
+
 <h2>Client principal</h2>
 <?php if (!empty($project->client)): ?>
   <p>Le client principal de ce projet est <a href="/client/<?php echo $project->client->id; ?>"><?php echo $project->client->fullName; ?></a>.</p>

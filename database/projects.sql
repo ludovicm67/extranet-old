@@ -6,6 +6,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `projects` (
   `id` int (11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255),
+  `domain` varchar(255),
   `client_id` int (11),
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

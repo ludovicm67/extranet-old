@@ -130,12 +130,14 @@ class Projects extends MY_AuthController
   {
     if (isset($_POST['name'])) {
       $projectName = strip_tags(trim($this->input->post('name')));
+      $projectDomain = strip_tags(trim($this->input->post('domain')));
       $projectClient = strip_tags(trim($this->input->post('client')));
 
       if (!empty($projectName)) {
         $this->db->insert('projects', [
           'name' => $projectName,
-          'client_id' => ($projectClient == 0) ? null : $projectClient
+          'client_id' => ($projectClient == 0) ? null : $projectClient,
+          'domain' => empty($projectDomain) ? null : $projectDomain
         ]);
         $projectId = $this->db->insert_id();
 
@@ -264,13 +266,15 @@ class Projects extends MY_AuthController
     // if form was submitted
     if (isset($_POST['name'])) {
       $projectName = strip_tags(trim($this->input->post('name')));
+      $projectDomain = strip_tags(trim($this->input->post('domain')));
       $projectClient = strip_tags(trim($this->input->post('client')));
 
       if (!empty($projectName)) {
         $this->db->where('id', $id);
         $this->db->update('projects', [
           'name' => $projectName,
-          'client_id' => ($projectClient == 0) ? null : $projectClient
+          'client_id' => ($projectClient == 0) ? null : $projectClient,
+          'domain' => empty($projectDomain) ? null : $projectDomain
         ]);
         $projectId = $id;
 

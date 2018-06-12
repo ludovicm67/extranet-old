@@ -41,6 +41,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="/contacts">Liste</a>
                 <a class="dropdown-item" href="/types">Types</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/export">Exporter</a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -49,7 +51,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <a class="dropdown-item" href="/users">Liste</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/roles">Rôles</a>
-                <a class="dropdown-item" href="/permissions">Permissions</a>
               </div>
             </li>
             <li class="nav-item">

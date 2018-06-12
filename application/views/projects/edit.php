@@ -14,6 +14,12 @@ ob_start();
     </div>
   </div>
   <div class="form-group row">
+    <label for="projectDomain" class="col-sm-2 col-form-label">Domaine principal</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="domain" value="<?php echo htmlspecialchars($project->domain); ?>" id="projectDomain" placeholder="Domaine principal du projet (facultatif)...">
+    </div>
+  </div>
+  <div class="form-group row">
     <label for="projectClient" class="col-sm-2 col-form-label">Client principal</label>
     <div class="col-sm-10">
       <select class="form-control" name="client" id="projectClient">
