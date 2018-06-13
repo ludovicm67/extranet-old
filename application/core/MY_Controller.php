@@ -77,7 +77,7 @@ class MY_Controller extends CI_Controller
       }
 
       // get user permissions
-      if (is_null($this->userInfos)) {
+      if (is_null($this->userRights)) {
         $r = $this->db
           ->get_where('rights', ['role_id' => $user->role_id])
           ->result();
@@ -90,8 +90,7 @@ class MY_Controller extends CI_Controller
       // when user has no rights, don't need to continue
       if (
         empty($this->userRights) ||
-        count($this->userRights) <= 0 ||
-        !in_array($permissionName, $userRights)
+        count($this->userRights) <= 0
       ) {
         return false;
       }
