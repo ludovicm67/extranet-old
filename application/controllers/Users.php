@@ -43,6 +43,15 @@ class Users extends MY_AuthController
   {
     $this->checkPermission('users', 'delete');
 
+    // disallow user to delete himself
+    if ($this->session->id == $id) {
+      $this->session->set_flashdata(
+        'error',
+        'Vous ne pouvez pas supprimer votre compte vous-même'
+      );
+      redirect('/users');
+    }
+
     $this->db->where('id', $id);
     $q = $this->db->get('users');
     if ($q->num_rows() > 0) {
@@ -148,7 +157,20 @@ class Users extends MY_AuthController
       $userRole = ($this->input->post('role') == 0)
         ? null
         : $this->input->post('role');
+
       $userAdmin = (empty($this->input->post('is_admin'))) ? 0 : 1;
+      if ($this->session->id == $id) {
+        $userAdminMe = ($this->session->is_admin) ? 1 : 0;
+        if ($user->is_admin == 1 && $userAdmin == 0) {
+          $this->session->set_flashdata(
+            'error',
+            'Vous ne pouvez pas vous retirer les droits administrateurs vous-même'
+          );
+          $userAdmin = $user->is_admin;
+        } else {
+          $this->session->set_userdata('is_admin', $userAdmin);
+        }
+      }
 
       if (empty($userMail)) {
         $this->session->set_flashdata(
