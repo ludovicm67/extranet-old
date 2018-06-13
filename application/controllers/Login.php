@@ -48,6 +48,6 @@ class Login extends MY_Controller
       }
     }
 
-    $this->load->view('login');
+    $this->view('login');
   }
 }

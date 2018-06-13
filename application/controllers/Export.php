@@ -51,7 +51,7 @@ class Export extends MY_AuthController
     $this->db->order_by('name');
     $tags = $this->db->get('tags')->result();
 
-    $this->load->view('export', [
+    $this->view('export', [
       'contacts' => $contacts,
       'types' => $types,
       'tags' => $tags,

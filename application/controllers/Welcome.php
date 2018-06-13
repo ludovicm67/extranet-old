@@ -9,7 +9,7 @@ class Welcome extends MY_AuthController
 {
   public function index()
   {
-    $this->load->view('welcome_message');
+    $this->view('welcome_message');
   }
 
   public function logout()

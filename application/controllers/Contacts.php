@@ -9,7 +9,7 @@ class Contacts extends MY_AuthController
 
     $this->db->order_by('name');
     $contacts = $this->db->get('contacts')->result();
-    $this->load->view('contacts/list', ['contacts' => $contacts]);
+    $this->view('contacts/list', ['contacts' => $contacts]);
   }
 
   public function show($id)
@@ -41,7 +41,7 @@ class Contacts extends MY_AuthController
     $this->db->where('contact_id', $contact->id);
     $contact->projects = $this->db->get()->result();
 
-    $this->load->view('contacts/show', ['contact' => $contact]);
+    $this->view('contacts/show', ['contact' => $contact]);
   }
 
   public function delete($id)
@@ -100,7 +100,7 @@ class Contacts extends MY_AuthController
     $this->db->select(['id', 'name']);
     $types = $this->db->get('types')->result();
 
-    $this->load->view('contacts/new', ['types' => $types]);
+    $this->view('contacts/new', ['types' => $types]);
   }
 
   public function edit($id)
@@ -150,7 +150,7 @@ class Contacts extends MY_AuthController
     $this->db->select(['id', 'name']);
     $types = $this->db->get('types')->result();
 
-    $this->load->view('contacts/edit', [
+    $this->view('contacts/edit', [
       'contact' => $contact,
       'types' => $types
     ]);

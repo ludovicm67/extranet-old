@@ -24,35 +24,69 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
             <?php if ($this->session->logged): ?>
-            <li class="nav-item">
-              <a class="nav-link" href="/clients">Clients</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Projets</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="/projects">Liste</a>
-                <a class="dropdown-item" href="/tags">Tags</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/identifiers">Types d'identifiants</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Contacts</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="/contacts">Liste</a>
-                <a class="dropdown-item" href="/types">Types</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/export">Exporter</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Utilisateurs</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="/users">Liste</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/roles">Rôles</a>
-              </div>
-            </li>
+              <?php if ($controller->hasPermissions('clients', 'show')): ?>
+                <li class="nav-item">
+                  <a class="nav-link" href="/clients">Clients</a>
+                </li>
+              <?php endif; ?>
+              <?php if ($controller->hasPermissions('projects', 'show')
+                        || $controller->hasPermissions('tags', 'show')
+                        || $controller->hasPermissions('identifiers', 'show')): ?>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Projets</a>
+                  <div class="dropdown-menu">
+                  <?php if ($controller->hasPermissions('projects', 'show')): ?>
+                    <a class="dropdown-item" href="/projects">Liste</a>
+                  <?php endif; ?>
+                  <?php if ($controller->hasPermissions('tags', 'show')): ?>
+                    <a class="dropdown-item" href="/tags">Tags</a>
+                  <?php endif; ?>
+                  <?php if ($controller->hasPermissions('projects', 'show')): ?>
+                    <div class="dropdown-divider"></div>
+                  <?php endif; ?>
+                  <?php if ($controller->hasPermissions('identifiers', 'show')): ?>
+                    <a class="dropdown-item" href="/identifiers">Types d'identifiants</a>
+                  <?php endif; ?>
+                  </div>
+                </li>
+              <?php endif; ?>
+              <?php if ($controller->hasPermissions('contacts', 'show')
+                        || $controller->hasPermissions('types', 'show')
+                        || $controller->hasPermissions('export_contacts', 'show')): ?>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Contacts</a>
+                  <div class="dropdown-menu">
+                    <?php if ($controller->hasPermissions('contacts', 'show')): ?>
+                      <a class="dropdown-item" href="/contacts">Liste</a>
+                    <?php endif; ?>
+                    <?php if ($controller->hasPermissions('types', 'show')): ?>
+                      <a class="dropdown-item" href="/types">Types</a>
+                    <?php endif; ?>
+                    <?php if ($controller->hasPermissions('contacts', 'show')
+                              && $controller->hasPermissions('export_contacts', 'show')): ?>
+                      <div class="dropdown-divider"></div>
+                    <?php endif; ?>
+                    <?php if ($controller->hasPermissions('export_contacts', 'show')): ?>
+                      <a class="dropdown-item" href="/export">Exporter</a>
+                    <?php endif; ?>
+                  </div>
+                </li>
+              <?php endif; ?>
+              <?php if ($controller->hasPermissions('users', 'show')
+                        || $controller->hasPermissions('roles', 'show')): ?>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Utilisateurs</a>
+                  <div class="dropdown-menu">
+                    <?php if ($controller->hasPermissions('users', 'show')): ?>
+                      <a class="dropdown-item" href="/users">Liste</a>
+                      <div class="dropdown-divider"></div>
+                    <?php endif; ?>
+                    <?php if ($controller->hasPermissions('roles', 'show')): ?>
+                      <a class="dropdown-item" href="/roles">Rôles</a>
+                    <?php endif; ?>
+                  </div>
+                </li>
+              <?php endif; ?>
             <li class="nav-item">
               <a class="nav-link" href="/logout">Déconnexion</a>
             </li>

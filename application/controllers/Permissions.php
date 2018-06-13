@@ -240,7 +240,7 @@ class Permissions extends MY_AuthController
       }
     }
 
-    $this->load->view('permissions', [
+    $this->view('permissions', [
       'role' => $role,
       'permissions' => $this->permissions
     ]);

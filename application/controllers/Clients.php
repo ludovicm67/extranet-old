@@ -8,7 +8,7 @@ class Clients extends MY_AuthController
     $this->checkPermission('clients', 'show');
 
     $clients = $this->db->get('sellsy_clients')->result();
-    $this->load->view('clients/list', ['clients' => $clients]);
+    $this->view('clients/list', ['clients' => $clients]);
   }
 
   public function show($id)
@@ -70,6 +70,6 @@ class Clients extends MY_AuthController
       ? $this->db->get_where('projects', ['client_id' => $client->id])->result()
       : [];
 
-    $this->load->view('clients/show', ['client' => $client]);
+    $this->view('clients/show', ['client' => $client]);
   }
 }

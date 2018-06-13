@@ -59,7 +59,7 @@ class Password extends MY_Controller
       );
     }
 
-    $this->load->view('password/reset');
+    $this->view('password/reset');
   }
 
   public function token($token = null)
@@ -99,6 +99,6 @@ class Password extends MY_Controller
       redirect('/login');
     }
 
-    $this->load->view('password/token');
+    $this->view('password/token');
   }
 }

@@ -9,7 +9,7 @@ class Roles extends MY_AuthController
 
     $this->db->order_by('name');
     $roles = $this->db->get('roles')->result();
-    $this->load->view('roles/list', ['roles' => $roles]);
+    $this->view('roles/list', ['roles' => $roles]);
   }
 
   public function delete($id)
@@ -52,7 +52,7 @@ class Roles extends MY_AuthController
       }
     }
 
-    $this->load->view('roles/new');
+    $this->view('roles/new');
   }
 
   public function edit($id)
@@ -93,6 +93,6 @@ class Roles extends MY_AuthController
       }
     }
 
-    $this->load->view('roles/edit', ['role' => $role]);
+    $this->view('roles/edit', ['role' => $role]);
   }
 }

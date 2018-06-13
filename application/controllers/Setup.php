@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Setup extends CI_Controller
+class Setup extends MY_Controller
 {
   public function index()
   {
@@ -49,6 +49,6 @@ class Setup extends CI_Controller
       redirect('/login');
     }
 
-    $this->load->view('setup', $r);
+    $this->view('setup', $r);
   }
 }

@@ -11,7 +11,7 @@ class Users extends MY_AuthController
     $this->db->order_by('users.id', 'desc');
     $this->db->join('roles', 'roles.id = users.role_id', 'left');
     $users = $this->db->get('users')->result();
-    $this->load->view('users/list', ['users' => $users]);
+    $this->view('users/list', ['users' => $users]);
   }
 
   public function show($id)
@@ -36,7 +36,7 @@ class Users extends MY_AuthController
       ? $this->db->get()->result()
       : [];
 
-    $this->load->view('users/show', ['user' => $user]);
+    $this->view('users/show', ['user' => $user]);
   }
 
   public function delete($id)
@@ -125,7 +125,7 @@ class Users extends MY_AuthController
     $this->db->select(['id', 'name']);
     $roles = $this->db->get('roles')->result();
 
-    $this->load->view('users/new', ['roles' => $roles]);
+    $this->view('users/new', ['roles' => $roles]);
   }
 
   public function edit($id)
@@ -209,6 +209,6 @@ class Users extends MY_AuthController
     $this->db->select(['id', 'name']);
     $roles = $this->db->get('roles')->result();
 
-    $this->load->view('users/edit', ['user' => $user, 'roles' => $roles]);
+    $this->view('users/edit', ['user' => $user, 'roles' => $roles]);
   }
 }

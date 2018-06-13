@@ -20,11 +20,18 @@ class MY_Controller extends CI_Controller
     }
 
     if (
-      !$this->db->table_exists('users') ||
-      $this->db->count_all('users') <= 0
+      !in_array($this->router->fetch_class(), ['setup', 'cron']) &&
+      (!$this->db->table_exists('users') ||
+      $this->db->count_all('users') <= 0)
     ) {
       redirect('/setup');
     }
+  }
+
+  public function view($name, $args = []) {
+    if (!is_array($args)) $args = [];
+    $args['controller'] = $this;
+    $this->load->view($name, $args);
   }
 
   public function isLoggedIn()
@@ -89,8 +96,9 @@ class MY_Controller extends CI_Controller
 
       // when user has no rights, don't need to continue
       if (
-        empty($this->userRights) ||
-        count($this->userRights) <= 0
+        empty($this->userRights)
+        || count($this->userRights) <= 0
+        || !isset($this->userRights[$permissionName])
       ) {
         return false;
       }
@@ -117,6 +125,12 @@ class MY_Controller extends CI_Controller
     }
 
     return false;
+  }
+
+
+  public function hasPermissions($permissionName, $values = [])
+  {
+    return $this->hasPermission($permissionName, $values);
   }
 
   // check if current user has required permissions; if not it will be redirected

@@ -9,7 +9,7 @@ class Types extends MY_AuthController
 
     $this->db->order_by('name');
     $types = $this->db->get('types')->result();
-    $this->load->view('types/list', ['types' => $types]);
+    $this->view('types/list', ['types' => $types]);
   }
 
   public function delete($id)
@@ -52,7 +52,7 @@ class Types extends MY_AuthController
       }
     }
 
-    $this->load->view('types/new');
+    $this->view('types/new');
   }
 
   public function edit($id)
@@ -93,6 +93,6 @@ class Types extends MY_AuthController
       }
     }
 
-    $this->load->view('types/edit', ['type' => $type]);
+    $this->view('types/edit', ['type' => $type]);
   }
 }

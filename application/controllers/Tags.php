@@ -9,7 +9,7 @@ class Tags extends MY_AuthController
 
     $this->db->order_by('name');
     $tags = $this->db->get('tags')->result();
-    $this->load->view('tags/list', ['tags' => $tags]);
+    $this->view('tags/list', ['tags' => $tags]);
   }
 
   public function show($id)
@@ -35,7 +35,7 @@ class Tags extends MY_AuthController
       ? $this->db->get()->result()
       : [];
 
-    $this->load->view('tags/show', ['tag' => $tag]);
+    $this->view('tags/show', ['tag' => $tag]);
   }
 
   public function delete($id)
@@ -83,7 +83,7 @@ class Tags extends MY_AuthController
       }
     }
 
-    $this->load->view('tags/new');
+    $this->view('tags/new');
   }
 
   public function edit($id)
@@ -128,6 +128,6 @@ class Tags extends MY_AuthController
       }
     }
 
-    $this->load->view('tags/edit', ['tag' => $tag]);
+    $this->view('tags/edit', ['tag' => $tag]);
   }
 }

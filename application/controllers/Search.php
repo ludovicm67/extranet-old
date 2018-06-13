@@ -64,6 +64,6 @@ class Search extends MY_AuthController
       $res->results += count($res->users);
       $res->results += count($res->tags);
     }
-    $this->load->view('search', ['results' => $res]);
+    $this->view('search', ['results' => $res]);
   }
 }

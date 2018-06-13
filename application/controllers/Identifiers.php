@@ -9,7 +9,7 @@ class Identifiers extends MY_AuthController
 
     $this->db->order_by('name');
     $identifiers = $this->db->get('identifiers')->result();
-    $this->load->view('identifiers/list', ['identifiers' => $identifiers]);
+    $this->view('identifiers/list', ['identifiers' => $identifiers]);
   }
 
   public function delete($id)
@@ -61,7 +61,7 @@ class Identifiers extends MY_AuthController
       }
     }
 
-    $this->load->view('identifiers/new');
+    $this->view('identifiers/new');
   }
 
   public function edit($id)
@@ -102,7 +102,7 @@ class Identifiers extends MY_AuthController
       }
     }
 
-    $this->load->view('identifiers/edit', ['identifier' => $identifier]);
+    $this->view('identifiers/edit', ['identifier' => $identifier]);
   }
 
   public function show($id)
@@ -143,7 +143,7 @@ class Identifiers extends MY_AuthController
       ->get_where('project_identifiers', ['project_id' => $id])
       ->result();
 
-    $this->load->view('identifiers/show', [
+    $this->view('identifiers/show', [
       'project' => $project,
       'identifiers' => $identifiers
     ]);
@@ -184,7 +184,7 @@ class Identifiers extends MY_AuthController
     $this->db->select(['id', 'name']);
     $identifiers = $this->db->get('identifiers')->result();
 
-    $this->load->view('identifiers/assign', [
+    $this->view('identifiers/assign', [
       'project' => $project,
       'identifiers' => $identifiers
     ]);
@@ -232,7 +232,7 @@ class Identifiers extends MY_AuthController
     $this->db->select(['id', 'name']);
     $identifiers = $this->db->get('identifiers')->result();
 
-    $this->load->view('identifiers/modify', [
+    $this->view('identifiers/modify', [
       'project' => $project,
       'identifiers' => $identifiers,
       'values' => $ident

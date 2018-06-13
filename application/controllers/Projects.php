@@ -23,7 +23,7 @@ class Projects extends MY_AuthController
     $this->db->where('user_id', $myId);
     $this->db->or_where('user_id', null);
     $projects = $this->db->get('projects')->result();
-    $this->load->view('projects/list', ['projects' => $projects]);
+    $this->view('projects/list', ['projects' => $projects]);
   }
 
   public function show($id)
@@ -125,7 +125,7 @@ class Projects extends MY_AuthController
         ->result()
       : [];
 
-    $this->load->view('projects/show', ['project' => $project]);
+    $this->view('projects/show', ['project' => $project]);
   }
 
   public function delete($id)
@@ -266,7 +266,7 @@ class Projects extends MY_AuthController
       : null;
     $project = (object) ['client_id' => $clientId];
 
-    $this->load->view('projects/new', [
+    $this->view('projects/new', [
       'project' => $project,
       'clients' => $clients,
       'contacts' => $contacts,
@@ -442,7 +442,7 @@ class Projects extends MY_AuthController
 
     $users = $this->db->get('users')->result();
 
-    $this->load->view('projects/edit', [
+    $this->view('projects/edit', [
       'project' => $project,
       'clients' => $clients,
       'contacts' => $contacts,
