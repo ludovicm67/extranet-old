@@ -76,3 +76,4 @@ $route['user/edit/(:num)'] = "users/edit/$1";
 $route['user/delete/(:num)'] = "users/delete/$1";
 $route['project/fav/(:num)'] = "projects/fav/$1";
 $route['project/unfav/(:num)'] = "projects/unfav/$1";
+$route['permissions/(:num)'] = "permissions/index/$1";

@@ -20,6 +20,8 @@ ob_start();
       <td>
         <a href="/role/edit/<?php echo $role->id; ?>">Modifier</a>
         -
+        <a href="/permissions/<?php echo $role->id; ?>">Gérer les permissions</a>
+        -
         <a href="/role/delete/<?php echo $role->id; ?>">Supprimer</a>
       </td>
     </tr>
