@@ -28,13 +28,14 @@ class Users extends MY_AuthController
     }
     $user = $q->result()[0];
 
-    $this->db->select('*');
-    $this->db->from('project_users');
-    $this->db->join('projects', 'projects.id = project_users.project_id');
-    $this->db->where('user_id', $user->id);
-    $user->projects = ($this->hasPermission('projects', 'show'))
-      ? $this->db->get()->result()
-      : [];
+    $user->projects = [];
+    if ($this->hasPermission('projects', 'show')) {
+      $this->db->select('*');
+      $this->db->from('project_users');
+      $this->db->join('projects', 'projects.id = project_users.project_id');
+      $this->db->where('user_id', $user->id);
+      $user->projects = $this->db->get()->result();
+    }
 
     $this->view('users/show', ['user' => $user]);
   }

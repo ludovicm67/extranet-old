@@ -50,12 +50,7 @@ ob_start();
           <input type="checkbox" value="0" name="permissions[<?php echo $key; ?>][delete]" disabled="disabled">
         <?php endif; ?>
       </td>
-      <td><input class="row-select-all-checkbox" type="checkbox"<?php echo (
-        (($permission->show && in_array('show', $permission->checked)) || !$permission->show)
-        && (($permission->add && in_array('add', $permission->checked)) || !$permission->add)
-        && (($permission->edit && in_array('edit', $permission->checked)) || !$permission->edit)
-        && (($permission->delete && in_array('delete', $permission->checked)) || !$permission->delete)
-      ) ? ' checked="checked"' : ''; ?>></td>
+      <td><input class="row-select-all-checkbox" type="checkbox"<?php echo ((($permission->show && in_array('show', $permission->checked)) || !$permission->show) && (($permission->add && in_array('add', $permission->checked)) || !$permission->add) && (($permission->edit && in_array('edit', $permission->checked)) || !$permission->edit) && (($permission->delete && in_array('delete', $permission->checked)) || !$permission->delete)) ? ' checked="checked"' : ''; ?>></td>
     </tr>
     <?php endforeach; ?>
   </tbody>

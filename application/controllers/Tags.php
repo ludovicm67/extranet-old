@@ -23,17 +23,18 @@ class Tags extends MY_AuthController
     }
     $tag = $q->result()[0];
 
-    $this->db->select('*');
-    $this->db->from('project_tags');
-    $this->db->join('projects', 'projects.id = project_tags.project_id');
-    $value = $this->input->get('value');
-    if (isset($_GET['value'])) {
-      $this->db->where('value', $value);
+    $tag->projects = [];
+    if ($this->hasPermission('projects', 'show')) {
+      $this->db->select('*');
+      $this->db->from('project_tags');
+      $this->db->join('projects', 'projects.id = project_tags.project_id');
+      $value = $this->input->get('value');
+      if (isset($_GET['value'])) {
+        $this->db->where('value', $value);
+      }
+      $this->db->where('tag_id', $tag->id);
+      $tag->projects = $this->db->get()->result();
     }
-    $this->db->where('tag_id', $tag->id);
-    $tag->projects = ($this->hasPermission('projects', 'show'))
-      ? $this->db->get()->result()
-      : [];
 
     $this->view('tags/show', ['tag' => $tag]);
   }

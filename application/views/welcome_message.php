@@ -6,6 +6,20 @@ ob_start();
 <h1 class="mt-5">Accueil</h1>
 <p class="lead">Bienvenue sur l'interface de gestion de <?php echo $this->db->dc->getConfValueDefault('site_name', null, 'Gestion'); ?>.</p>
 
+<?php if (!empty($projects)): ?>
+<h2>Projets sur lesquels je suis assigné</h2>
+  <ul>
+    <?php foreach ($projects as $project): ?>
+      <li>
+        <a href="/project/<?php echo $project->id; ?>">
+          <?php echo $project->name; ?>
+        </a>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+<?php endif; ?>
+
+
 <h2>Mettre à jour les informations de la base de données</h2>
 <table class="table table-hover">
   <thead class="thead-dark">

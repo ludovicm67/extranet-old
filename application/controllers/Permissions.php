@@ -105,9 +105,9 @@ class Permissions extends MY_AuthController
         (object) [
           'name' => 'Identifiants confidentiels',
           'show' => true,
-          'add' => false,
-          'edit' => false,
-          'delete' => false,
+          'add' => true,
+          'edit' => true,
+          'delete' => true,
           'checked' => []
         ],
       'tags' =>

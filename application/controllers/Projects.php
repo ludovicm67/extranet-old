@@ -3,6 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Projects extends MY_AuthController
 {
+  private $isMyProject = false;
+  private $myProjects = null;
+
   public function index()
   {
     $this->checkPermission('projects', 'show');
@@ -26,9 +29,33 @@ class Projects extends MY_AuthController
     $this->view('projects/list', ['projects' => $projects]);
   }
 
+  private function getMyProjects()
+  {
+    if (is_null($this->myProjects)) {
+      $this->db->select('project_id');
+      $this->db->from('project_users');
+      $this->db->where('user_id', $this->session->id);
+      $this->myProjects = array_map(function ($p) {
+        return $p->project_id;
+      }, $this->db->get()->result());
+    }
+    return $this->myProjects;
+  }
+
+  private function imAssigned($id)
+  {
+    if (!empty($this->session->id)) {
+      return in_array($id, $this->getMyProjects());
+    }
+    return false;
+  }
+
   public function show($id)
   {
-    $this->checkPermission('projects', 'show');
+    $this->isMyProject = $this->imAssigned($id);
+    if (!$this->isMyProject) {
+      $this->checkPermission('projects', 'show');
+    }
 
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
@@ -41,23 +68,27 @@ class Projects extends MY_AuthController
     $clientDB = $this->db
       ->get_where('sellsy_clients', ['id' => $project->client_id], 1, 0)
       ->result();
-    if (count($clientDB) === 1 && $this->hasPermission('clients', 'show')) {
+    if (
+      count($clientDB) === 1 &&
+      ($this->isMyProject || $this->hasPermission('clients', 'show'))
+    ) {
       $project->client = $clientDB[0];
     }
 
-    $this->db->select(
-      '*, contacts.id AS id, contacts.name AS name, types.name AS type'
-    );
-    $this->db->from('project_contacts');
-    $this->db->join('contacts', 'contacts.id = project_contacts.contact_id');
-    $this->db->join('types', 'types.id = contacts.type_id', 'left');
-    $this->db->where('project_id', $project->id);
-    $project->contacts = ($this->hasPermission('contacts', 'show'))
-      ? $this->db->get()->result()
-      : [];
+    $project->contacts = [];
+    if ($this->isMyProject || $this->hasPermission('contacts', 'show')) {
+      $this->db->select(
+        '*, contacts.id AS id, contacts.name AS name, types.name AS type'
+      );
+      $this->db->from('project_contacts');
+      $this->db->join('contacts', 'contacts.id = project_contacts.contact_id');
+      $this->db->join('types', 'types.id = contacts.type_id', 'left');
+      $this->db->where('project_id', $project->id);
+      $project->contacts = $this->db->get()->result();
+    }
 
     $orders = [];
-    if ($this->hasPermission('orders', 'show')) {
+    if ($this->isMyProject || $this->hasPermission('orders', 'show')) {
       $this->db->select('*');
       $this->db->from('project_orders');
       $this->db->join(
@@ -87,7 +118,7 @@ class Projects extends MY_AuthController
         if (!isset($orders[$invoice->parentid])) {
           continue;
         }
-        if ($this->hasPermission('invoices', 'show')) {
+        if ($this->isMyProject || $this->hasPermission('invoices', 'show')) {
           $orders[$invoice->parentid]->invoices[] = $invoice;
         }
         $orders[$invoice->parentid]->remainingOrderAmount -= floatval(
@@ -101,31 +132,37 @@ class Projects extends MY_AuthController
 
     $project->orders = $orders;
 
-    $this->db->select('*');
-    $this->db->from('project_tags');
-    $this->db->join('tags', 'tags.id = project_tags.tag_id');
-    $this->db->where('project_id', $project->id);
-    $project->tags = ($this->hasPermission('tags', 'show'))
-      ? $this->db->get()->result()
-      : [];
+    $project->tags = [];
+    if ($this->isMyProject || $this->hasPermission('tags', 'show')) {
+      $this->db->select('*');
+      $this->db->from('project_tags');
+      $this->db->join('tags', 'tags.id = project_tags.tag_id');
+      $this->db->where('project_id', $project->id);
+      $project->tags = $this->db->get()->result();
+    }
 
-    $this->db->select('*');
-    $this->db->from('project_users');
-    $this->db->join('users', 'users.id = project_users.user_id');
-    $this->db->where('project_id', $project->id);
-    $project->users = ($this->hasPermission('users', 'show'))
-      ? $this->db->get()->result()
-      : [];
+    $project->users = [];
+    if ($this->isMyProject || $this->hasPermission('users', 'show')) {
+      $this->db->select('*');
+      $this->db->from('project_users');
+      $this->db->join('users', 'users.id = project_users.user_id');
+      $this->db->where('project_id', $project->id);
+      $project->users = $this->db->get()->result();
+    }
 
-    $this->db->order_by('order', 'asc');
-    $this->db->select(['name', 'value']);
-    $project->urls = ($this->hasPermission('project_urls', 'show'))
-      ? $this->db
+    $project->urls = [];
+    if ($this->isMyProject || $this->hasPermission('project_urls', 'show')) {
+      $this->db->order_by('order', 'asc');
+      $this->db->select(['name', 'value']);
+      $project->urls = $this->db
         ->get_where('project_urls', ['project_id' => $project->id])
-        ->result()
-      : [];
+        ->result();
+    }
 
-    $this->view('projects/show', ['project' => $project]);
+    $this->view('projects/show', [
+      'project' => $project,
+      'isMyProject' => $this->isMyProject
+    ]);
   }
 
   public function delete($id)
@@ -278,7 +315,10 @@ class Projects extends MY_AuthController
 
   public function edit($id)
   {
-    $this->checkPermission('projects', 'edit');
+    $this->isMyProject = $this->imAssigned($id);
+    if (!$this->isMyProject) {
+      $this->checkPermission('projects', 'edit');
+    }
 
     // check if project exists
     $this->db->where('id', $id);

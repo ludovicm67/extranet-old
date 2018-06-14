@@ -3,6 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Identifiers extends MY_AuthController
 {
+  private $isMyProject = false;
+  private $myProjects = null;
+
   public function index()
   {
     $this->checkPermission('identifiers', 'show');
@@ -10,6 +13,27 @@ class Identifiers extends MY_AuthController
     $this->db->order_by('name');
     $identifiers = $this->db->get('identifiers')->result();
     $this->view('identifiers/list', ['identifiers' => $identifiers]);
+  }
+
+  private function getMyProjects()
+  {
+    if (is_null($this->myProjects)) {
+      $this->db->select('project_id');
+      $this->db->from('project_users');
+      $this->db->where('user_id', $this->session->id);
+      $this->myProjects = array_map(function ($p) {
+        return $p->project_id;
+      }, $this->db->get()->result());
+    }
+    return $this->myProjects;
+  }
+
+  private function imAssigned($id)
+  {
+    if (!empty($this->session->id)) {
+      return in_array($id, $this->getMyProjects());
+    }
+    return false;
   }
 
   public function delete($id)
@@ -107,7 +131,10 @@ class Identifiers extends MY_AuthController
 
   public function show($id)
   {
-    $this->checkPermission('project_identifiers', 'show');
+    $this->isMyProject = $this->imAssigned($id);
+    if (!$this->isMyProject) {
+      $this->checkPermission('project_identifiers', 'show');
+    }
 
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
@@ -127,7 +154,8 @@ class Identifiers extends MY_AuthController
 
     if (
       !in_array($this->session->id, $users) &&
-      !$this->hasPermission('project_confidential_identifiers', 'show')
+      !$this->hasPermission('project_confidential_identifiers', 'show') &&
+      !$this->isMyProject
     ) {
       $this->db->where('confidential !=', 1);
     }
@@ -145,13 +173,17 @@ class Identifiers extends MY_AuthController
 
     $this->view('identifiers/show', [
       'project' => $project,
-      'identifiers' => $identifiers
+      'identifiers' => $identifiers,
+      'isMyProject' => $this->isMyProject
     ]);
   }
 
   public function assign($id)
   {
-    $this->checkPermission('project_identifiers', 'add');
+    $this->isMyProject = $this->imAssigned($id);
+    if (!$this->isMyProject) {
+      $this->checkPermission('project_identifiers', 'add');
+    }
 
     $this->db->where('id', $id);
     $q = $this->db->get('projects');
@@ -167,6 +199,10 @@ class Identifiers extends MY_AuthController
         : $this->input->post('type');
       $value = htmlspecialchars(trim($this->input->post('value')));
       $confidential = (empty($this->input->post('confidential'))) ? 0 : 1;
+
+      if (!$this->isMyProject && $confidential == 1) {
+        $this->checkPermission('project_confidential_identifiers', 'add');
+      }
 
       $this->db->insert('project_identifiers', [
         'project_id' => $id,
@@ -192,14 +228,20 @@ class Identifiers extends MY_AuthController
 
   public function project_edit($id)
   {
-    $this->checkPermission('project_identifiers', 'edit');
-
     $this->db->where('id', $id);
     $q = $this->db->get('project_identifiers');
     if ($q->num_rows() <= 0) {
       redirect('/projects');
     }
     $ident = $q->result()[0];
+
+    $this->isMyProject = $this->imAssigned($ident->project_id);
+    if (!$this->isMyProject) {
+      $this->checkPermission('project_identifiers', 'edit');
+      if ($ident->confidential == 1) {
+        $this->checkPermission('project_confidential_identifiers', 'edit');
+      }
+    }
 
     $this->db->where('id', $ident->project_id);
     $q = $this->db->get('projects');
@@ -241,17 +283,24 @@ class Identifiers extends MY_AuthController
 
   public function project_delete($id)
   {
-    $this->checkPermission('project_identifiers', 'delete');
-
     $this->db->where('id', $id);
     $q = $this->db->get('project_identifiers');
     if ($q->num_rows() > 0) {
+      $res = $q->result()[0];
+      $this->isMyProject = $this->imAssigned($res->project_id);
+      if (!$this->isMyProject) {
+        $this->checkPermission('project_identifiers', 'delete');
+        if ($res->confidential == 1) {
+          $this->checkPermission('project_confidential_identifiers', 'delete');
+        }
+      }
+
       $this->db->delete('project_identifiers', ['id' => $id]);
       $this->session->set_flashdata(
         'success',
         "L'identifiant a bien été supprimé !"
       );
-      redirect('/identifiers/show/' . $q->result()[0]->project_id);
+      redirect('/identifiers/show/' . $res->project_id);
     } else {
       $this->session->set_flashdata('error', "L'identifiant n'existe pas.");
       redirect('/projects');
