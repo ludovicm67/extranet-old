@@ -14,7 +14,7 @@ ob_start();
 <h2>Clients</h2>
 <ul>
   <?php foreach ($results->clients as $client): ?>
-  <li class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($client->fullName)); ?>">
+  <li>
     <a href="/client/<?php echo $client->id; ?>"><?php echo $client->fullName; ?></a>
   </li>
 <?php endforeach; ?>
@@ -25,7 +25,7 @@ ob_start();
 <h2>Projets</h2>
 <ul>
   <?php foreach ($results->projects as $project): ?>
-  <li class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($project->name)); ?>">
+  <li>
     <a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a>
   </li>
 <?php endforeach; ?>
@@ -43,7 +43,7 @@ ob_start();
   </thead>
   <tbody>
     <?php foreach ($results->contacts as $contact): ?>
-    <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($contact->name)); ?>">
+    <tr>
       <td><a href="/contact/<?php echo $contact->id; ?>"><?php echo $contact->name; ?></a></td>
       <td>
         <a href="/contact/edit/<?php echo $contact->id; ?>">Modifier</a>
@@ -69,7 +69,7 @@ ob_start();
   </thead>
   <tbody>
     <?php foreach ($results->users as $user): ?>
-    <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($user->firstname . ' ' . $user->lastname . ' ' . $user->firstname . ' ' . $user->mail)); ?>">
+    <tr>
       <td><a href="/user/<?php echo $user->id; ?>"><?php echo $user->firstname; ?> <?php echo $user->lastname; ?></a></td>
       <td><a href="mailto:<?php echo htmlspecialchars($user->mail); ?>"><?php echo $user->mail; ?></a></td>
       <td><?php echo ($user->role) ? $user->role : 'Aucun rôle'; ?></td>
@@ -91,7 +91,7 @@ ob_start();
   </thead>
   <tbody>
     <?php foreach ($results->tags as $tag): ?>
-    <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($tag->name)); ?>">
+    <tr>
       <td><a href="/tag/<?php echo $tag->id; ?>"><?php echo $tag->name; ?></a></td>
       <td>
         <a href="/tag/edit/<?php echo $tag->id; ?>">Modifier</a>
