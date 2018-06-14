@@ -150,9 +150,6 @@ class Contacts extends MY_AuthController
     $this->db->select(['id', 'name']);
     $types = $this->db->get('types')->result();
 
-    $this->view('contacts/edit', [
-      'contact' => $contact,
-      'types' => $types
-    ]);
+    $this->view('contacts/edit', ['contact' => $contact, 'types' => $types]);
   }
 }

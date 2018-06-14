@@ -21,15 +21,17 @@ class MY_Controller extends CI_Controller
 
     if (
       !in_array($this->router->fetch_class(), ['setup', 'cron']) &&
-      (!$this->db->table_exists('users') ||
-      $this->db->count_all('users') <= 0)
+      (!$this->db->table_exists('users') || $this->db->count_all('users') <= 0)
     ) {
       redirect('/setup');
     }
   }
 
-  public function view($name, $args = []) {
-    if (!is_array($args)) $args = [];
+  public function view($name, $args = [])
+  {
+    if (!is_array($args)) {
+      $args = [];
+    }
     $args['controller'] = $this;
     $this->load->view($name, $args);
   }
@@ -96,9 +98,9 @@ class MY_Controller extends CI_Controller
 
       // when user has no rights, don't need to continue
       if (
-        empty($this->userRights)
-        || count($this->userRights) <= 0
-        || !isset($this->userRights[$permissionName])
+        empty($this->userRights) ||
+        count($this->userRights) <= 0 ||
+        !isset($this->userRights[$permissionName])
       ) {
         return false;
       }
@@ -126,7 +128,6 @@ class MY_Controller extends CI_Controller
 
     return false;
   }
-
 
   public function hasPermissions($permissionName, $values = [])
   {

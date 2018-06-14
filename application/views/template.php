@@ -29,9 +29,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   <a class="nav-link" href="/clients">Clients</a>
                 </li>
               <?php endif; ?>
-              <?php if ($controller->hasPermissions('projects', 'show')
-                        || $controller->hasPermissions('tags', 'show')
-                        || $controller->hasPermissions('identifiers', 'show')): ?>
+              <?php if ($controller->hasPermissions('projects', 'show') || $controller->hasPermissions('tags', 'show') || $controller->hasPermissions('identifiers', 'show')): ?>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Projets</a>
                   <div class="dropdown-menu">
@@ -50,9 +48,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </div>
                 </li>
               <?php endif; ?>
-              <?php if ($controller->hasPermissions('contacts', 'show')
-                        || $controller->hasPermissions('types', 'show')
-                        || $controller->hasPermissions('export_contacts', 'show')): ?>
+              <?php if ($controller->hasPermissions('contacts', 'show') || $controller->hasPermissions('types', 'show') || $controller->hasPermissions('export_contacts', 'show')): ?>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Contacts</a>
                   <div class="dropdown-menu">
@@ -62,8 +58,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <?php if ($controller->hasPermissions('types', 'show')): ?>
                       <a class="dropdown-item" href="/types">Types</a>
                     <?php endif; ?>
-                    <?php if ($controller->hasPermissions('contacts', 'show')
-                              && $controller->hasPermissions('export_contacts', 'show')): ?>
+                    <?php if ($controller->hasPermissions('contacts', 'show') && $controller->hasPermissions('export_contacts', 'show')): ?>
                       <div class="dropdown-divider"></div>
                     <?php endif; ?>
                     <?php if ($controller->hasPermissions('export_contacts', 'show')): ?>
@@ -72,8 +67,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </div>
                 </li>
               <?php endif; ?>
-              <?php if ($controller->hasPermissions('users', 'show')
-                        || $controller->hasPermissions('roles', 'show')): ?>
+              <?php if ($controller->hasPermissions('users', 'show') || $controller->hasPermissions('roles', 'show')): ?>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Utilisateurs</a>
                   <div class="dropdown-menu">
