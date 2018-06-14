@@ -20,7 +20,7 @@ class MY_Controller extends CI_Controller
     }
 
     if (
-      !in_array($this->router->fetch_class(), ['setup', 'cron']) &&
+      !in_array($this->router->class, ['setup', 'cron']) &&
       (!$this->db->table_exists('users') || $this->db->count_all('users') <= 0)
     ) {
       redirect('/setup');
@@ -46,6 +46,15 @@ class MY_Controller extends CI_Controller
     $this->isLogged = false;
     $this->session->unset_userdata('logged');
     redirect('/login');
+  }
+
+  public function logDB($type, $table, $content = []) {
+    $userId = ($this->isLoggedIn() && isset($this->session->id)) ? $this->session->id : null;
+    $queryType = strtolower(trim($type));
+    $queryTable = strtolower(trim($table));
+    $queryContent = json_encode(trim($content));
+
+    // @TODO: write data in a database table
   }
 
   public function hasPermission($permissionName, $values = [])
