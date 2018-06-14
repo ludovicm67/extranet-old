@@ -90,4 +90,9 @@ $(document).ready(function () {
       $_target.prop('disabled', false);
     });
   });
+
+  $('.row-select-all-checkbox').click(function (e) {
+    $('input[type=checkbox]:enabled', $(e.target).closest('tr'))
+      .not(e.target).prop('checked', e.target.checked);
+  });
 });
