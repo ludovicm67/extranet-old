@@ -26,7 +26,10 @@ class Projects extends MY_AuthController
     $this->db->where('user_id', $myId);
     $this->db->or_where('user_id', null);
     $projects = $this->db->get('projects')->result();
-    $this->view('projects/list', ['projects' => $projects]);
+    $this->view('projects/list', [
+      'projects' => $projects,
+      'myProjects' => $this->getMyProjects()
+    ]);
   }
 
   private function getMyProjects()

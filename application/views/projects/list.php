@@ -3,7 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
 ?>
 
-<h1 class="mt-5">Liste des projets <a class="btn btn-outline-primary" href="/projects/new" role="button">Ajouter</a></h1>
+<h1 class="mt-5">
+  Liste des projets
+  <?php if ($controller->hasPermission('projects', 'add')): ?>
+    <a class="btn btn-outline-primary" href="/projects/new" role="button">Ajouter</a>
+  <?php endif; ?>
+</h1>
 <p class="lead">Page listant les différents projets</p>
 
 <table class="table table-hover">
@@ -24,9 +29,15 @@ ob_start();
       </td>
       <td><a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a></td>
       <td>
-        <a href="/project/edit/<?php echo $project->id; ?>">Modifier</a>
-        -
-        <a href="/project/delete/<?php echo $project->id; ?>">Supprimer</a>
+        <?php if (in_array($project->id, $myProjects) || $controller->hasPermission('projects', 'edit')): ?>
+          <a href="/project/edit/<?php echo $project->id; ?>">Modifier</a>
+        <?php endif; ?>
+        <?php if (in_array($project->id, $myProjects) || $controller->hasPermission('projects', 'edit') || $controller->hasPermission('projects', 'delete')): ?>
+          -
+        <?php endif; ?>
+        <?php if (in_array($project->id, $myProjects) || $controller->hasPermission('projects', 'delete')): ?>
+          <a href="/project/delete/<?php echo $project->id; ?>">Supprimer</a>
+        <?php endif; ?>
       </td>
     </tr>
     <?php endforeach; ?>
