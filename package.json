@@ -1,16 +1,22 @@
 {
   "name": "extranet",
   "version": "1.0.0",
-  "description": "What is CodeIgniter ###################",
+  "description": "Extranet",
   "main": "index.js",
   "devDependencies": {
-    "prettier": "^1.13.5",
-    "@prettier/plugin-php": "github:prettier/plugin-php"
+    "@prettier/plugin-php": "github:prettier/plugin-php",
+    "gulp": "^4.0.0",
+    "prettier": "^1.13.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier": "prettier"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.1.1",
+    "jquery": "^3.3.1",
+    "select2": "^4.0.6-rc.1"
+  }
 }

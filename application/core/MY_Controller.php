@@ -48,8 +48,11 @@ class MY_Controller extends CI_Controller
     redirect('/login');
   }
 
-  public function logDB($type, $table, $content = []) {
-    $userId = ($this->isLoggedIn() && isset($this->session->id)) ? $this->session->id : null;
+  public function logDB($type, $table, $content = [])
+  {
+    $userId = ($this->isLoggedIn() && isset($this->session->id))
+      ? $this->session->id
+      : null;
     $queryType = strtolower(trim($type));
     $queryTable = strtolower(trim($table));
     $queryContent = json_encode(trim($content));
