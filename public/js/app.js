@@ -38,7 +38,6 @@ $(document).ready(function () {
 
     if (!item) return;
     const newItem = item.cloneNode(true);
-    // newItem.classList.remove('dupplcate-item');
     target.parentNode.insertBefore(newItem, target);
     $(newItem).removeClass('dupplicate-item').show();
 

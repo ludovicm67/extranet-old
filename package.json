@@ -7,14 +7,15 @@
     "@prettier/plugin-php": "github:prettier/plugin-php",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
+    "bootstrap": "^4.1.1",
+    "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-babel": "^7.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify-es": "^1.0.4",
-    "prettier": "^1.13.5",
-    "bootstrap": "^4.1.1",
     "jquery": "^3.3.1",
+    "prettier": "^1.13.5",
     "select2": "^4.0.6-rc.1"
   },
   "scripts": {
