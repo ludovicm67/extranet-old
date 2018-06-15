@@ -57,6 +57,7 @@ class Users extends MY_AuthController
     $q = $this->db->get('users');
     if ($q->num_rows() > 0) {
       $this->db->delete('users', ['id' => $id]);
+      $this->writeLog('delete', 'users', $q->result()[0]);
       $this->session->set_flashdata(
         'success',
         "L'utilisateur a bien été supprimé !"
@@ -107,14 +108,17 @@ class Users extends MY_AuthController
           "Un utilisateur existe déjà avec cette adresse mail !"
         );
       } else {
-        $this->db->insert('users', [
+        $content = [
           'firstname' => $userFirstname,
           'lastname' => $userLastname,
           'password' => $userPassword,
           'mail' => $userMail,
           'role_id' => $userRole,
           'is_admin' => $userAdmin
-        ]);
+        ];
+        $this->db->insert('users', $content);
+        $content['id'] = $this->db->insert_id();
+        $this->writeLog('insert', 'users', $content);
         $this->session->set_flashdata(
           'success',
           "L'utilisateur a bien été créé avec succès !"
@@ -190,15 +194,18 @@ class Users extends MY_AuthController
           "Un utilisateur existe déjà avec cette adresse mail !"
         );
       } else {
-        $this->db->where('id', $id);
-        $this->db->update('users', [
+        $content = [
           'firstname' => $userFirstname,
           'lastname' => $userLastname,
           'password' => $userPassword,
           'mail' => $userMail,
           'role_id' => $userRole,
           'is_admin' => $userAdmin
-        ]);
+        ];
+        $this->db->where('id', $id);
+        $this->db->update('users', $content);
+        $content['id'] = $id;
+        $this->writeLog('update', 'users', $content);
         $this->session->set_flashdata(
           'success',
           "L'utilisateur a bien été modifié avec succès !"
