@@ -55,7 +55,7 @@ class MY_Controller extends CI_Controller
       : null;
     $queryType = strtolower(trim($type));
     $queryTable = strtolower(trim($table));
-    $queryContent = json_encode(trim($content));
+    $queryContent = json_encode($content);
 
     // @TODO: write data in a database table
   }
