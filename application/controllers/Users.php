@@ -219,4 +219,69 @@ class Users extends MY_AuthController
 
     $this->view('users/edit', ['user' => $user, 'roles' => $roles]);
   }
+
+  public function me()
+  {
+    $id = $this->session->id;
+
+    // check if user exists
+    $this->db->where('id', $id);
+    $q = $this->db->get('users');
+    if ($q->num_rows() <= 0) {
+      redirect('/users');
+    }
+    $user = $q->result()[0];
+
+    // if form was submitted
+    if (isset($_POST['mail'])) {
+      if (empty(trim($this->input->post('password')))) {
+        $userPassword = $user->password;
+      } else {
+        $userPassword = password_hash(
+          trim($this->input->post('password')),
+          PASSWORD_DEFAULT
+        );
+      }
+
+      $userFirstname = strip_tags(trim($this->input->post('firstname')));
+      $userLastname = strip_tags(trim($this->input->post('lastname')));
+      $userMail = strip_tags(trim($this->input->post('mail')));
+
+      if (empty($userMail)) {
+        $this->session->set_flashdata(
+          'error',
+          'Veuillez insérer une adresse mail !'
+        );
+        redirect('/users/new');
+      }
+
+      $this->db->where('id !=', $id);
+      $this->db->where('mail', $userMail);
+      $q = $this->db->get('users');
+      if ($q->num_rows() > 0) {
+        $this->session->set_flashdata(
+          'error',
+          "Un utilisateur existe déjà avec cette adresse mail !"
+        );
+      } else {
+        $content = [
+          'firstname' => $userFirstname,
+          'lastname' => $userLastname,
+          'password' => $userPassword,
+          'mail' => $userMail
+        ];
+        $this->db->where('id', $id);
+        $this->db->update('users', $content);
+        $content['id'] = $id;
+        $this->writeLog('update', 'users', $content);
+        $this->session->set_flashdata(
+          'success',
+          "Votre compte utilisateur a bien été modifié avec succès !"
+        );
+        redirect('/');
+      }
+    }
+
+    $this->view('users/me', ['user' => $user]);
+  }
 }

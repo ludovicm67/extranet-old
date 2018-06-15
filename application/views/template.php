@@ -79,13 +79,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </div>
                 </li>
               <?php endif; ?>
-            <li class="nav-item">
-              <a class="nav-link" href="/logout">Déconnexion</a>
-            </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  Moi<?php echo (!empty($this->session->firstname)) ? ' (' . $this->session->firstname . ')' : ''; ?>
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/users/me">Mon compte</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/logout">Déconnexion</a>
+                </div>
+              </li>
             <?php else: ?>
-            <li class="nav-item">
-              <a class="nav-link" href="/login">Connexion</a>
-            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Connexion</a>
+              </li>
             <?php endif; ?>
           </ul>
           <?php if ($this->session->logged): ?>
