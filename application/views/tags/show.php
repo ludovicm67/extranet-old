@@ -25,7 +25,7 @@ echo (!empty($this->input->get('value')))
 </h1>
 <p class="lead">Affichage des projets utilisant ce tag</p>
 
-<ul>
+<ul class="list-upgraded">
   <?php foreach ($tag->projects as $project): ?>
   <li>
     <a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a>

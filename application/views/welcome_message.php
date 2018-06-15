@@ -8,15 +8,15 @@ ob_start();
 
 <?php if (!empty($projects)): ?>
 <h2>Projets sur lesquels je suis assigné</h2>
-  <ul>
-    <?php foreach ($projects as $project): ?>
-      <li>
-        <a href="/project/<?php echo $project->id; ?>">
-          <?php echo $project->name; ?>
-        </a>
-      </li>
-    <?php endforeach; ?>
-  </ul>
+<ul class="list-upgraded">
+  <?php foreach ($projects as $project): ?>
+    <li>
+      <a href="/project/<?php echo $project->id; ?>">
+        <?php echo $project->name; ?>
+      </a>
+    </li>
+  <?php endforeach; ?>
+</ul>
 <?php endif; ?>
 
 

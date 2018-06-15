@@ -12,7 +12,7 @@ ob_start();
 <p><strong><?php echo $results->results; ?> résultats pour la requête "<em><?php echo $results->query; ?></em>".</strong></p>
 <?php if (!empty($results->clients)): ?>
 <h2>Clients</h2>
-<ul>
+<ul class="list-upgraded">
   <?php foreach ($results->clients as $client): ?>
   <li>
     <a href="/client/<?php echo $client->id; ?>"><?php echo $client->fullName; ?></a>
@@ -23,7 +23,7 @@ ob_start();
 
 <?php if (!empty($results->projects)): ?>
 <h2>Projets</h2>
-<ul>
+<ul class="list-upgraded">
   <?php foreach ($results->projects as $project): ?>
   <li>
     <a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a>
@@ -34,7 +34,7 @@ ob_start();
 
 <?php if (!empty($results->contacts)): ?>
 <h2>Contacts</h2>
-<ul>
+<ul class="list-upgraded">
   <?php foreach ($results->contacts as $contact): ?>
     <li>
       <a href="/contact/<?php echo $contact->id; ?>"><?php echo $contact->name; ?></a>
@@ -45,11 +45,10 @@ ob_start();
 
 <?php if (!empty($results->users)): ?>
 <h2>Utilisateurs</h2>
-<ul>
+<ul class="list-upgraded">
   <?php foreach ($results->users as $user): ?>
   <li>
-    <a href="/user/<?php echo $user->id; ?>"><?php echo $user->firstname; ?> <?php echo $user->lastname; ?></a>
-    (<a href="mailto:<?php echo htmlspecialchars($user->mail); ?>"><?php echo $user->mail; ?></a>)
+    <a href="/user/<?php echo $user->id; ?>"><?php echo $user->firstname; ?> <?php echo $user->lastname; ?> (<?php echo $user->mail; ?>)</a>
   </li>
   <?php endforeach; ?>
 </ul>
@@ -57,7 +56,7 @@ ob_start();
 
 <?php if (!empty($results->tags)): ?>
 <h2>Tags</h2>
-<ul>
+<ul class="list-upgraded">
   <?php foreach ($results->tags as $tag): ?>
   <li>
     <a href="/tag/<?php echo $tag->id; ?>"><?php echo $tag->name; ?></a>

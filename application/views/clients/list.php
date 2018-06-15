@@ -6,7 +6,7 @@ ob_start();
 <h1 class="mt-5">Liste des clients</h1>
 <p class="lead">Page listant les différents clients</p>
 
-<ul>
+<ul class="list-upgraded">
   <?php foreach ($clients as $client): ?>
   <li class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($client->fullName)); ?>">
     <a href="/client/<?php echo $client->id; ?>"><?php echo $client->fullName; ?></a>

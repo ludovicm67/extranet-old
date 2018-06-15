@@ -8,34 +8,34 @@ ob_start();
 
 <?php if (count($client->contacts)): ?>
 <h2>Contacts</h2>
-<ul>
+<div class="card-deck">
   <?php foreach ($client->contacts as $contact): ?>
-  <li>
-    <ul>
-      <?php if (!empty($contact->fullName)): ?>
-        <li><strong>Nom complet :</strong> <?php echo $contact->fullName; ?></li>
-      <?php endif; ?>
-      <?php if (!empty($contact->email)): ?>
-        <li><strong>Email :</strong> <?php echo $contact->email; ?></li>
-      <?php endif; ?>
-      <?php if (!empty($contact->tel)): ?>
-        <li><strong>Téléphone :</strong> <?php echo $contact->tel; ?></li>
-      <?php endif; ?>
-      <?php if (!empty($contact->mobile)): ?>
-        <li><strong>Mobile :</strong> <?php echo $contact->mobile; ?></li>
-      <?php endif; ?>
-      <?php if (!empty($contact->position)): ?>
-        <li><strong>Position :</strong> <?php echo $contact->position; ?></li>
-      <?php endif; ?>
-    </ul>
-  </li>
+  <div class="card bg-light">
+    <div class="card-body">
+      <h5 class="card-title"><?php echo $contact->fullName; ?></h5>
+      <p class="card-text">
+        <?php if (!empty($contact->position)): ?>
+          <?php echo $contact->position; ?><br>
+        <?php endif; ?>
+        <?php if (!empty($contact->email)): ?>
+          <a href="mailto:<?php echo htmlspecialchars($contact->email); ?>"><?php echo $contact->email; ?></a><br>
+        <?php endif; ?>
+        <?php if (!empty($contact->tel)): ?>
+          <a href="tel:<?php echo htmlspecialchars($contact->tel); ?>"><?php echo $contact->tel; ?></a><br>
+        <?php endif; ?>
+        <?php if (!empty($contact->mobile)): ?>
+          <a href="tel:<?php echo htmlspecialchars($contact->mobile); ?>"><?php echo $contact->mobile; ?></a><br>
+        <?php endif; ?>
+      </p>
+    </div>
+  </div>
   <?php endforeach; ?>
-</ul>
+</div>
 <?php endif; ?>
 
 <?php if (count($client->projects)): ?>
 <h2>Projets</h2>
-<ul>
+<ul class="list-upgraded">
   <?php foreach ($client->projects as $project): ?>
     <li><a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a></li>
   <?php endforeach; ?>

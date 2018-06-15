@@ -43,7 +43,7 @@ ob_start();
 </ul>
 
 <h2>Projets dans lequel ce contact est impliqué</h2>
-<ul>
+<ul class="list-upgraded">
   <?php foreach ($contact->projects as $project): ?>
   <li>
     <a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a>

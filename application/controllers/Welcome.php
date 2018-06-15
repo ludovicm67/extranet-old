@@ -14,6 +14,8 @@ class Welcome extends MY_AuthController
       $this->db->select('*');
       $this->db->from('project_users');
       $this->db->join('projects', 'projects.id = project_users.project_id');
+      $this->db->order_by('updated_at', 'desc');
+      $this->db->order_by('id', 'desc');
       $this->db->where('user_id', $this->session->id);
       $userProjects = $this->db->get()->result();
     }

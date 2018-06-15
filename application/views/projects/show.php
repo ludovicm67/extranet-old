@@ -38,7 +38,7 @@ ob_start();
 
 <h2>Contacts pour ce projet</h2>
 <?php if (!empty($project->contacts)): ?>
-  <ul>
+  <ul class="list-upgraded">
     <?php foreach ($project->contacts as $contact): ?>
       <li>
         <a href="/contact/<?php echo $contact->id; ?>">
@@ -54,7 +54,7 @@ ob_start();
 
 <h2>Utilisateurs assignés à ce projet</h2>
 <?php if (!empty($project->users)): ?>
-  <ul>
+  <ul class="list-upgraded">
     <?php foreach ($project->users as $user): ?>
       <li>
         <a href="/user/<?php echo $user->id; ?>">
