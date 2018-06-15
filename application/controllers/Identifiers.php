@@ -44,6 +44,7 @@ class Identifiers extends MY_AuthController
     $q = $this->db->get('identifiers');
     if ($q->num_rows() > 0) {
       $this->db->delete('identifiers', ['id' => $id]);
+      $this->writeLog('delete', 'identifiers', $q->result()[0]);
       $this->session->set_flashdata(
         'success',
         "Le type d'identifiant a bien été supprimé !"
@@ -76,7 +77,10 @@ class Identifiers extends MY_AuthController
           "Le type d'identifiant existe déjà !"
         );
       } else {
-        $this->db->insert('identifiers', ['name' => $identifierName]);
+        $content = ['name' => $identifierName];
+        $this->db->insert('identifiers', $content);
+        $content['id'] = $this->db->insert_id();
+        $this->writeLog('insert', 'identifiers', $content);
         $this->session->set_flashdata(
           'success',
           "Le type d'identifiant a bien été créé avec succès !"
@@ -116,8 +120,11 @@ class Identifiers extends MY_AuthController
           "Le type d'identifiant n'as pas été modifié : un autre porte déjà le même nom !"
         );
       } else {
+        $content = ['name' => $identifierName];
         $this->db->where('id', $id);
-        $this->db->update('identifiers', ['name' => $identifierName]);
+        $this->db->update('identifiers', $content);
+        $content['id'] = $id;
+        $this->writeLog('update', 'identifiers', $content);
         $this->session->set_flashdata(
           'success',
           "Le type d'identifiant a bien été modifié avec succès !"
