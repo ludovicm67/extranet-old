@@ -6,8 +6,12 @@ ob_start();
 <h1 class="mt-5">
   <?php echo $user->firstname; ?> <?php echo $user->lastname; ?>
   <small>(<?php echo $user->mail; ?>)</small>
-  <a class="btn btn-outline-primary" href="/user/edit/<?php echo $user->id; ?>" role="button">Modifier</a>
-  <a class="btn btn-outline-danger" href="/user/delete/<?php echo $user->id; ?>" role="button">Supprimer</a>
+  <?php if ($controller->hasPermission('users', 'edit')): ?>
+    <a class="btn btn-outline-primary" href="/user/edit/<?php echo $user->id; ?>" role="button">Modifier</a>
+  <?php endif; ?>
+  <?php if ($this->session->id != $user->id && $controller->hasPermission('users', 'delete')): ?>
+    <a class="btn btn-outline-danger" href="/user/delete/<?php echo $user->id; ?>" role="button">Supprimer</a>
+  <?php endif; ?>
 </h1>
 <p class="lead">Affichage des informations à propos de cet utilisateur</p>
 

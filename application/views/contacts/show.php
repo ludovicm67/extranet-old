@@ -5,8 +5,12 @@ ob_start();
 
 <h1 class="mt-5">
   <?php echo $contact->name; ?>
-  <a class="btn btn-outline-primary" href="/contact/edit/<?php echo $contact->id; ?>" role="button">Modifier</a>
-  <a class="btn btn-outline-danger" href="/contact/delete/<?php echo $contact->id; ?>" role="button">Supprimer</a>
+  <?php if ($controller->hasPermission('contacts', 'edit')): ?>
+    <a class="btn btn-outline-primary" href="/contact/edit/<?php echo $contact->id; ?>" role="button">Modifier</a>
+  <?php endif; ?>
+  <?php if ($controller->hasPermission('contacts', 'delete')): ?>
+    <a class="btn btn-outline-danger" href="/contact/delete/<?php echo $contact->id; ?>" role="button">Supprimer</a>
+  <?php endif; ?>
 </h1>
 <p class="lead">Affichage des informations à propos de ce contact</p>
 

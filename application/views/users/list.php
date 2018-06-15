@@ -3,7 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
 ?>
 
-<h1 class="mt-5">Liste des utilisateurs <a class="btn btn-outline-primary" href="/users/new" role="button">Ajouter</a></h1>
+<h1 class="mt-5">
+  Liste des utilisateurs
+  <?php if ($controller->hasPermission('users', 'add')): ?>
+    <a class="btn btn-outline-primary" href="/users/new" role="button">Ajouter</a>
+  <?php endif; ?>
+</h1>
 <p class="lead">Page listant les différents utilisateurs</p>
 
 <table class="table table-hover">
@@ -24,9 +29,15 @@ ob_start();
       <td><?php echo ($user->role) ? $user->role : 'Aucun rôle'; ?></td>
       <td><?php echo ($user->is_admin) ? 'Oui' : 'Non'; ?></td>
       <td>
-        <a href="/user/edit/<?php echo $user->id; ?>">Modifier</a>
-        -
-        <a href="/user/delete/<?php echo $user->id; ?>">Supprimer</a>
+        <?php if ($controller->hasPermission('users', 'edit')): ?>
+          <a href="/user/edit/<?php echo $user->id; ?>">Modifier</a>
+        <?php endif; ?>
+        <?php if ($controller->hasPermission('users', 'edit') && $this->session->id != $user->id && $controller->hasPermission('users', 'delete')): ?>
+          -
+        <?php endif; ?>
+        <?php if ($this->session->id != $user->id && $controller->hasPermission('users', 'delete')): ?>
+          <a href="/user/delete/<?php echo $user->id; ?>">Supprimer</a>
+        <?php endif; ?>
       </td>
     </tr>
     <?php endforeach; ?>

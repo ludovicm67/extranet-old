@@ -9,19 +9,20 @@ ob_start();
     <small><?php echo strip_tags($this->input->get('value')); ?></small>
     <a class="btn btn-outline-secondary" href="/tag/<?php echo $tag->id; ?>" role="button">Enlever le filtre</a>
   <?php endif; ?>
+  <?php if ($controller->hasPermission('export_contacts', 'show')): ?>
   <a
-    class="btn btn-outline-secondary"
-    href="/export?tag=<?php
-echo $tag->id;
-echo (!empty($this->input->get('value')))
-  ? '&value=' . urlencode(trim($this->input->get('value')))
-  : '';
-?>"
+  class="btn btn-outline-secondary"
+  href="/export?tag=<?php echo $tag->id; echo (!empty($this->input->get('value'))) ? '&value=' . urlencode(trim($this->input->get('value'))) : ''; ?>"
     role="button">
     Exporter
   </a>
-  <a class="btn btn-outline-primary" href="/tag/edit/<?php echo $tag->id; ?>" role="button">Modifier</a>
-  <a class="btn btn-outline-danger" href="/tag/delete/<?php echo $tag->id; ?>" role="button">Supprimer</a>
+  <?php endif; ?>
+  <?php if ($controller->hasPermission('tags', 'edit')): ?>
+    <a class="btn btn-outline-primary" href="/tag/edit/<?php echo $tag->id; ?>" role="button">Modifier</a>
+  <?php endif; ?>
+  <?php if ($controller->hasPermission('tags', 'delete')): ?>
+    <a class="btn btn-outline-danger" href="/tag/delete/<?php echo $tag->id; ?>" role="button">Supprimer</a>
+  <?php endif; ?>
 </h1>
 <p class="lead">Affichage des projets utilisant ce tag</p>
 

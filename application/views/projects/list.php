@@ -32,7 +32,7 @@ ob_start();
         <?php if (in_array($project->id, $myProjects) || $controller->hasPermission('projects', 'edit')): ?>
           <a href="/project/edit/<?php echo $project->id; ?>">Modifier</a>
         <?php endif; ?>
-        <?php if (in_array($project->id, $myProjects) || $controller->hasPermission('projects', 'edit') || $controller->hasPermission('projects', 'delete')): ?>
+        <?php if (in_array($project->id, $myProjects) || ($controller->hasPermission('projects', 'edit') && $controller->hasPermission('projects', 'delete'))): ?>
           -
         <?php endif; ?>
         <?php if (in_array($project->id, $myProjects) || $controller->hasPermission('projects', 'delete')): ?>

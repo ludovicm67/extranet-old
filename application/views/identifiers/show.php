@@ -5,7 +5,9 @@ ob_start();
 
 <h1 class="mt-5">
   <?php echo $project->name; ?>
-  <a class="btn btn-outline-primary" href="/project/<?php echo $project->id; ?>" role="button">Voir le projet</a>
+  <?php if ($isMyProject || $controller->hasPermission('projects', 'show')): ?>
+    <a class="btn btn-outline-primary" href="/project/<?php echo $project->id; ?>" role="button">Voir le projet</a>
+  <?php endif; ?>
   <?php if ($isMyProject || $controller->hasPermission('project_identifiers', 'add')): ?>
     <a class="btn btn-outline-primary" href="/identifiers/<?php echo $project->id; ?>/new" role="button">Ajouter un identifiant</a>
   <?php endif; ?>
@@ -31,7 +33,7 @@ ob_start();
         <?php if ($isMyProject || $controller->hasPermission('project_identifiers', 'edit')): ?>
           <a href="/identifiers/project_edit/<?php echo $identifier->id; ?>">Modifier</a>
         <?php endif; ?>
-        <?php if ($isMyProject || $controller->hasPermission('project_identifiers', 'edit') || $controller->hasPermission('project_identifiers', 'delete')): ?>
+        <?php if ($isMyProject || ($controller->hasPermission('project_identifiers', 'edit') && $controller->hasPermission('project_identifiers', 'delete'))): ?>
           -
         <?php endif; ?>
         <?php if ($isMyProject || $controller->hasPermission('project_identifiers', 'delete')): ?>

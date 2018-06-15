@@ -3,7 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
 ?>
 
-<h1 class="mt-5">Liste des tags <a class="btn btn-outline-primary" href="/tags/new" role="button">Ajouter</a></h1>
+<h1 class="mt-5">
+  Liste des tags
+  <?php if ($controller->hasPermission('tags', 'add')): ?>
+    <a class="btn btn-outline-primary" href="/tags/new" role="button">Ajouter</a>
+  <?php endif; ?>
+</h1>
 <p class="lead">Page listant les différents tags</p>
 
 <table class="table table-hover">
@@ -18,9 +23,15 @@ ob_start();
     <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($tag->name)); ?>">
       <td><a href="/tag/<?php echo $tag->id; ?>"><?php echo $tag->name; ?></a></td>
       <td>
-        <a href="/tag/edit/<?php echo $tag->id; ?>">Modifier</a>
-        -
-        <a href="/tag/delete/<?php echo $tag->id; ?>">Supprimer</a>
+        <?php if ($controller->hasPermission('tags', 'edit')): ?>
+          <a href="/tag/edit/<?php echo $tag->id; ?>">Modifier</a>
+        <?php endif; ?>
+        <?php if ($controller->hasPermission('tags', 'edit') && $controller->hasPermission('tags', 'delete')): ?>
+          -
+        <?php endif; ?>
+        <?php if ($controller->hasPermission('tags', 'delete')): ?>
+          <a href="/tag/delete/<?php echo $tag->id; ?>">Supprimer</a>
+        <?php endif; ?>
       </td>
     </tr>
     <?php endforeach; ?>

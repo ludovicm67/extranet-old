@@ -3,7 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
 ?>
 
-<h1 class="mt-5">Liste des types de contacts <a class="btn btn-outline-primary" href="/types/new" role="button">Ajouter</a></h1>
+<h1 class="mt-5">
+  Liste des types de contacts
+  <?php if ($controller->hasPermission('types', 'add')): ?>
+    <a class="btn btn-outline-primary" href="/types/new" role="button">Ajouter</a>
+  <?php endif; ?>
+</h1>
 <p class="lead">Page listant les différents types de contacts</p>
 
 <table class="table table-hover">
@@ -18,9 +23,15 @@ ob_start();
     <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($type->name)); ?>">
       <td><?php echo $type->name; ?></td>
       <td>
+        <?php if ($controller->hasPermission('types', 'edit')): ?>
         <a href="/type/edit/<?php echo $type->id; ?>">Modifier</a>
-        -
-        <a href="/type/delete/<?php echo $type->id; ?>">Supprimer</a>
+        <?php endif; ?>
+        <?php if ($controller->hasPermission('types', 'edit') && $controller->hasPermission('types', 'delete')): ?>
+          -
+        <?php endif; ?>
+        <?php if ($controller->hasPermission('types', 'delete')): ?>
+          <a href="/type/delete/<?php echo $type->id; ?>">Supprimer</a>
+        <?php endif; ?>
       </td>
     </tr>
     <?php endforeach; ?>
