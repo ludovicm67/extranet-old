@@ -176,6 +176,7 @@ class Projects extends MY_AuthController
     $q = $this->db->get('projects');
     if ($q->num_rows() > 0) {
       $this->db->delete('projects', ['id' => $id]);
+      $this->writeLog('delete', 'projects', $q->result()[0]);
       $this->session->set_flashdata(
         'success',
         'Le projet a bien été supprimé !'
@@ -196,11 +197,12 @@ class Projects extends MY_AuthController
       $projectClient = strip_tags(trim($this->input->post('client')));
 
       if (!empty($projectName)) {
-        $this->db->insert('projects', [
+        $projectContent = [
           'name' => $projectName,
           'client_id' => ($projectClient == 0) ? null : $projectClient,
           'domain' => empty($projectDomain) ? null : $projectDomain
-        ]);
+        ];
+        $this->db->insert('projects', $projectContent);
         $projectId = $this->db->insert_id();
 
         if (isset($_POST['contacts'])) {
@@ -233,6 +235,16 @@ class Projects extends MY_AuthController
           }
         }
 
+        $contentToLog = [
+          'project_id' => $projectId,
+          'project' => $projectContent,
+          'contacts' => $this->input->post('contacts'),
+          'orders' => $this->input->post('orders'),
+          'users' => $this->input->post('users'),
+          'urls' => [],
+          'tags' => []
+        ];
+
         if (
           isset($_POST['tagName']) &&
           isset($_POST['tagName']) &&
@@ -249,6 +261,10 @@ class Projects extends MY_AuthController
                 'tag_id' => $tagId,
                 'value' => $tagVal
               ]);
+              $contentToLog['tags'][] = [
+                'tag_id' => $tagId,
+                'value' => $tagVal
+              ];
             }
           }
         }
@@ -270,9 +286,16 @@ class Projects extends MY_AuthController
                 'value' => $urlValue,
                 'order' => $i
               ]);
+              $contentToLog['urls'][] = [
+                'name' => $urlName,
+                'value' => $urlValue,
+                'order' => $i
+              ];
             }
           }
         }
+
+        $this->writeLog('insert', 'projects', $contentToLog);
 
         $this->session->set_flashdata(
           'success',
@@ -337,12 +360,13 @@ class Projects extends MY_AuthController
       $projectClient = strip_tags(trim($this->input->post('client')));
 
       if (!empty($projectName)) {
-        $this->db->where('id', $id);
-        $this->db->update('projects', [
+        $projectContent = [
           'name' => $projectName,
           'client_id' => ($projectClient == 0) ? null : $projectClient,
           'domain' => empty($projectDomain) ? null : $projectDomain
-        ]);
+        ];
+        $this->db->where('id', $id);
+        $this->db->update('projects', $projectContent);
         $projectId = $id;
 
         $this->db->delete('project_contacts', ['project_id' => $id]);
@@ -378,6 +402,16 @@ class Projects extends MY_AuthController
           }
         }
 
+        $contentToLog = [
+          'project_id' => $projectId,
+          'project' => $projectContent,
+          'contacts' => $this->input->post('contacts'),
+          'orders' => $this->input->post('orders'),
+          'users' => $this->input->post('users'),
+          'urls' => [],
+          'tags' => []
+        ];
+
         $this->db->delete('project_tags', ['project_id' => $id]);
         if (
           isset($_POST['tagName']) &&
@@ -395,6 +429,10 @@ class Projects extends MY_AuthController
                 'tag_id' => $tagId,
                 'value' => $tagVal
               ]);
+              $contentToLog['tags'][] = [
+                'tag_id' => $tagId,
+                'value' => $tagVal
+              ];
             }
           }
         }
@@ -417,9 +455,16 @@ class Projects extends MY_AuthController
                 'value' => $urlValue,
                 'order' => $i
               ]);
+              $contentToLog['urls'][] = [
+                'name' => $urlName,
+                'value' => $urlValue,
+                'order' => $i
+              ];
             }
           }
         }
+
+        $this->writeLog('update', 'projects', $contentToLog);
 
         $this->session->set_flashdata(
           'success',
