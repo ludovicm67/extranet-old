@@ -48,7 +48,7 @@ class MY_Controller extends CI_Controller
     redirect('/login');
   }
 
-  public function logDB($type, $table, $content = [])
+  public function writeLog($type, $table, $content = [])
   {
     $userId = ($this->isLoggedIn() && isset($this->session->id))
       ? $this->session->id
@@ -57,7 +57,12 @@ class MY_Controller extends CI_Controller
     $queryTable = strtolower(trim($table));
     $queryContent = json_encode($content);
 
-    // @TODO: write data in a database table
+    $this->db->insert('logs', [
+      'user_id' => $userId,
+      'type' => $queryType,
+      'table' => $queryTable,
+      'content' => $queryContent
+    ]);
   }
 
   public function hasPermission($permissionName, $values = [])
