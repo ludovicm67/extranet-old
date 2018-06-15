@@ -282,6 +282,14 @@ class Users extends MY_AuthController
       }
     }
 
+    $this->db->where('user_id', $id);
+    $this->db->order_by('leave.id', 'desc');
+    $leave = $this->db->get('leave')->result();
+
+    $this->db->where('user_id', $id);
+    $this->db->order_by('transports.id', 'desc');
+    $transports = $this->db->get('transports')->result();
+
     $this->view('users/me', ['user' => $user]);
   }
 }

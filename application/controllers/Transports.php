@@ -100,6 +100,10 @@ class Transports extends MY_AuthController
 
   public function index()
   {
-    $this->view('transports/list');
+    $this->db->select('*, transports.id AS id');
+    $this->db->order_by('transports.id', 'desc');
+    $this->db->join('users', 'users.id = transports.user_id', 'left');
+    $content = $this->db->get('transports')->result();
+    $this->view('transports/list', ['content' => $content]);
   }
 }

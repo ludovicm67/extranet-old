@@ -45,6 +45,10 @@ class Leave extends MY_AuthController
 
   public function index()
   {
-    $this->view('leave/list');
+    $this->db->select('*, leave.id AS id');
+    $this->db->order_by('leave.id', 'desc');
+    $this->db->join('users', 'users.id = leave.user_id', 'left');
+    $content = $this->db->get('leave')->result();
+    $this->view('leave/list', ['content' => $content]);
   }
 }
