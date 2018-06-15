@@ -57,4 +57,28 @@ CREATE TABLE IF NOT EXISTS `rights` (
   FOREIGN KEY (`role_id`) REFERENCES roles(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE IF NOT EXISTS `leave` (
+  `id` int (11) NOT NULL AUTO_INCREMENT,
+  `user_id` int (11) NOT NULL,
+  `accepted` tinyint(1) DEFAULT 0,
+  `start` datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `end` datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `details` text,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `transports` (
+  `id` int (11) NOT NULL AUTO_INCREMENT,
+  `user_id` int (11) NOT NULL,
+  `accepted` tinyint(1) DEFAULT 0,
+  `year` int(11),
+  `month` int(11),
+  `amount` decimal(10, 2),
+  `file` varchar(255),
+  `details` text,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;

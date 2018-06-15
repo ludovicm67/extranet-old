@@ -1,3 +1,5 @@
 /vendor/
 /node_modules/
 /config.yml
+/public/uploads/*
+!/public/uploads/index.php

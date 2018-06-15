@@ -86,6 +86,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="/users/me">Mon compte</a>
                   <a class="dropdown-item" href="/calendar">Calendrier</a>
+                  <a class="dropdown-item" href="/leave">Congés</a>
+                  <a class="dropdown-item" href="/transports">Frais de transport</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="/logout">Déconnexion</a>
                 </div>
