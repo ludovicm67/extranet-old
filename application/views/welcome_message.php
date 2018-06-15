@@ -58,9 +58,6 @@ ob_start();
   </tbody>
 </table>
 
-<ul>
-</ul>
-
 <?php
 $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

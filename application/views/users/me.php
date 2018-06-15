@@ -3,7 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
 ?>
 
-<h1 class="mt-5">Modifier mes informations</h1>
+<h1 class="mt-5">
+  Modifier mes informations
+  <a class="btn btn-outline-primary" href="/leave/new" role="button">Demande de congés</a>
+  <a class="btn btn-outline-primary" href="/transports/new" role="button">Remboursement frais de transport</a>
+</h1>
 <p class="lead">Modifiez ici les informations concernant votre compte utilisateur</p>
 
 <form method="post">
