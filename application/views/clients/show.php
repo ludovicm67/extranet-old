@@ -3,7 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
 ?>
 
-<h1 class="mt-5"><?php echo $client->fullName; ?> <a class="btn btn-outline-primary" href="/projects/new?client_id=<?php echo $client->id; ?>" role="button">Ajouter un projet</a></h1>
+<h1 class="mt-5">
+  <?php echo $client->fullName; ?>
+  <?php if ($controller->hasPermission('projects', 'add')): ?>
+    <a class="btn btn-outline-primary" href="/projects/new?client_id=<?php echo $client->id; ?>" role="button">Ajouter un projet</a>
+  <?php endif; ?>
+</h1>
 <p class="lead">Affichage de quelques informations à propos de ce client</p>
 
 <?php if (count($client->contacts)): ?>
@@ -42,8 +47,8 @@ ob_start();
 </ul>
 <?php endif; ?>
 
-<h2>Commandes</h2>
 <?php if (!empty($client->orders)): ?>
+<h2>Commandes</h2>
 <div id="accordion">
   <?php foreach ($client->orders as $order): ?>
   <div class="card">
