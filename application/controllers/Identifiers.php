@@ -44,7 +44,7 @@ class Identifiers extends MY_AuthController
     $q = $this->db->get('identifiers');
     if ($q->num_rows() > 0) {
       $this->db->delete('identifiers', ['id' => $id]);
-      $this->writeLog('delete', 'identifiers', $q->result()[0]);
+      $this->writeLog('delete', 'identifiers', $q->result()[0], $id);
       $this->session->set_flashdata(
         'success',
         "Le type d'identifiant a bien été supprimé !"
@@ -80,7 +80,7 @@ class Identifiers extends MY_AuthController
         $content = ['name' => $identifierName];
         $this->db->insert('identifiers', $content);
         $content['id'] = $this->db->insert_id();
-        $this->writeLog('insert', 'identifiers', $content);
+        $this->writeLog('insert', 'identifiers', $content, $content['id']);
         $this->session->set_flashdata(
           'success',
           "Le type d'identifiant a bien été créé avec succès !"
@@ -124,7 +124,7 @@ class Identifiers extends MY_AuthController
         $this->db->where('id', $id);
         $this->db->update('identifiers', $content);
         $content['id'] = $id;
-        $this->writeLog('update', 'identifiers', $content);
+        $this->writeLog('update', 'identifiers', $content, $content['id']);
         $this->session->set_flashdata(
           'success',
           "Le type d'identifiant a bien été modifié avec succès !"
@@ -219,7 +219,12 @@ class Identifiers extends MY_AuthController
       ];
       $this->db->insert('project_identifiers', $content);
       $content['id'] = $this->db->insert_id();
-      $this->writeLog('insert', 'project_identifiers', $content);
+      $this->writeLog(
+        'insert',
+        'project_identifiers',
+        $content,
+        $content['id']
+      );
 
       $this->session->set_flashdata(
         'success',
@@ -278,7 +283,12 @@ class Identifiers extends MY_AuthController
       $this->db->where('id', $id);
       $this->db->update('project_identifiers', $content);
       $content['id'] = $id;
-      $this->writeLog('update', 'project_identifiers', $content);
+      $this->writeLog(
+        'update',
+        'project_identifiers',
+        $content,
+        $content['id']
+      );
 
       $this->session->set_flashdata(
         'success',
@@ -312,7 +322,7 @@ class Identifiers extends MY_AuthController
       }
 
       $this->db->delete('project_identifiers', ['id' => $id]);
-      $this->writeLog('delete', 'project_identifiers', $res);
+      $this->writeLog('delete', 'project_identifiers', $res, $id);
       $this->session->set_flashdata(
         'success',
         "L'identifiant a bien été supprimé !"

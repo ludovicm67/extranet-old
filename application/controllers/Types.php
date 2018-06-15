@@ -20,7 +20,7 @@ class Types extends MY_AuthController
     $q = $this->db->get('types');
     if ($q->num_rows() > 0) {
       $this->db->delete('types', ['id' => $id]);
-      $this->writeLog('delete', 'types', $q->result()[0]);
+      $this->writeLog('delete', 'types', $q->result()[0], $id);
       $this->session->set_flashdata('success', 'Le type a bien été supprimé !');
     } else {
       $this->session->set_flashdata('error', "Le type n'existe pas.");
@@ -45,10 +45,13 @@ class Types extends MY_AuthController
         $this->session->set_flashdata('error', 'Le type existe déjà !');
       } else {
         $this->db->insert('types', ['name' => $typeName]);
-        $this->writeLog('insert', 'types', [
-          'name' => $typeName,
-          'id' => $this->db->insert_id()
-        ]);
+        $newId = $this->db->insert_id();
+        $this->writeLog(
+          'insert',
+          'types',
+          ['name' => $typeName, 'id' => $newId],
+          $newId
+        );
         $this->session->set_flashdata(
           'success',
           'Le type a bien été créé avec succès !'
@@ -90,7 +93,12 @@ class Types extends MY_AuthController
       } else {
         $this->db->where('id', $id);
         $this->db->update('types', ['name' => $typeName]);
-        $this->writeLog('update', 'types', ['name' => $typeName, 'id' => $id]);
+        $this->writeLog(
+          'update',
+          'types',
+          ['name' => $typeName, 'id' => $id],
+          $id
+        );
         $this->session->set_flashdata(
           'success',
           'Le type a bien été modifié avec succès !'

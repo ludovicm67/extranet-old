@@ -52,7 +52,7 @@ class Contacts extends MY_AuthController
     $q = $this->db->get('contacts');
     if ($q->num_rows() > 0) {
       $this->db->delete('contacts', ['id' => $id]);
-      $this->writeLog('delete', 'contacts', $q->result()[0]);
+      $this->writeLog('delete', 'contacts', $q->result()[0], $id);
       $this->session->set_flashdata(
         'success',
         'Le contact a bien été supprimé !'
@@ -93,7 +93,7 @@ class Contacts extends MY_AuthController
       ];
       $this->db->insert('contacts', $content);
       $content['id'] = $this->db->insert_id();
-      $this->writeLog('insert', 'contacts', $content);
+      $this->writeLog('insert', 'contacts', $content, $content['id']);
 
       $this->session->set_flashdata(
         'success',
@@ -147,7 +147,7 @@ class Contacts extends MY_AuthController
       $this->db->where('id', $id);
       $this->db->update('contacts', $content);
       $content['id'] = $id;
-      $this->writeLog('update', 'contacts', $content);
+      $this->writeLog('update', 'contacts', $content, $content['id']);
 
       $this->session->set_flashdata(
         'success',

@@ -57,7 +57,7 @@ class Users extends MY_AuthController
     $q = $this->db->get('users');
     if ($q->num_rows() > 0) {
       $this->db->delete('users', ['id' => $id]);
-      $this->writeLog('delete', 'users', $q->result()[0]);
+      $this->writeLog('delete', 'users', $q->result()[0], $id);
       $this->session->set_flashdata(
         'success',
         "L'utilisateur a bien été supprimé !"
@@ -118,7 +118,7 @@ class Users extends MY_AuthController
         ];
         $this->db->insert('users', $content);
         $content['id'] = $this->db->insert_id();
-        $this->writeLog('insert', 'users', $content);
+        $this->writeLog('insert', 'users', $content, $content['id']);
         $this->session->set_flashdata(
           'success',
           "L'utilisateur a bien été créé avec succès !"
@@ -205,7 +205,7 @@ class Users extends MY_AuthController
         $this->db->where('id', $id);
         $this->db->update('users', $content);
         $content['id'] = $id;
-        $this->writeLog('update', 'users', $content);
+        $this->writeLog('update', 'users', $content, $id);
         $this->session->set_flashdata(
           'success',
           "L'utilisateur a bien été modifié avec succès !"
@@ -273,7 +273,7 @@ class Users extends MY_AuthController
         $this->db->where('id', $id);
         $this->db->update('users', $content);
         $content['id'] = $id;
-        $this->writeLog('update', 'users', $content);
+        $this->writeLog('update', 'users', $content, $id);
         $this->session->set_flashdata(
           'success',
           "Votre compte utilisateur a bien été modifié avec succès !"

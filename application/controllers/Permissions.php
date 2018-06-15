@@ -213,7 +213,7 @@ class Permissions extends MY_AuthController
       $this->writeLog('update', 'rights', [
         'permissions' => $this->input->post('permissions'),
         'role_id' => $id
-      ]);
+      ], $id);
 
       $this->session->set_flashdata(
         'success',

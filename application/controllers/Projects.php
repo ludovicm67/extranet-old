@@ -176,7 +176,7 @@ class Projects extends MY_AuthController
     $q = $this->db->get('projects');
     if ($q->num_rows() > 0) {
       $this->db->delete('projects', ['id' => $id]);
-      $this->writeLog('delete', 'projects', $q->result()[0]);
+      $this->writeLog('delete', 'projects', $q->result()[0], $id);
       $this->session->set_flashdata(
         'success',
         'Le projet a bien été supprimé !'
@@ -295,7 +295,7 @@ class Projects extends MY_AuthController
           }
         }
 
-        $this->writeLog('insert', 'projects', $contentToLog);
+        $this->writeLog('insert', 'projects', $contentToLog, $projectId);
 
         $this->session->set_flashdata(
           'success',
@@ -464,7 +464,7 @@ class Projects extends MY_AuthController
           }
         }
 
-        $this->writeLog('update', 'projects', $contentToLog);
+        $this->writeLog('update', 'projects', $contentToLog, $projectId);
 
         $this->session->set_flashdata(
           'success',

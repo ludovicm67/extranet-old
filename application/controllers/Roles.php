@@ -20,7 +20,7 @@ class Roles extends MY_AuthController
     $q = $this->db->get('roles');
     if ($q->num_rows() > 0) {
       $this->db->delete('roles', ['id' => $id]);
-      $this->writeLog('delete', 'roles', $q->result()[0]);
+      $this->writeLog('delete', 'roles', $q->result()[0], $id);
       $this->session->set_flashdata('success', "Le rôle a bien été supprimé !");
     } else {
       $this->session->set_flashdata('error', "Le rôle n'existe pas.");
@@ -45,10 +45,13 @@ class Roles extends MY_AuthController
         $this->session->set_flashdata('error', "Le rôle existe déjà !");
       } else {
         $this->db->insert('roles', ['name' => $roleName]);
-        $this->writeLog('insert', 'roles', [
-          'name' => $roleName,
-          'id' => $this->db->insert_id()
-        ]);
+        $newId = $this->db->insert_id();
+        $this->writeLog(
+          'insert',
+          'roles',
+          ['name' => $roleName, 'id' => $newId],
+          $newId
+        );
         $this->session->set_flashdata(
           'success',
           "Le rôle a bien été créé avec succès !"
@@ -90,7 +93,12 @@ class Roles extends MY_AuthController
       } else {
         $this->db->where('id', $id);
         $this->db->update('roles', ['name' => $roleName]);
-        $this->writeLog('update', 'roles', ['name' => $roleName, 'id' => $id]);
+        $this->writeLog(
+          'update',
+          'roles',
+          ['name' => $roleName, 'id' => $id],
+          $id
+        );
         $this->session->set_flashdata(
           'success',
           "Le rôle a bien été modifié avec succès !"

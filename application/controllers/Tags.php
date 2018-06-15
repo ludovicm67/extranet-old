@@ -47,7 +47,7 @@ class Tags extends MY_AuthController
     $q = $this->db->get('tags');
     if ($q->num_rows() > 0) {
       $this->db->delete('tags', ['id' => $id]);
-      $this->writeLog('delete', 'tags', $q->result()[0]);
+      $this->writeLog('delete', 'tags', $q->result()[0], $id);
       $this->session->set_flashdata('success', 'Le tag a bien été supprimé !');
     } else {
       $this->session->set_flashdata('error', "Le tag n'existe pas.");
@@ -77,10 +77,13 @@ class Tags extends MY_AuthController
         $this->session->set_flashdata('error', 'Le tag existe déjà !');
       } else {
         $this->db->insert('tags', ['name' => $tagName]);
-        $this->writeLog('insert', 'tags', [
-          'name' => $tagName,
-          'id' => $this->db->insert_id()
-        ]);
+        $newId = $this->db->insert_id();
+        $this->writeLog(
+          'insert',
+          'tags',
+          ['name' => $tagName, 'id' => $newId],
+          $newId
+        );
         $this->session->set_flashdata(
           'success',
           'Le tag a bien été créé avec succès !'
@@ -128,7 +131,12 @@ class Tags extends MY_AuthController
       } else {
         $this->db->where('id', $id);
         $this->db->update('tags', ['name' => $tagName]);
-        $this->writeLog('update', 'tags', ['name' => $tagName, 'id' => $id]);
+        $this->writeLog(
+          'update',
+          'tags',
+          ['name' => $tagName, 'id' => $id],
+          $id
+        );
         $this->session->set_flashdata(
           'success',
           'Le tag a bien été modifié avec succès !'
