@@ -48,7 +48,7 @@ class MY_Controller extends CI_Controller
     redirect('/login');
   }
 
-  public function writeLog($type, $table, $content = [])
+  public function writeLog($type, $table, $content = [], $ressourceId = null)
   {
     $userId = ($this->isLoggedIn() && isset($this->session->id))
       ? $this->session->id
@@ -61,7 +61,8 @@ class MY_Controller extends CI_Controller
       'user_id' => $userId,
       'type' => $queryType,
       'table' => $queryTable,
-      'content' => $queryContent
+      'content' => $queryContent,
+      'ressource_id' => $ressourceId
     ]);
   }
 

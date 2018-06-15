@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `user_id` int (11),
   `type` varchar(255) NOT NULL,
   `table` varchar(255) NOT NULL,
+  `ressource_id` int (11),
   `content` json,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
