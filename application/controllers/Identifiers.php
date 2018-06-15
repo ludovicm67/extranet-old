@@ -211,12 +211,16 @@ class Identifiers extends MY_AuthController
         $this->checkPermission('project_confidential_identifiers', 'add');
       }
 
-      $this->db->insert('project_identifiers', [
+      $content = [
         'project_id' => $id,
         'identifier_id' => $type,
         'value' => $value,
         'confidential' => $confidential
-      ]);
+      ];
+      $this->db->insert('project_identifiers', $content);
+      $content['id'] = $this->db->insert_id();
+      $this->writeLog('insert', 'project_identifiers', $content);
+
       $this->session->set_flashdata(
         'success',
         "L'identifiant a bien été ajouté avec succès !"
@@ -265,12 +269,17 @@ class Identifiers extends MY_AuthController
       $value = htmlspecialchars(trim($this->input->post('value')));
       $confidential = (empty($this->input->post('confidential'))) ? 0 : 1;
 
-      $this->db->where('id', $id);
-      $this->db->update('project_identifiers', [
+      $content = [
         'identifier_id' => $type,
         'value' => $value,
         'confidential' => $confidential
-      ]);
+      ];
+
+      $this->db->where('id', $id);
+      $this->db->update('project_identifiers', $content);
+      $content['id'] = $id;
+      $this->writeLog('update', 'project_identifiers', $content);
+
       $this->session->set_flashdata(
         'success',
         "L'identifiant a bien été modifié avec succès !"
@@ -303,6 +312,7 @@ class Identifiers extends MY_AuthController
       }
 
       $this->db->delete('project_identifiers', ['id' => $id]);
+      $this->writeLog('delete', 'project_identifiers', $res);
       $this->session->set_flashdata(
         'success',
         "L'identifiant a bien été supprimé !"
