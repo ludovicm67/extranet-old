@@ -17,15 +17,22 @@ class Projects extends MY_AuthController
     $this->db->order_by('favorite', 'desc');
     $this->db->order_by('updated_at', 'desc');
     $this->db->order_by('id', 'desc');
-    $this->db->select('*, COALESCE(project_favorites.user_id, 0) AS favorite');
-    $this->db->join(
-      'project_favorites',
-      'projects.id = project_favorites.project_id',
-      'left'
-    );
-    $this->db->where('user_id', $myId);
-    $this->db->or_where('user_id', null);
+
+    if (is_null($myId)) {
+      $this->db->select('*, 0 AS favorite');
+    } else {
+      $this->db->select(
+        '*, COALESCE(project_favorites.user_id, 0) AS favorite'
+      );
+      $this->db->join(
+        'project_favorites',
+        'projects.id = project_favorites.project_id AND user_id = ' . $myId,
+        'left'
+      );
+    }
+
     $projects = $this->db->get('projects')->result();
+
     $this->view('projects/list', [
       'projects' => $projects,
       'myProjects' => $this->getMyProjects()
