@@ -98,9 +98,47 @@ class Transports extends MY_AuthController
     $this->view('transports/new', ['months' => $this->months]);
   }
 
+  public function accept($id)
+  {
+    $this->db->where('id', $id);
+    $q = $this->db->get('transports');
+    if ($q->num_rows() <= 0) {
+      redirect('/transports');
+    }
+
+    $content = ['accepted' => 1];
+    $this->db->where('id', $id);
+    $this->db->update('transports', $content);
+    $content['id'] = $id;
+    $this->writeLog('update', 'transports', $content, $content['id']);
+    $this->session->set_flashdata(
+      'success',
+      'La demande a bien été acceptée !'
+    );
+    redirect('/transports');
+  }
+
+  public function delete($id)
+  {
+    $this->db->where('id', $id);
+    $q = $this->db->get('transports');
+    if ($q->num_rows() > 0) {
+      $this->db->delete('transports', ['id' => $id]);
+      $this->writeLog('delete', 'transports', $q->result()[0], $id);
+      $this->session->set_flashdata(
+        'success',
+        'La demande a bien été supprimée !'
+      );
+    } else {
+      $this->session->set_flashdata('error', "La demande n'existe pas.");
+    }
+    redirect('/transports');
+  }
+
   public function index()
   {
     $this->db->select('*, transports.id AS id');
+    $this->db->order_by('transports.accepted', 'asc');
     $this->db->order_by('transports.id', 'desc');
     $this->db->join('users', 'users.id = transports.user_id', 'left');
     $content = $this->db->get('transports')->result();

@@ -27,11 +27,21 @@ ob_start();
       <td><?php echo number_format($c->amount, 2, ',', ' '); ?>€</td>
       <td><?php echo nl2br($c->details); ?></td>
       <td>
-        OK
-        KO
         <?php if (!empty($c->file)): ?>
-          <a class="btn btn-dark" href="<?php echo $c->file; ?>" target="_blank" title="Ouvrir le justificatif"><i class="far fa-file"></i></a>
+          <a class="btn btn-dark" href="<?php echo $c->file; ?>" target="_blank" title="Ouvrir le justificatif">
+            <i class="far fa-file"></i>
+          </a>
         <?php endif; ?>
+
+        <?php if ($c->accepted == 0): ?>
+          <a class="btn btn-success" href="/transports/accept/<?php echo $c->id; ?>">
+            <i class="fas fa-check"></i>
+          </a>
+        <?php endif; ?>
+
+        <a class="btn btn-danger" href="/transports/delete/<?php echo $c->id; ?>">
+          <i class="far fa-trash-alt"></i>
+        </a>
       </td>
     </tr>
     <?php endforeach; ?>

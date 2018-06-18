@@ -43,9 +43,47 @@ class Leave extends MY_AuthController
     $this->view('leave/new');
   }
 
+  public function accept($id)
+  {
+    $this->db->where('id', $id);
+    $q = $this->db->get('leave');
+    if ($q->num_rows() <= 0) {
+      redirect('/leave');
+    }
+
+    $content = ['accepted' => 1];
+    $this->db->where('id', $id);
+    $this->db->update('leave', $content);
+    $content['id'] = $id;
+    $this->writeLog('update', 'leave', $content, $content['id']);
+    $this->session->set_flashdata(
+      'success',
+      'La demande a bien été acceptée !'
+    );
+    redirect('/leave');
+  }
+
+  public function delete($id)
+  {
+    $this->db->where('id', $id);
+    $q = $this->db->get('leave');
+    if ($q->num_rows() > 0) {
+      $this->db->delete('leave', ['id' => $id]);
+      $this->writeLog('delete', 'leave', $q->result()[0], $id);
+      $this->session->set_flashdata(
+        'success',
+        'La demande a bien été supprimée !'
+      );
+    } else {
+      $this->session->set_flashdata('error', "La demande n'existe pas.");
+    }
+    redirect('/leave');
+  }
+
   public function index()
   {
     $this->db->select('*, leave.id AS id');
+    $this->db->order_by('leave.accepted', 'asc');
     $this->db->order_by('leave.id', 'desc');
     $this->db->join('users', 'users.id = leave.user_id', 'left');
     $content = $this->db->get('leave')->result();

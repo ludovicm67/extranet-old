@@ -49,10 +49,37 @@ class Calendar extends MY_AuthController
       'month' => ($nowMonth == 12) ? 1 : $nowMonth + 1
     ];
 
+    $dtStart = new DateTime("$nowYear-$nowMonth-1");
+    $dtEnd = new DateTime($dtStart->format('Y-m-t'));
+
+    $this->db->select('*, leave.id AS id');
+    $this->db->order_by('leave.accepted', 'asc');
+    $this->db->order_by('leave.id', 'desc');
+    $this->db->where('start <=', $dtEnd->format('Y-m-d H:i:s'));
+    $this->db->where('end >=', $dtStart->format('Y-m-d H:i:s'));
+    if ($this->input->get('me') == 1) {
+      $this->db->where('user_id', $this->session->id);
+    }
+    $this->db->join('users', 'users.id = leave.user_id', 'left');
+    $leave = $this->db->get('leave')->result();
+
+    $this->db->select('*, transports.id AS id');
+    $this->db->where('month', $nowMonth);
+    $this->db->where('year', $nowYear);
+    if ($this->input->get('me') == 1) {
+      $this->db->where('user_id', $this->session->id);
+    }
+    $this->db->order_by('transports.accepted', 'asc');
+    $this->db->order_by('transports.id', 'desc');
+    $this->db->join('users', 'users.id = transports.user_id', 'left');
+    $transports = $this->db->get('transports')->result();
+
     $this->view('calendar', [
       'now' => $now,
       'prev' => $prev,
       'next' => $next,
+      'leave' => $leave,
+      'transports' => $transports,
       'o' => (object) ['calendarTranslator' => new CalendarTranslator()]
     ]);
   }

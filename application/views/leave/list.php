@@ -26,7 +26,17 @@ ob_start();
       <td><?php echo (new DateTime($c->start))->format('d/m/Y'); ?></td>
       <td><?php echo (new DateTime($c->end))->format('d/m/Y'); ?></td>
       <td><?php echo nl2br($c->details); ?></td>
-      <td>OK KO</td>
+      <td>
+        <?php if ($c->accepted == 0): ?>
+          <a class="btn btn-success" href="/leave/accept/<?php echo $c->id; ?>">
+            <i class="fas fa-check"></i>
+          </a>
+        <?php endif; ?>
+
+        <a class="btn btn-danger" href="/leave/delete/<?php echo $c->id; ?>">
+          <i class="far fa-trash-alt"></i>
+        </a>
+      </td>
     </tr>
     <?php endforeach; ?>
   </tbody>
