@@ -43,6 +43,8 @@ class Identifiers extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('identifiers');
     if ($q->num_rows() > 0) {
+      $this->db->where('identifier_id', $id);
+      $this->db->update('project_identifiers', ['identifier_id' => null]);
       $this->db->delete('identifiers', ['id' => $id]);
       $this->writeLog('delete', 'identifiers', $q->result()[0], $id);
       $this->session->set_flashdata(
@@ -94,7 +96,7 @@ class Identifiers extends MY_AuthController
 
   private function createIdentifierOnThFly($id)
   {
-    if (!is_numeric($id)) {
+    if (!is_numeric($id) && !empty($id)) {
       $this->db->where('name', $id);
       $q = $this->db->get('identifiers');
       if ($q->num_rows() > 0) {

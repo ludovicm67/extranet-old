@@ -16,7 +16,7 @@ ob_start();
   <div class="form-group row">
     <label for="contactType" class="col-sm-2 col-form-label">Type de contact</label>
     <div class="col-sm-10">
-      <select class="form-control" name="type" id="contactType">
+      <select data-tags="true" class="form-control" name="type" id="contactType">
         <option value="0">Aucun type</option>
         <?php foreach ($types as $type): ?>
         <option value="<?php echo $type->id; ?>"<?php echo ($contact->type_id === $type->id) ? ' selected="selected"' : ''; ?>>

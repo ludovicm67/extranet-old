@@ -63,20 +63,36 @@ class Contacts extends MY_AuthController
     redirect('/contacts');
   }
 
+  private function createTypeOnThFly($id)
+  {
+    if (!is_numeric($id) && !empty($id)) {
+      $this->db->where('name', $id);
+      $q = $this->db->get('types');
+      if ($q->num_rows() > 0) {
+        return $q->result()[0]->id;
+      } else {
+        $content = ['name' => $id];
+        $this->db->insert('types', $content);
+        $content['id'] = $this->db->insert_id();
+        $this->writeLog('insert', 'types', $content, $content['id']);
+        return $content['id'];
+      }
+    } else {
+      return ($id == 0) ? null : $id;
+    }
+  }
+
   public function new()
   {
     $this->checkPermission('contacts', 'add');
 
     if (isset($_POST['name'])) {
       $contactName = strip_tags(trim($this->input->post('name')));
-      $contactType = intval($this->input->post('type'));
+      $contactType = $this->createTypeOnThFly($this->input->post('type'));
       $contactMail = strip_tags(trim($this->input->post('mail')));
       $contactPhone = strip_tags(trim($this->input->post('phone')));
       $contactAddress = strip_tags(trim($this->input->post('address')));
       $contactOther = strip_tags(trim($this->input->post('other')));
-      if ($contactType == 0) {
-        $contactType = null;
-      }
 
       if (empty($contactName)) {
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');
@@ -122,14 +138,11 @@ class Contacts extends MY_AuthController
 
     if (isset($_POST['name'])) {
       $contactName = strip_tags(trim($this->input->post('name')));
-      $contactType = intval($this->input->post('type'));
+      $contactType = $this->createTypeOnThFly($this->input->post('type'));
       $contactMail = strip_tags(trim($this->input->post('mail')));
       $contactPhone = strip_tags(trim($this->input->post('phone')));
       $contactAddress = strip_tags(trim($this->input->post('address')));
       $contactOther = strip_tags(trim($this->input->post('other')));
-      if ($contactType == 0) {
-        $contactType = null;
-      }
 
       if (empty($contactName)) {
         $this->session->set_flashdata('error', 'Veuillez insérer un nom !');

@@ -19,6 +19,8 @@ class Types extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('types');
     if ($q->num_rows() > 0) {
+      $this->db->where('type_id', $id);
+      $this->db->update('contacts', ['type_id' => null]);
       $this->db->delete('types', ['id' => $id]);
       $this->writeLog('delete', 'types', $q->result()[0], $id);
       $this->session->set_flashdata('success', 'Le type a bien été supprimé !');
