@@ -124,6 +124,56 @@ class Contacts extends MY_AuthController
     $this->view('contacts/new', ['types' => $types]);
   }
 
+  public function newAjax()
+  {
+    header('Content-Type: application/json');
+
+    if (!$this->hasPermission('contacts', 'add')) {
+      echo json_encode([
+        'success' => false,
+        'message' => 'no permission to create a contact...'
+      ]);
+    }
+
+    if (isset($_POST['name'])) {
+      $contactName = strip_tags(trim($this->input->post('name')));
+      $contactType = $this->createTypeOnThFly($this->input->post('type'));
+      $contactMail = strip_tags(trim($this->input->post('mail')));
+      $contactPhone = strip_tags(trim($this->input->post('phone')));
+      $contactAddress = strip_tags(trim($this->input->post('address')));
+      $contactOther = strip_tags(trim($this->input->post('other')));
+
+      if (empty($contactName)) {
+        echo json_encode([
+          'success' => false,
+          'message' => 'no name specified...'
+        ]);
+        return;
+      }
+
+      $content = [
+        'name' => $contactName,
+        'type_id' => $contactType,
+        'mail' => $contactMail,
+        'phone' => $contactPhone,
+        'address' => $contactAddress,
+        'other' => $contactOther
+      ];
+      $this->db->insert('contacts', $content);
+      $content['id'] = $this->db->insert_id();
+      $this->writeLog('insert', 'contacts', $content, $content['id']);
+
+      echo json_encode([
+        'success' => true,
+        'id' => $content['id'],
+        'name' => $contactName
+      ]);
+      return;
+    }
+
+    echo json_encode(['success' => false, 'message' => 'empty fields']);
+  }
+
   public function edit($id)
   {
     $this->checkPermission('contacts', 'edit');

@@ -15,6 +15,24 @@ CREATE TABLE IF NOT EXISTS `projects` (
   FOREIGN KEY (client_id) REFERENCES sellsy_clients(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE IF NOT EXISTS `types` (
+  `id` int (11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) UNIQUE,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `contacts` (
+  `id` int (11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255),
+  `type_id` int(11), -- type de contact
+  `mail` varchar(255),
+  `phone` varchar(255),
+  `address` varchar(255),
+  `other` text,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`type_id`) REFERENCES types(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE IF NOT EXISTS `tags` (
   `id` int (11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) UNIQUE,
@@ -34,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `project_contacts` (
   `contact_id` int (11) NOT NULL,
   PRIMARY KEY (`project_id`, `contact_id`),
   FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
-  FOREIGN KEY (contact_id) REFERENCES sellsy_contacts(id) ON DELETE CASCADE
+  FOREIGN KEY (contact_id) REFERENCES contacts(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `project_orders` (
@@ -43,24 +61,6 @@ CREATE TABLE IF NOT EXISTS `project_orders` (
   PRIMARY KEY (`project_id`, `order_id`),
   FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
   FOREIGN KEY (order_id) REFERENCES sellsy_orders(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-CREATE TABLE IF NOT EXISTS `types` (
-  `id` int (11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) UNIQUE,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-CREATE TABLE IF NOT EXISTS `contacts` (
-  `id` int (11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255),
-  `type_id` int(11), -- type de contact
-  `mail` varchar(255),
-  `phone` varchar(255),
-  `address` varchar(255),
-  `other` text,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`type_id`) REFERENCES types(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `identifiers` (

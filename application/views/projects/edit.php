@@ -36,7 +36,7 @@ ob_start();
     </div>
   </div>
   <div class="form-group row">
-    <label for="projectContact" class="col-sm-2 col-form-label">Contacts <a href="/contacts/new">(Créer)</a></label>
+    <label for="projectContact" class="col-sm-2 col-form-label">Contacts <a data-create-contact-modal href="/contacts/new">(Créer)</a></label>
     <div class="col-sm-10">
       <select class="form-control" name="contacts[]" id="projectContact" multiple="multiple">
         <?php foreach ($contacts as $contact): ?>
@@ -173,6 +173,70 @@ ob_start();
 
   <button type="submit" class="btn btn-primary">Modifier</button>
 </form>
+
+<div class="modal fade" id="createContactModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Création d'un contact</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="createContactModalForm">
+          <div class="form-group row">
+            <label for="contactName" class="col-sm-4 col-form-label">Nom</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="name" id="contactName" placeholder="Nom du contact..." required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="contactType" class="col-sm-4 col-form-label">Type de contact</label>
+            <div class="col-sm-8">
+              <select data-tags="true" class="form-control" name="type" id="contactType">
+                <option value="0">Aucun type</option>
+                <?php foreach ($types as $type): ?>
+                <option value="<?php echo $type->id; ?>">
+                  <?php echo $type->name; ?>
+                </option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="contactMail" class="col-sm-4 col-form-label">Adresse mail</label>
+            <div class="col-sm-8">
+              <input type="email" class="form-control" name="mail" id="contactMail" placeholder="Adresse mail du contact...">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="contactPhone" class="col-sm-4 col-form-label">Téléphone</label>
+            <div class="col-sm-8">
+              <input type="tel" class="form-control" name="phone" id="contactPhone" placeholder="Téléphone du contact...">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="contactAddress" class="col-sm-4 col-form-label">Adresse</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="address" id="contactAddress" placeholder="Adresse du contact...">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="contactOther" class="col-sm-4 col-form-label">Autres informations</label>
+            <div class="col-sm-8">
+              <textarea class="form-control" name="other" id="contactOther" placeholder="Autres informations sur le contact..."></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" id="createContactModalBtn">Créer</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <?php
 $content = ob_get_clean();

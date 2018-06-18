@@ -151,7 +151,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
       </div>
     </div>
 
-
     <?php echo (isset($content)) ? $content : ''; ?>
   </main>
 

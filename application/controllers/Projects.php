@@ -367,13 +367,17 @@ class Projects extends MY_AuthController
       : null;
     $project = (object) ['client_id' => $clientId];
 
+    $this->db->select(['id', 'name']);
+    $types = $this->db->get('types')->result();
+
     $this->view('projects/new', [
       'project' => $project,
       'clients' => $clients,
       'contacts' => $contacts,
       'orders' => $orders,
       'tags' => $tags,
-      'users' => $users
+      'users' => $users,
+      'types' => $types
     ]);
   }
 
@@ -576,13 +580,17 @@ class Projects extends MY_AuthController
 
     $users = $this->db->get('users')->result();
 
+    $this->db->select(['id', 'name']);
+    $types = $this->db->get('types')->result();
+
     $this->view('projects/edit', [
       'project' => $project,
       'clients' => $clients,
       'contacts' => $contacts,
       'orders' => $orders,
       'tags' => $tags,
-      'users' => $users
+      'users' => $users,
+      'types' => $types
     ]);
   }
 

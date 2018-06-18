@@ -49,6 +49,45 @@ $(document).ready(function () {
     $('select').not('[data-tags=true]').select2({ tags: false });
   });
 
+  $('[data-create-contact-modal]').click(function (e) {
+    e.preventDefault();
+    let $item = $('select[name^=contacts]');
+    let $modal = $('#createContactModal');
+    let $form = $('form#createContactModalForm');
+    let $btn = $('#createContactModalBtn');
+
+    $('select', $modal).select2('destroy');
+    $form.get(0).reset();
+    $btn.prop('disabled', false);
+
+
+
+    $btn.click(function (e) {
+
+      $.post("/contacts/newAjax", $form.serialize(), function (data) {
+        if (data.success) {
+          let optionVal = data.id;
+          let optionTxt = data.name;
+
+          if (!$item.find("option[value='" + optionVal + "']").length) {
+            var newOption = new Option(optionTxt, optionVal, true, true);
+            $item.append(newOption).trigger('change');
+          }
+        }
+      }, "json");
+
+      $modal.modal('hide');
+      $btn.prop('disabled', true);
+    });
+
+    $modal.modal();
+    $('select', $modal).select2({
+      tags: true,
+      width: '100%',
+      dropdownParent: $modal
+    });
+  });
+
   $('.move-up').click(moveUp);
   $('.move-down').click(moveDown);
 
