@@ -32,7 +32,7 @@ ob_start();
           -
         <?php endif; ?>
         <?php if ($controller->hasPermission('roles', 'delete')): ?>
-          <a href="/role/delete/<?php echo $role->id; ?>">Supprimer</a>
+          <a data-confirm-delete-url href="/role/delete/<?php echo $role->id; ?>">Supprimer</a>
         <?php endif; ?>
       </td>
     </tr>

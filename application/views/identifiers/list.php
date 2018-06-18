@@ -30,7 +30,7 @@ ob_start();
           -
         <?php endif; ?>
         <?php if ($controller->hasPermission('project_identifiers', 'delete')): ?>
-          <a href="/identifier/delete/<?php echo $identifier->id; ?>">Supprimer</a>
+          <a data-confirm-delete-url href="/identifier/delete/<?php echo $identifier->id; ?>">Supprimer</a>
         <?php endif; ?>
       </td>
     </tr>

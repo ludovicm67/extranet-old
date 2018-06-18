@@ -12,7 +12,7 @@ ob_start();
     <a class="btn btn-outline-primary" href="/project/edit/<?php echo $project->id; ?>" role="button">Modifier</a>
   <?php endif; ?>
   <?php if ($controller->hasPermission('projects', 'delete')): ?>
-    <a class="btn btn-outline-danger" href="/project/delete/<?php echo $project->id; ?>" role="button">Supprimer</a>
+    <a data-confirm-delete-url class="btn btn-outline-danger" href="/project/delete/<?php echo $project->id; ?>" role="button">Supprimer</a>
   <?php endif; ?>
 </h1>
 <p class="lead">Affichages d'informations concernant le projet</p>

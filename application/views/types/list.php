@@ -30,7 +30,7 @@ ob_start();
           -
         <?php endif; ?>
         <?php if ($controller->hasPermission('types', 'delete')): ?>
-          <a href="/type/delete/<?php echo $type->id; ?>">Supprimer</a>
+          <a data-confirm-delete-url href="/type/delete/<?php echo $type->id; ?>">Supprimer</a>
         <?php endif; ?>
       </td>
     </tr>

@@ -82,6 +82,12 @@ $(document).ready(function () {
     }
   });
 
+  $('[data-confirm-delete-url]').click(function (e) {
+    e.preventDefault();
+    $('#modalDeleteUrl').attr('href', $(e.target).attr('href'));
+    $('#confirmDelete').modal();
+  });
+
   $('.request-runner').click(function (e) {
     const $_target = $(e.target);
     const url = $_target.data('request');

@@ -21,7 +21,7 @@ ob_start();
     <a class="btn btn-outline-primary" href="/tag/edit/<?php echo $tag->id; ?>" role="button">Modifier</a>
   <?php endif; ?>
   <?php if ($controller->hasPermission('tags', 'delete')): ?>
-    <a class="btn btn-outline-danger" href="/tag/delete/<?php echo $tag->id; ?>" role="button">Supprimer</a>
+    <a data-confirm-delete-url class="btn btn-outline-danger" href="/tag/delete/<?php echo $tag->id; ?>" role="button">Supprimer</a>
   <?php endif; ?>
 </h1>
 <p class="lead">Affichage des projets utilisant ce tag</p>

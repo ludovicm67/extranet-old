@@ -33,7 +33,7 @@ ob_start();
           </a>
         <?php endif; ?>
 
-        <a class="btn btn-danger" href="/leave/delete/<?php echo $c->id; ?>">
+        <a data-confirm-delete-url class="btn btn-danger" href="/leave/delete/<?php echo $c->id; ?>">
           <i class="far fa-trash-alt"></i>
         </a>
       </td>

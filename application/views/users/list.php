@@ -36,7 +36,7 @@ ob_start();
           -
         <?php endif; ?>
         <?php if ($this->session->id != $user->id && $controller->hasPermission('users', 'delete')): ?>
-          <a href="/user/delete/<?php echo $user->id; ?>">Supprimer</a>
+          <a data-confirm-delete-url href="/user/delete/<?php echo $user->id; ?>">Supprimer</a>
         <?php endif; ?>
       </td>
     </tr>

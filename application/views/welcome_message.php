@@ -19,7 +19,6 @@ ob_start();
 </ul>
 <?php endif; ?>
 
-
 <h2>Mettre à jour les informations de la base de données</h2>
 <table class="table table-hover">
   <thead class="thead-dark">

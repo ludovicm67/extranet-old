@@ -10,7 +10,7 @@ ob_start();
     <a class="btn btn-outline-primary" href="/user/edit/<?php echo $user->id; ?>" role="button">Modifier</a>
   <?php endif; ?>
   <?php if ($this->session->id != $user->id && $controller->hasPermission('users', 'delete')): ?>
-    <a class="btn btn-outline-danger" href="/user/delete/<?php echo $user->id; ?>" role="button">Supprimer</a>
+    <a data-confirm-delete-url class="btn btn-outline-danger" href="/user/delete/<?php echo $user->id; ?>" role="button">Supprimer</a>
   <?php endif; ?>
 </h1>
 <p class="lead">Affichage des informations à propos de cet utilisateur</p>
