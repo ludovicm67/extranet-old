@@ -3,7 +3,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
 ?>
 
-<h1 class="mt-5">Modifier un projet</h1>
+<h1 class="mt-5">
+  Modifier le projet <em><?php echo $project->name; ?></em>
+  <a class="btn btn-outline-primary" href="/project/<?php echo $project->id; ?>" role="button">Retourner au projet sans sauvegarder</a>
+</h1>
 <p class="lead">Ici vous pouvez modifier les informations concernant le projet</p>
 
 <form method="post">
