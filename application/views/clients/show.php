@@ -58,9 +58,9 @@ ob_start();
           <?php echo $order->subject; ?>
         </button>
         <span class="float-right" style="color: <?php echo $order->step_hex; ?>;">
-          <?php echo number_format($order->remainingOrderAmount, 2, ',', ' ') . ' ' . $order->currencysymbol; ?>
+          <?php echo number_format($order->remainingOrderAmount, 2, ',', ' ') . ' ' . $order->currencysymbol; ?> HT
           <?php if ($order->remainingDueAmount > 0): ?>
-            + <?php echo number_format($order->remainingDueAmount, 2, ',', ' ') . ' ' . $order->currencysymbol; ?> en attente de paiement
+            + <?php echo number_format($order->remainingDueAmount, 2, ',', ' ') . ' ' . $order->currencysymbol; ?> TTC en attente de paiement
           <?php endif; ?>
         </span>
       </h5>
@@ -72,7 +72,8 @@ ob_start();
         <li><strong>Client :</strong> <?php echo $order->thirdname; ?></li>
         <li><strong>Sujet :</strong> <?php echo $order->subject; ?></li>
         <li><strong>Statut :</strong> <span style="color: <?php echo $order->step_hex; ?>;"><?php echo $order->step_label; ?></span></li>
-        <li><strong>Montant total :</strong> <?php echo $order->formatted_totalAmount; ?></li>
+        <li><strong>Montant total HT :</strong> <?php echo $order->formatted_totalAmountTaxesFree; ?> HT</li>
+        <li><strong>Montant total TTC :</strong> <?php echo $order->formatted_totalAmount; ?> TTC</li>
         <li><strong>Contact :</strong> <?php echo $order->contactName; ?></li>
         <li>
           <p><strong>Factures associées :</strong></p>
@@ -82,8 +83,9 @@ ob_start();
               <ul>
                 <li><strong>Sujet :</strong> <?php echo $invoice->subject; ?></li>
                 <li><strong>Statut :</strong> <span style="color: <?php echo $invoice->step_hex; ?>;"><?php echo $invoice->step_label; ?></span></li>
-                <li><strong>Montant total :</strong> <?php echo $invoice->formatted_totalAmount; ?></li>
-                <li><strong>Reste à payer :</strong> <?php echo $invoice->formatted_dueAmount; ?></li>
+                <li><strong>Montant total HT :</strong> <?php echo $invoice->formatted_totalAmountTaxesFree; ?> HT</li>
+                <li><strong>Montant total TTC :</strong> <?php echo $invoice->formatted_totalAmount; ?> TTC</li>
+                <li><strong>Reste à payer :</strong> <?php echo $invoice->formatted_dueAmount; ?> TTC</li>
                 <li><strong>Contact :</strong> <?php echo $invoice->contactName; ?></li>
               </ul>
             </li>

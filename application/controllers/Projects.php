@@ -111,7 +111,7 @@ class Projects extends MY_AuthController
         $orders[$o->sellsy_id] = $o;
         $orders[$o->sellsy_id]->invoices = [];
         $orders[$o->sellsy_id]->remainingOrderAmount = floatval(
-          $o->totalAmount
+          $o->totalAmountTaxesFree
         );
         $orders[$o->sellsy_id]->remainingDueAmount = 0;
       }
@@ -132,7 +132,7 @@ class Projects extends MY_AuthController
           $orders[$invoice->parentid]->invoices[] = $invoice;
         }
         $orders[$invoice->parentid]->remainingOrderAmount -= floatval(
-          $invoice->totalAmount
+          $invoice->totalAmountTaxesFree
         );
         $orders[$invoice->parentid]->remainingDueAmount += floatval(
           $invoice->dueAmount
