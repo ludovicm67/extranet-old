@@ -59,6 +59,7 @@ ob_start();
       </select>
     </div>
   </div>
+
   <div class="form-group row">
     <label for="projectUsers" class="col-sm-2 col-form-label">Utilisateurs affectés</label>
     <div class="col-sm-10">
@@ -69,6 +70,20 @@ ob_start();
         </option>
         <?php endforeach; ?>
       </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="projectNextAction" class="col-sm-2 col-form-label">Prochaine action à effectuer</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="next_action" id="projectNextAction" placeholder="Prochaine action à effectuer sur le projet..."><?php echo $project->next_action; ?></textarea>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="projectEndAt" class="col-sm-2 col-form-label">Date de fin</label>
+    <div class="col-sm-10">
+      <input type="date" class="form-control" name="end_at" id="projectEndAt" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="<?php echo date('Y-m-d', strtotime($project->end_at)); ?>">
     </div>
   </div>
 

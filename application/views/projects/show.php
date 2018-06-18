@@ -67,6 +67,15 @@ ob_start();
   <p>Le projet n'est assigné à aucun utilisateurs.</p>
 <?php endif; ?>
 
+<?php if (!empty($project->next_action)): ?>
+  <h2>Prochaine action à effectuer</h2>
+  <p><?php echo nl2br($project->next_action); ?></p>
+<?php endif; ?>
+
+<p<?php echo (!empty($project->end_at) && new DateTime($project->end_at) < new DateTime('now')) ? ' class="text-warning"' : ''; ?>>
+  <strong>Date de fin :</strong> <?php echo (!empty($project->end_at)) ? (new DateTime($project->end_at))->format('d/m/Y') : ''; ?>
+</p>
+
 <h2>Commandes pour ce projet</h2>
 <?php if (!empty($project->orders)): ?>
 <div id="accordion">

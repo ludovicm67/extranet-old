@@ -64,6 +64,20 @@ ob_start();
   </div>
 
   <div class="form-group row">
+    <label for="projectNextAction" class="col-sm-2 col-form-label">Prochaine action à effectuer</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="next_action" id="projectNextAction" placeholder="Prochaine action à effectuer sur le projet..."></textarea>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="projectEndAt" class="col-sm-2 col-form-label">Date de fin</label>
+    <div class="col-sm-10">
+      <input type="date" class="form-control" name="end_at" id="projectEndAt" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+    </div>
+  </div>
+
+  <div class="form-group row">
     <label class="col-sm-2 col-form-label">Tags</label>
     <div class="col-sm-10">
       <div>

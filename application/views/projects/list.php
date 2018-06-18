@@ -30,8 +30,10 @@ ob_start();
         </span>
       </td>
       <td><a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a></td>
-      <td></td>
-      <td class="text-warning">Une date passée (@TODO)</td>
+      <td><?php echo nl2br($project->next_action); ?></td>
+      <td<?php echo (!empty($project->end_at) && new DateTime($project->end_at) < new DateTime('now')) ? ' class="text-warning"' : ''; ?>>
+        <?php echo (!empty($project->end_at)) ? (new DateTime($project->end_at))->format('d/m/Y') : ''; ?>
+      </td>
       <td>
         <?php if (in_array($project->id, $myProjects) || $controller->hasPermission('projects', 'edit')): ?>
           <a href="/project/edit/<?php echo $project->id; ?>">Modifier</a>

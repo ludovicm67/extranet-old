@@ -202,12 +202,18 @@ class Projects extends MY_AuthController
       $projectName = strip_tags(trim($this->input->post('name')));
       $projectDomain = strip_tags(trim($this->input->post('domain')));
       $projectClient = strip_tags(trim($this->input->post('client')));
+      $projectNextAction = htmlspecialchars(
+        trim($this->input->post('next_action'))
+      );
+      $projectEndAt = date('Y-m-d', strtotime($this->input->post('end_at')));
 
       if (!empty($projectName)) {
         $projectContent = [
           'name' => $projectName,
           'client_id' => ($projectClient == 0) ? null : $projectClient,
-          'domain' => empty($projectDomain) ? null : $projectDomain
+          'domain' => empty($projectDomain) ? null : $projectDomain,
+          'next_action' => $projectNextAction,
+          'end_at' => $projectEndAt
         ];
         $this->db->insert('projects', $projectContent);
         $projectId = $this->db->insert_id();
@@ -365,12 +371,18 @@ class Projects extends MY_AuthController
       $projectName = strip_tags(trim($this->input->post('name')));
       $projectDomain = strip_tags(trim($this->input->post('domain')));
       $projectClient = strip_tags(trim($this->input->post('client')));
+      $projectNextAction = htmlspecialchars(
+        trim($this->input->post('next_action'))
+      );
+      $projectEndAt = date('Y-m-d', strtotime($this->input->post('end_at')));
 
       if (!empty($projectName)) {
         $projectContent = [
           'name' => $projectName,
           'client_id' => ($projectClient == 0) ? null : $projectClient,
-          'domain' => empty($projectDomain) ? null : $projectDomain
+          'domain' => empty($projectDomain) ? null : $projectDomain,
+          'next_action' => $projectNextAction,
+          'end_at' => $projectEndAt
         ];
         $this->db->where('id', $id);
         $this->db->update('projects', $projectContent);
