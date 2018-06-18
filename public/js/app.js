@@ -45,7 +45,8 @@ $(document).ready(function () {
     $('.move-up', newItem).click(moveUp);
     $('.move-down', newItem).click(moveDown);
 
-    $('select').select2();
+    $('select[data-tags=true]').select2({ tags: true });
+    $('select').not('[data-tags=true]').select2({ tags: false });
   });
 
   $('.move-up').click(moveUp);

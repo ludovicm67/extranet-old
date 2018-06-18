@@ -194,6 +194,29 @@ class Projects extends MY_AuthController
     redirect('/projects');
   }
 
+  private function createTagsOnThFly($id)
+  {
+    $tagName = strtolower(
+      str_replace(' ', '_', preg_replace("/[^A-Za-z0-9 ]/", '', $id))
+    );
+
+    if (!is_numeric($id) && !empty($tagName)) {
+      $this->db->where('name', $id);
+      $q = $this->db->get('tags');
+      if ($q->num_rows() > 0) {
+        return $q->result()[0]->id;
+      } else {
+        $content = ['name' => $tagName];
+        $this->db->insert('tags', $content);
+        $content['id'] = $this->db->insert_id();
+        $this->writeLog('insert', 'tags', $content, $content['id']);
+        return $content['id'];
+      }
+    } else {
+      return ($id == 0) ? null : $id;
+    }
+  }
+
   public function new()
   {
     $this->checkPermission('projects', 'add');
@@ -266,7 +289,9 @@ class Projects extends MY_AuthController
           count($_POST['tagValue'])
         ) {
           for ($i = 0; $i < count($_POST['tagName']); $i++) {
-            $tagId = intval($this->input->post('tagName')[$i]);
+            $tagId = $this->createTagsOnThFly(
+              $this->input->post('tagName')[$i]
+            );
             $tagVal = strip_tags(trim($this->input->post('tagValue')[$i]));
             if (!empty($tagId)) {
               $this->db->insert('project_tags', [
@@ -440,7 +465,9 @@ class Projects extends MY_AuthController
           count($_POST['tagValue'])
         ) {
           for ($i = 0; $i < count($_POST['tagName']); $i++) {
-            $tagId = intval($this->input->post('tagName')[$i]);
+            $tagId = $this->createTagsOnThFly(
+              $this->input->post('tagName')[$i]
+            );
             $tagVal = strip_tags(trim($this->input->post('tagValue')[$i]));
             if (!empty($tagId)) {
               $this->db->insert('project_tags', [
