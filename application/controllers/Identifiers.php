@@ -92,6 +92,25 @@ class Identifiers extends MY_AuthController
     $this->view('identifiers/new');
   }
 
+  private function createIdentifierOnThFly($id)
+  {
+    if (!is_numeric($id)) {
+      $this->db->where('name', $id);
+      $q = $this->db->get('identifiers');
+      if ($q->num_rows() > 0) {
+        return $q->result()[0]->id;
+      } else {
+        $content = ['name' => $id];
+        $this->db->insert('identifiers', $content);
+        $content['id'] = $this->db->insert_id();
+        $this->writeLog('insert', 'identifiers', $content, $content['id']);
+        return $content['id'];
+      }
+    } else {
+      return ($id == 0) ? null : $id;
+    }
+  }
+
   public function edit($id)
   {
     $this->checkPermission('identifiers', 'edit');
@@ -201,9 +220,7 @@ class Identifiers extends MY_AuthController
 
     // if form was submitted
     if (count($_POST) > 0) {
-      $type = ($this->input->post('type') == 0)
-        ? null
-        : $this->input->post('type');
+      $type = $this->input->post('type');
       $value = htmlspecialchars(trim($this->input->post('value')));
       $confidential = (empty($this->input->post('confidential'))) ? 0 : 1;
 
@@ -213,7 +230,7 @@ class Identifiers extends MY_AuthController
 
       $content = [
         'project_id' => $id,
-        'identifier_id' => $type,
+        'identifier_id' => $this->createIdentifierOnThFly($type),
         'value' => $value,
         'confidential' => $confidential
       ];
@@ -268,14 +285,12 @@ class Identifiers extends MY_AuthController
 
     // if form was submitted
     if (count($_POST) > 0) {
-      $type = ($this->input->post('type') == 0)
-        ? null
-        : $this->input->post('type');
+      $type = $this->input->post('type');
       $value = htmlspecialchars(trim($this->input->post('value')));
       $confidential = (empty($this->input->post('confidential'))) ? 0 : 1;
 
       $content = [
-        'identifier_id' => $type,
+        'identifier_id' => $this->createIdentifierOnThFly($type),
         'value' => $value,
         'confidential' => $confidential
       ];

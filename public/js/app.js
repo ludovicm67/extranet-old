@@ -1,5 +1,6 @@
 $(document).ready(function () {
-  $('select').select2();
+  $('select[data-tags=true]').select2({ tags: true });
+  $('select').not('[data-tags=true]').select2({ tags: false });
   $('.dupplicate-item').hide();
 
   const moveUp = function (e) {

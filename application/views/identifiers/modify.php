@@ -12,7 +12,7 @@ ob_start();
   <div class="form-group row">
     <label for="identifierType" class="col-sm-2 col-form-label">Type d'identifiant</label>
     <div class="col-sm-10">
-      <select class="form-control" name="type" id="identifierType">
+      <select data-tags="true" class="form-control" name="type" id="identifierType">
         <option value="0">Autre ?</option>
         <?php foreach ($identifiers as $identifier): ?>
         <option value="<?php echo $identifier->id; ?>"<?php echo ($identifier->id === $values->identifier_id) ? ' selected="selected"' : ''; ?>>
