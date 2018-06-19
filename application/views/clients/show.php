@@ -4,6 +4,9 @@ ob_start();
 ?>
 
 <h1 class="mt-5">
+  <a class="btn btn-outline-dark" title="Retour à la liste" href="/clients" role="button">
+    <i class="fas fa-list"></i>
+  </a>
   <?php echo $client->fullName; ?>
   <?php if ($controller->hasPermission('projects', 'add')): ?>
     <a class="btn btn-outline-primary" href="/projects/new?client_id=<?php echo $client->id; ?>" role="button">Ajouter un projet</a>

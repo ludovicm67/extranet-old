@@ -4,6 +4,9 @@ ob_start();
 ?>
 
 <h1 class="mt-5">
+  <a class="btn btn-outline-dark" title="Retour à la liste" href="/tags" role="button">
+    <i class="fas fa-list"></i>
+  </a>
   <?php echo $tag->name; ?>
   <?php if (!empty($this->input->get('value'))): ?>
     <small><?php echo strip_tags($this->input->get('value')); ?></small>
