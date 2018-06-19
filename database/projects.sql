@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `next_action` text,
   `end_at` datetime,
+  `maintenance` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`),
   FOREIGN KEY (client_id) REFERENCES sellsy_clients(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
