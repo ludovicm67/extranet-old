@@ -5,6 +5,8 @@ class Leave extends MY_AuthController
 {
   public function new()
   {
+    $this->checkPermission('leave', 'add');
+
     // form was submitted
     if (
       isset($_SERVER['REQUEST_METHOD']) &&
@@ -45,6 +47,8 @@ class Leave extends MY_AuthController
 
   public function accept($id)
   {
+    $this->checkPermission('leave', 'edit');
+
     $this->db->where('id', $id);
     $q = $this->db->get('leave');
     if ($q->num_rows() <= 0) {
@@ -65,6 +69,8 @@ class Leave extends MY_AuthController
 
   public function delete($id)
   {
+    $this->checkPermission('leave', 'delete');
+
     $this->db->where('id', $id);
     $q = $this->db->get('leave');
     if ($q->num_rows() > 0) {
@@ -82,6 +88,9 @@ class Leave extends MY_AuthController
 
   public function index()
   {
+    if (!$this->hasPermissions('leave', 'show')) {
+      $this->db->where('leave.user_id', $this->session->id);
+    }
     $this->db->select('*, leave.id AS id');
     $this->db->order_by('leave.accepted', 'asc');
     $this->db->order_by('leave.id', 'desc');

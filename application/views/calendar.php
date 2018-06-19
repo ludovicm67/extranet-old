@@ -13,8 +13,12 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
 echo $next->month;
 echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
 ?>" class="btn btn-dark"><i class="fas fa-arrow-right"></i></a>
-  <a class="btn btn-outline-primary" href="/leave/new" role="button">Demande de congés</a>
-  <a class="btn btn-outline-primary" href="/transports/new" role="button">Remboursement frais de transport</a>
+  <?php if ($controller->hasPermission('leave', 'add')): ?>
+    <a class="btn btn-outline-primary" href="/leave/new" role="button">Demande de congés</a>
+  <?php endif; ?>
+  <?php if ($controller->hasPermission('transports', 'add')): ?>
+    <a class="btn btn-outline-primary" href="/transports/new" role="button">Remboursement frais de transport</a>
+  <?php endif; ?>
 </h1>
 <p class="lead">Calendrier permettant d'afficher les congés et les demandes de remboursements de frais de transport.</p>
 
@@ -37,15 +41,17 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
       <td><?php echo (new DateTime($c->end))->format('d/m/Y'); ?></td>
       <td><?php echo nl2br($c->details); ?></td>
       <td>
-        <?php if ($c->accepted == 0): ?>
+        <?php if ($c->accepted == 0 && ($c->user_id == $this->session->id || $controller->hasPermissions('leave', 'edit'))): ?>
           <a class="btn btn-success" href="/leave/accept/<?php echo $c->id; ?>">
             <i class="fas fa-check"></i>
           </a>
         <?php endif; ?>
 
-        <a data-confirm-delete-url class="btn btn-danger" href="/leave/delete/<?php echo $c->id; ?>">
-          <i class="far fa-trash-alt"></i>
-        </a>
+        <?php if ($c->user_id == $this->session->id || $controller->hasPermissions('leave', 'delete')): ?>
+          <a data-confirm-delete-url class="btn btn-danger" href="/leave/delete/<?php echo $c->id; ?>">
+            <i class="far fa-trash-alt"></i>
+          </a>
+        <?php endif; ?>
       </td>
     </tr>
     <?php endforeach; ?>
@@ -77,15 +83,17 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
           </a>
         <?php endif; ?>
 
-        <?php if ($c->accepted == 0): ?>
+        <?php if ($c->accepted == 0 && ($c->user_id == $this->session->id || $controller->hasPermissions('transports', 'edit'))): ?>
           <a class="btn btn-success" href="/transports/accept/<?php echo $c->id; ?>">
             <i class="fas fa-check"></i>
           </a>
         <?php endif; ?>
 
-        <a data-confirm-delete-url class="btn btn-danger" href="/transports/delete/<?php echo $c->id; ?>">
-          <i class="far fa-trash-alt"></i>
-        </a>
+        <?php if ($c->user_id == $this->session->id || $controller->hasPermissions('transports', 'delete')): ?>
+          <a data-confirm-delete-url class="btn btn-danger" href="/transports/delete/<?php echo $c->id; ?>">
+            <i class="far fa-trash-alt"></i>
+          </a>
+        <?php endif; ?>
       </td>
     </tr>
     <?php endforeach; ?>

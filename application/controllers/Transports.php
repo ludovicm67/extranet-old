@@ -22,6 +22,8 @@ class Transports extends MY_AuthController
 
   public function new()
   {
+    $this->checkPermission('transports', 'add');
+
     // form was submitted
     if (
       isset($_SERVER['REQUEST_METHOD']) &&
@@ -100,6 +102,8 @@ class Transports extends MY_AuthController
 
   public function accept($id)
   {
+    $this->checkPermission('transports', 'edit');
+
     $this->db->where('id', $id);
     $q = $this->db->get('transports');
     if ($q->num_rows() <= 0) {
@@ -120,6 +124,8 @@ class Transports extends MY_AuthController
 
   public function delete($id)
   {
+    $this->checkPermission('transports', 'delete');
+
     $this->db->where('id', $id);
     $q = $this->db->get('transports');
     if ($q->num_rows() > 0) {
@@ -137,6 +143,9 @@ class Transports extends MY_AuthController
 
   public function index()
   {
+    if (!$this->hasPermissions('transports', 'show')) {
+      $this->db->where('users.id', $this->session->id);
+    }
     $this->db->select('*, transports.id AS id');
     $this->db->order_by('transports.accepted', 'asc');
     $this->db->order_by('transports.id', 'desc');

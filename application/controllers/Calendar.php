@@ -52,6 +52,9 @@ class Calendar extends MY_AuthController
     $dtStart = new DateTime("$nowYear-$nowMonth-1");
     $dtEnd = new DateTime($dtStart->format('Y-m-t'));
 
+    if (!$this->hasPermissions('leave', 'show')) {
+      $this->db->where('users.id', $this->session->id);
+    }
     $this->db->select('*, leave.id AS id');
     $this->db->order_by('leave.accepted', 'asc');
     $this->db->order_by('leave.id', 'desc');
@@ -63,6 +66,9 @@ class Calendar extends MY_AuthController
     $this->db->join('users', 'users.id = leave.user_id', 'left');
     $leave = $this->db->get('leave')->result();
 
+    if (!$this->hasPermissions('transports', 'show')) {
+      $this->db->where('users.id', $this->session->id);
+    }
     $this->db->select('*, transports.id AS id');
     $this->db->where('month', $nowMonth);
     $this->db->where('year', $nowYear);
