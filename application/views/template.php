@@ -100,9 +100,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <?php endif; ?>
           </ul>
           <?php if ($this->session->logged): ?>
-          <form class="form-inline" action="/search" method="get">
+          <form class="form-inline d-md-none d-lg-block" action="/search" method="get">
             <input id="searcher" class="form-control mr-sm-2" type="search" name="q" placeholder="Rechercher..." aria-label="Rechercher">
-            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Rechercher</button>
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
           </form>
           <?php endif; ?>
         </div>
