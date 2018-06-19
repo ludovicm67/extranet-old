@@ -30,7 +30,6 @@ ob_start();
     </div>
   </div>
 
-
   <div class="form-group row">
     <span class="col-sm-2 col-form-label">Confidentialité</span>
     <div class="col-sm-10">

@@ -225,6 +225,7 @@ class Projects extends MY_AuthController
       $projectName = strip_tags(trim($this->input->post('name')));
       $projectDomain = strip_tags(trim($this->input->post('domain')));
       $projectClient = strip_tags(trim($this->input->post('client')));
+      $projectMaintenance = (empty($this->input->post('maintenance'))) ? 0 : 1;
       $projectNextAction = htmlspecialchars(
         trim($this->input->post('next_action'))
       );
@@ -236,6 +237,7 @@ class Projects extends MY_AuthController
           'client_id' => ($projectClient == 0) ? null : $projectClient,
           'domain' => empty($projectDomain) ? null : $projectDomain,
           'next_action' => $projectNextAction,
+          'maintenance' => $projectMaintenance,
           'end_at' => $projectEndAt
         ];
         $this->db->insert('projects', $projectContent);
@@ -400,6 +402,7 @@ class Projects extends MY_AuthController
       $projectName = strip_tags(trim($this->input->post('name')));
       $projectDomain = strip_tags(trim($this->input->post('domain')));
       $projectClient = strip_tags(trim($this->input->post('client')));
+      $projectMaintenance = (empty($this->input->post('maintenance'))) ? 0 : 1;
       $projectNextAction = htmlspecialchars(
         trim($this->input->post('next_action'))
       );
@@ -411,6 +414,7 @@ class Projects extends MY_AuthController
           'client_id' => ($projectClient == 0) ? null : $projectClient,
           'domain' => empty($projectDomain) ? null : $projectDomain,
           'next_action' => $projectNextAction,
+          'maintenance' => $projectMaintenance,
           'end_at' => $projectEndAt
         ];
         $this->db->where('id', $id);

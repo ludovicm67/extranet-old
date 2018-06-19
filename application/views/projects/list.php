@@ -17,6 +17,7 @@ ob_start();
       <th scope="col"></th>
       <th scope="col">Nom</th>
       <th scope="col">Prochaine action à effectuer</th>
+      <th scope="col">Maintenance incluse ?</th>
       <th scope="col">Date de fin</th>
       <th scope="col">Actions</th>
     </tr>
@@ -31,6 +32,7 @@ ob_start();
       </td>
       <td><a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a></td>
       <td><?php echo nl2br($project->next_action); ?></td>
+      <td><?php echo ($project->maintenance == 0) ? 'Non' : 'Oui'; ?></td>
       <td<?php echo (!empty($project->end_at) && new DateTime($project->end_at) < new DateTime('now')) ? ' class="text-warning"' : ''; ?>>
         <?php echo (!empty($project->end_at)) ? (new DateTime($project->end_at))->format('d/m/Y') : ''; ?>
       </td>
