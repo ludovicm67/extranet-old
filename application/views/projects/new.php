@@ -84,7 +84,7 @@ ob_start();
 
         <div class="row dupplicate-item">
           <div class="col-sm-4">
-            <select class="form-control" name="tagName[]">
+            <select data-tags="true" class="form-control" name="tagName[]">
               <option value="">Aucun tag</option>
               <?php foreach ($tags as $tag): ?>
               <option value="<?php echo $tag->id; ?>">

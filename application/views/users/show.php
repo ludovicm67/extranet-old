@@ -4,6 +4,9 @@ ob_start();
 ?>
 
 <h1 class="mt-5">
+  <a class="btn btn-outline-dark" title="Retour à la liste" href="/users" role="button">
+    <i class="fas fa-list"></i>
+  </a>
   <?php echo $user->firstname; ?> <?php echo $user->lastname; ?>
   <small>(<?php echo $user->mail; ?>)</small>
   <?php if ($controller->hasPermission('users', 'edit')): ?>

@@ -30,23 +30,24 @@ $(document).ready(function () {
   $('.dupplicate-action').click(function (e) {
     const target = e.target;
     const item = target.parentNode.querySelector('.dupplicate-item');
+    if (!item) return;
 
-    if ($('select', item).length > 0) {
-      $('select', item).select2('destroy');
-    }
+    $('select.select2-hidden-accessible', item).select2('destroy');
 
     $('select, input', item).val('');
 
-    if (!item) return;
-    const newItem = item.cloneNode(true);
-    target.parentNode.insertBefore(newItem, target);
-    $(newItem).removeClass('dupplicate-item').show();
+    const newItem = $(item).clone().insertBefore(target).removeClass('dupplicate-item').show();
 
     $('.move-up', newItem).click(moveUp);
     $('.move-down', newItem).click(moveDown);
+    console.log(target.parentNode);
 
-    $('select[data-tags=true]').select2({ tags: true });
-    $('select').not('[data-tags=true]').select2({ tags: false });
+    $(target.parentNode).each(function () {
+      $('select, option', this).removeAttr('data-select2-id');
+    });
+
+    $('select[data-tags=true]', target.parentNode).select2({ tags: true });
+    $('select', target.parentNode).not('[data-tags=true]').select2({ tags: false });
   });
 
   $('[data-create-contact-modal]').click(function (e) {
@@ -59,8 +60,6 @@ $(document).ready(function () {
     $('select', $modal).select2('destroy');
     $form.get(0).reset();
     $btn.prop('disabled', false);
-
-
 
     $btn.click(function (e) {
 

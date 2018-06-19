@@ -4,6 +4,9 @@ ob_start();
 ?>
 
 <h1 class="mt-5">
+  <a class="btn btn-outline-dark" title="Retour à la liste" href="/projects" role="button">
+    <i class="fas fa-list"></i>
+  </a>
   <?php echo $project->name; ?>
   <?php if ($isMyProject || $controller->hasPermission('project_identifiers', 'show')): ?>
     <a class="btn btn-outline-primary" href="/identifiers/show/<?php echo $project->id; ?>" role="button">Identifiants</a>
