@@ -1,6 +1,14 @@
 $(document).ready(function () {
-  $('select[data-tags=true]').select2({ tags: true, width: '100%' });
-  $('select').not('[data-tags=true]').select2({ tags: false, width: '100%' });
+  $('select[data-tags=true]').select2({
+    tags: true,
+    width: '100%',
+    minimumResultsForSearch: 5
+  });
+  $('select').not('[data-tags=true]').select2({
+    tags: false,
+    width: '100%',
+    minimumResultsForSearch: 5
+  });
   $('.dupplicate-item').hide();
 
   const moveUp = function (e) {
@@ -46,8 +54,16 @@ $(document).ready(function () {
       $('select, option', this).removeAttr('data-select2-id');
     });
 
-    $('select[data-tags=true]', target.parentNode).select2({ tags: true, width: '100%' });
-    $('select', target.parentNode).not('[data-tags=true]').select2({ tags: false, width: '100%' });
+    $('select[data-tags=true]', target.parentNode).select2({
+      tags: true,
+      width: '100%',
+      minimumResultsForSearch: 5
+    });
+    $('select', target.parentNode).not('[data-tags=true]').select2({
+      tags: false,
+      width: '100%',
+      minimumResultsForSearch: 5
+    });
   });
 
   $('[data-create-contact-modal]').click(function (e) {
@@ -83,6 +99,7 @@ $(document).ready(function () {
     $('select', $modal).select2({
       tags: true,
       width: '100%',
+      minimumResultsForSearch: 5,
       dropdownParent: $modal
     });
   });
