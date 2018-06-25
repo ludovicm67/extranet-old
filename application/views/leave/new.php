@@ -6,7 +6,7 @@ ob_start();
 <h1 class="mt-5">Nouvelle demande de congés</h1>
 <p class="lead">Demandez une nouvelle période de congés</p>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
   <div class="form-group row">
     <label for="leaveStart" class="col-sm-2 col-form-label">Début</label>
     <div class="col-sm-7">
@@ -14,7 +14,7 @@ ob_start();
     </div>
     <div class="col-sm-3">
       <select name="start_time">
-        <option value="9">9h</option>
+        <option value="09">9h</option>
         <option value="14">14h</option>
       </select>
     </div>

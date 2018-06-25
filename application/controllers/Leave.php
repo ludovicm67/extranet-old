@@ -1,10 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use Ramsey\Uuid\Uuid;
+
 class Leave extends MY_AuthController
 {
-  public function new()
-  {
+  function new () {
     $this->checkPermission('leave', 'add');
 
     // form was submitted
@@ -12,14 +13,41 @@ class Leave extends MY_AuthController
       isset($_SERVER['REQUEST_METHOD']) &&
       $_SERVER['REQUEST_METHOD'] == 'POST'
     ) {
-      $startDate = date('Y-m-d', strtotime($this->input->post('start')));
-      $endDate = date('Y-m-d', strtotime($this->input->post('end')));
+      $startTime = intval($this->input->post('start_time'));
+      $endTime = intval($this->input->post('end_time'));
+      $startDate = date(
+        'Y-m-d H:i:s',
+        strtotime($this->input->post('start') . ' ' . $startTime . ':00:00')
+      );
+      $endDate = date(
+        'Y-m-d H:i:s',
+        strtotime($this->input->post('end') . ' ' . $endTime . ':00:00')
+      );
+
+      $days = floatval($this->input->post('days'));
+      if ($days < 0) {
+        $days *= -1;
+      }
+
+      // reason
+      switch ($this->input->post('reason')) {
+        case 'leave':
+          $reason = 'Congé';
+          break;
+        case 'disease':
+          $reason = 'Maladie';
+          break;
+        default:
+          $reason = 'Autre';
+          break;
+      }
+
       $details = htmlspecialchars(trim($this->input->post('details')));
       if (!$startDate || !$endDate) {
-        $this->session->set_flashdata('error', 'Mauvais format de dates !');
+        $this->session->set_flashdata('error', 'Mauvais format de date !');
         redirect('/leave/new');
       }
-      if ($startDate > $endDate) {
+      if ($startDate >= $endDate) {
         $this->session->set_flashdata(
           'error',
           'La date de début doit être antérieure à celle de fin.'
@@ -27,11 +55,48 @@ class Leave extends MY_AuthController
         redirect('/leave/new');
       }
 
+      $this->load->library('upload', [
+        'upload_path' => ROOTPATH . 'public/uploads/',
+        'allowed_types' => 'gif|jpg|png|jpeg|pdf',
+      ]);
+
+      $file = null;
+      if (
+        isset($_FILES['file']) &&
+        !empty($_FILES['file']) &&
+        !empty($_FILES['file']['name'])
+      ) {
+        if (!$this->upload->do_upload('file')) {
+          $this->session->set_flashdata(
+            'error',
+            "Le justificatif n'a pas pu être uploadé.."
+          );
+          redirect('/leave/new');
+        } else {
+          $upload_data = $this->upload->data();
+          $newName =
+          $upload_data['file_path'] .
+          $this->session->id .
+          '_leave_' .
+          Uuid::uuid4()->toString() .
+          '_' .
+          base64_encode($upload_data['orig_name']) .
+            $upload_data['file_ext'];
+          rename($upload_data['full_path'], $newName);
+          $file = str_replace(ROOTPATH . 'public', '', $newName);
+        }
+      }
+
       $content = [
         'user_id' => $this->session->id,
         'start' => $startDate,
         'end' => $endDate,
-        'details' => $details
+        'details' => $details,
+        'start_time' => $startTime,
+        'end_time' => $endTime,
+        'days' => $days,
+        'reason' => $reason,
+        'file' => $file,
       ];
       $this->db->insert('leave', $content);
       $content['id'] = $this->db->insert_id();
