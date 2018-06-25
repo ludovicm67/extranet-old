@@ -15,8 +15,10 @@ ob_start();
   <thead class="thead-dark">
     <tr>
       <th scope="col">Utilisateur</th>
+      <th scope="col">Motif</th>
       <th scope="col">Début</th>
       <th scope="col">Fin</th>
+      <th scope="col">Nombre de jours</th>
       <th scope="col">Commentaire</th>
       <th scope="col">Actions</th>
     </tr>
@@ -25,10 +27,18 @@ ob_start();
     <?php foreach ($content as $c): ?>
     <tr>
       <td><a href="/user/<?php echo $c->user_id; ?>"><?php echo $c->firstname; ?> <?php echo $c->lastname; ?></a></td>
+      <td><?php echo $c->reason; ?></td>
       <td><?php echo (new DateTime($c->start))->format('d/m/Y'); ?></td>
       <td><?php echo (new DateTime($c->end))->format('d/m/Y'); ?></td>
+      <td><?php echo $c->days; ?></td>
       <td><?php echo nl2br($c->details); ?></td>
       <td>
+        <?php if (!empty($c->file)): ?>
+          <a class="btn btn-dark" href="<?php echo $c->file; ?>" target="_blank" title="Ouvrir le justificatif">
+            <i class="far fa-file"></i>
+          </a>
+        <?php endif;?>
+
         <?php if ($c->accepted == 0 && ($c->user_id == $this->session->id || $controller->hasPermissions('leave', 'edit'))): ?>
           <a class="btn btn-success" href="/leave/accept/<?php echo $c->id; ?>">
             <i class="fas fa-check"></i>
