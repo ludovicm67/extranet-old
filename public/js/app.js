@@ -141,4 +141,13 @@ $(document).ready(function () {
     $('input[type=checkbox]:enabled', $(e.target).closest('tr'))
       .not(e.target).prop('checked', e.target.checked);
   });
+
+  $('input[type=file]').change(function (e) {
+    const target = e.target;
+    let fileName = 'Choisir un fichier...';
+    if (target.files && target.files.length > 0) {
+      fileName = target.files[0].name;
+    }
+    console.log($(target).next('label').text(fileName));
+  })
 });
