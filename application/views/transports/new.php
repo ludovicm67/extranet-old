@@ -26,10 +26,10 @@ ob_start();
     </div>
   </div>
   <div class="form-group row">
-    <label for="transportsMonth" class="col-sm-2 col-form-label">Montant</label>
+    <label for="transportsAmount" class="col-sm-2 col-form-label">Montant</label>
     <div class="col-sm-10">
       <div class="input-group">
-        <input type="number" class="form-control" required pattern="[0-9]+([\.,][0-9]+)?" step="0.01" min="0" value="0" name="amount">
+        <input id="transportsAmount" type="number" class="form-control" required pattern="[0-9]+([\.,][0-9]+)?" step="0.01" min="0" value="0" name="amount">
         <div class="input-group-append">
           <span class="input-group-text">€</span>
         </div>
@@ -37,7 +37,7 @@ ob_start();
     </div>
   </div>
   <div class="form-group row">
-    <label for="transportsMonth" class="col-sm-2 col-form-label">Justificatif</label>
+    <label for="transportsFile" class="col-sm-2 col-form-label">Justificatif</label>
     <div class="col-sm-10">
       <div class="input-group">
         <div class="custom-file">
