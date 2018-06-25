@@ -1,6 +1,6 @@
 $(document).ready(function () {
-  $('select[data-tags=true]').select2({ tags: true });
-  $('select').not('[data-tags=true]').select2({ tags: false });
+  $('select[data-tags=true]').select2({ tags: true, width: '100%' });
+  $('select').not('[data-tags=true]').select2({ tags: false, width: '100%' });
   $('.dupplicate-item').hide();
 
   const moveUp = function (e) {
@@ -46,8 +46,8 @@ $(document).ready(function () {
       $('select, option', this).removeAttr('data-select2-id');
     });
 
-    $('select[data-tags=true]', target.parentNode).select2({ tags: true });
-    $('select', target.parentNode).not('[data-tags=true]').select2({ tags: false });
+    $('select[data-tags=true]', target.parentNode).select2({ tags: true, width: '100%' });
+    $('select', target.parentNode).not('[data-tags=true]').select2({ tags: false, width: '100%' });
   });
 
   $('[data-create-contact-modal]').click(function (e) {
