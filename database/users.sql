@@ -63,6 +63,11 @@ CREATE TABLE IF NOT EXISTS `leave` (
   `accepted` tinyint(1) DEFAULT 0,
   `start` datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
   `end` datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `start_time` int(11) DEFAULT 9,
+  `end_time` int(11) DEFAULT 18,
+  `days` float DEFAULT 0,
+  `reason` varchar(255) DEFAULT "Autre",
+  `file` varchar(255),
   `details` text,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
