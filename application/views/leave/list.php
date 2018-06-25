@@ -37,7 +37,7 @@ ob_start();
           <a class="btn btn-dark" href="<?php echo $c->file; ?>" target="_blank" title="Ouvrir le justificatif">
             <i class="far fa-file"></i>
           </a>
-        <?php endif;?>
+        <?php endif; ?>
 
         <?php if ($c->accepted == 0 && ($c->user_id == $this->session->id || $controller->hasPermissions('leave', 'edit'))): ?>
           <a class="btn btn-success" href="/leave/accept/<?php echo $c->id; ?>">

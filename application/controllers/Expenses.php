@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 use Ramsey\Uuid\Uuid;
 
-class Transports extends MY_AuthController
+class Expenses extends MY_AuthController
 {
   private $months = [
     1 => 'Janvier',
@@ -22,7 +22,7 @@ class Transports extends MY_AuthController
 
   public function new()
   {
-    $this->checkPermission('transports', 'add');
+    $this->checkPermission('expenses', 'add');
 
     // form was submitted
     if (
@@ -38,14 +38,14 @@ class Transports extends MY_AuthController
           'error',
           "Veuillez rensigner le mois et l'année !"
         );
-        redirect('/transports/new');
+        redirect('/expenses/new');
       }
       if ($amount < 0) {
         $this->session->set_flashdata(
           'error',
           'Le montant ne peut être négatif !'
         );
-        redirect('/transports/new');
+        redirect('/expenses/new');
       }
 
       $this->load->library('upload', [
@@ -64,7 +64,7 @@ class Transports extends MY_AuthController
             'error',
             "Le justificatif n'a pas pu être uploadé.."
           );
-          redirect('/transports/new');
+          redirect('/expenses/new');
         } else {
           $upload_data = $this->upload->data();
           $newName =
@@ -88,49 +88,49 @@ class Transports extends MY_AuthController
         'details' => $details,
         'file' => $file
       ];
-      $this->db->insert('transports', $content);
+      $this->db->insert('expenses', $content);
       $content['id'] = $this->db->insert_id();
-      $this->writeLog('insert', 'transports', $content, $content['id']);
+      $this->writeLog('insert', 'expenses', $content, $content['id']);
 
       $this->session->set_flashdata('success', 'La demande a bien été crée !');
 
-      redirect('/transports');
+      redirect('/expenses');
     }
 
-    $this->view('transports/new', ['months' => $this->months]);
+    $this->view('expenses/new', ['months' => $this->months]);
   }
 
   public function accept($id)
   {
-    $this->checkPermission('transports', 'edit');
+    $this->checkPermission('expenses', 'edit');
 
     $this->db->where('id', $id);
-    $q = $this->db->get('transports');
+    $q = $this->db->get('expenses');
     if ($q->num_rows() <= 0) {
-      redirect('/transports');
+      redirect('/expenses');
     }
 
     $content = ['accepted' => 1];
     $this->db->where('id', $id);
-    $this->db->update('transports', $content);
+    $this->db->update('expenses', $content);
     $content['id'] = $id;
-    $this->writeLog('update', 'transports', $content, $content['id']);
+    $this->writeLog('update', 'expenses', $content, $content['id']);
     $this->session->set_flashdata(
       'success',
       'La demande a bien été acceptée !'
     );
-    redirect('/transports');
+    redirect('/expenses');
   }
 
   public function delete($id)
   {
-    $this->checkPermission('transports', 'delete');
+    $this->checkPermission('expenses', 'delete');
 
     $this->db->where('id', $id);
-    $q = $this->db->get('transports');
+    $q = $this->db->get('expenses');
     if ($q->num_rows() > 0) {
-      $this->db->delete('transports', ['id' => $id]);
-      $this->writeLog('delete', 'transports', $q->result()[0], $id);
+      $this->db->delete('expenses', ['id' => $id]);
+      $this->writeLog('delete', 'expenses', $q->result()[0], $id);
       $this->session->set_flashdata(
         'success',
         'La demande a bien été supprimée !'
@@ -138,19 +138,19 @@ class Transports extends MY_AuthController
     } else {
       $this->session->set_flashdata('error', "La demande n'existe pas.");
     }
-    redirect('/transports');
+    redirect('/expenses');
   }
 
   public function index()
   {
-    if (!$this->hasPermissions('transports', 'show')) {
+    if (!$this->hasPermissions('expenses', 'show')) {
       $this->db->where('users.id', $this->session->id);
     }
-    $this->db->select('*, transports.id AS id');
-    $this->db->order_by('transports.accepted', 'asc');
-    $this->db->order_by('transports.id', 'desc');
-    $this->db->join('users', 'users.id = transports.user_id', 'left');
-    $content = $this->db->get('transports')->result();
-    $this->view('transports/list', ['content' => $content]);
+    $this->db->select('*, expenses.id AS id');
+    $this->db->order_by('expenses.accepted', 'asc');
+    $this->db->order_by('expenses.id', 'desc');
+    $this->db->join('users', 'users.id = expenses.user_id', 'left');
+    $content = $this->db->get('expenses')->result();
+    $this->view('expenses/list', ['content' => $content]);
   }
 }

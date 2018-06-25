@@ -4,12 +4,12 @@ ob_start();
 ?>
 
 <h1 class="mt-5">
-  Liste des remboursements de frais de transport
-  <?php if ($controller->hasPermission('transports', 'add')): ?>
-    <a class="btn btn-outline-primary" href="/transports/new" role="button">Faire une demande</a>
+  Liste des notes de frais
+  <?php if ($controller->hasPermission('expenses', 'add')): ?>
+    <a class="btn btn-outline-primary" href="/expenses/new" role="button">Faire une demande</a>
   <?php endif; ?>
 </h1>
-<p class="lead">Passez en revue les demandes de remboursements de frais de transport</p>
+<p class="lead">Passez en revue les notes de frais</p>
 
 <table class="table table-hover">
   <thead class="thead-dark">
@@ -35,14 +35,14 @@ ob_start();
           </a>
         <?php endif; ?>
 
-        <?php if ($c->accepted == 0 && ($c->user_id == $this->session->id || $controller->hasPermissions('transports', 'edit'))): ?>
-          <a class="btn btn-success" href="/transports/accept/<?php echo $c->id; ?>">
+        <?php if ($c->accepted == 0 && ($c->user_id == $this->session->id || $controller->hasPermissions('expenses', 'edit'))): ?>
+          <a class="btn btn-success" href="/expenses/accept/<?php echo $c->id; ?>">
             <i class="fas fa-check"></i>
           </a>
         <?php endif; ?>
 
-        <?php if ($c->user_id == $this->session->id || $controller->hasPermissions('transports', 'delete')): ?>
-          <a data-confirm-delete-url class="btn btn-danger" href="/transports/delete/<?php echo $c->id; ?>">
+        <?php if ($c->user_id == $this->session->id || $controller->hasPermissions('expenses', 'delete')): ?>
+          <a data-confirm-delete-url class="btn btn-danger" href="/expenses/delete/<?php echo $c->id; ?>">
             <i class="far fa-trash-alt"></i>
           </a>
         <?php endif; ?>

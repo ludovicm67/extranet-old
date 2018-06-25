@@ -66,26 +66,26 @@ class Calendar extends MY_AuthController
     $this->db->join('users', 'users.id = leave.user_id', 'left');
     $leave = $this->db->get('leave')->result();
 
-    if (!$this->hasPermissions('transports', 'show')) {
+    if (!$this->hasPermissions('expenses', 'show')) {
       $this->db->where('users.id', $this->session->id);
     }
-    $this->db->select('*, transports.id AS id');
+    $this->db->select('*, expenses.id AS id');
     $this->db->where('month', $nowMonth);
     $this->db->where('year', $nowYear);
     if ($this->input->get('me') == 1) {
       $this->db->where('user_id', $this->session->id);
     }
-    $this->db->order_by('transports.accepted', 'asc');
-    $this->db->order_by('transports.id', 'desc');
-    $this->db->join('users', 'users.id = transports.user_id', 'left');
-    $transports = $this->db->get('transports')->result();
+    $this->db->order_by('expenses.accepted', 'asc');
+    $this->db->order_by('expenses.id', 'desc');
+    $this->db->join('users', 'users.id = expenses.user_id', 'left');
+    $expenses = $this->db->get('expenses')->result();
 
     $this->view('calendar', [
       'now' => $now,
       'prev' => $prev,
       'next' => $next,
       'leave' => $leave,
-      'transports' => $transports,
+      'expenses' => $expenses,
       'o' => (object) ['calendarTranslator' => new CalendarTranslator()]
     ]);
   }

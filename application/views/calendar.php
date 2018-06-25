@@ -16,11 +16,11 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
   <?php if ($controller->hasPermission('leave', 'add')): ?>
     <a class="btn btn-outline-primary" href="/leave/new" role="button">Demande de congés</a>
   <?php endif; ?>
-  <?php if ($controller->hasPermission('transports', 'add')): ?>
-    <a class="btn btn-outline-primary" href="/transports/new" role="button">Remboursement frais de transport</a>
+  <?php if ($controller->hasPermission('expenses', 'add')): ?>
+    <a class="btn btn-outline-primary" href="/expenses/new" role="button">Nouvelle note de frais</a>
   <?php endif; ?>
 </h1>
-<p class="lead">Calendrier permettant d'afficher les congés et les demandes de remboursements de frais de transport.</p>
+<p class="lead">Calendrier permettant d'afficher les congés et les notes de frais.</p>
 
 <h2>Congés</h2>
 <table class="table table-hover">
@@ -58,7 +58,7 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
   </tbody>
 </table>
 
-<h2>Remboursement de frais de transport</h2>
+<h2>Liste des notes de frais</h2>
 <table class="table table-hover">
   <thead class="thead-dark">
     <tr>
@@ -70,7 +70,7 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
     </tr>
   </thead>
   <tbody>
-    <?php foreach ($transports as $c): ?>
+    <?php foreach ($expenses as $c): ?>
     <tr>
       <td><a href="/user/<?php echo $c->user_id; ?>"><?php echo $c->firstname; ?> <?php echo $c->lastname; ?></a></td>
       <td><?php echo $c->month . '/' . $c->year; ?></td>
@@ -83,14 +83,14 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
           </a>
         <?php endif; ?>
 
-        <?php if ($c->accepted == 0 && ($c->user_id == $this->session->id || $controller->hasPermissions('transports', 'edit'))): ?>
-          <a class="btn btn-success" href="/transports/accept/<?php echo $c->id; ?>">
+        <?php if ($c->accepted == 0 && ($c->user_id == $this->session->id || $controller->hasPermissions('expenses', 'edit'))): ?>
+          <a class="btn btn-success" href="/expenses/accept/<?php echo $c->id; ?>">
             <i class="fas fa-check"></i>
           </a>
         <?php endif; ?>
 
-        <?php if ($c->user_id == $this->session->id || $controller->hasPermissions('transports', 'delete')): ?>
-          <a data-confirm-delete-url class="btn btn-danger" href="/transports/delete/<?php echo $c->id; ?>">
+        <?php if ($c->user_id == $this->session->id || $controller->hasPermissions('expenses', 'delete')): ?>
+          <a data-confirm-delete-url class="btn btn-danger" href="/expenses/delete/<?php echo $c->id; ?>">
             <i class="far fa-trash-alt"></i>
           </a>
         <?php endif; ?>

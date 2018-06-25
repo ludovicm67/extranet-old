@@ -156,9 +156,9 @@ class Permissions extends MY_AuthController
           'delete' => true,
           'checked' => []
         ],
-      'transports' =>
+      'expenses' =>
         (object) [
-          'name' => 'Frais de transport',
+          'name' => 'Notes de frais',
           'show' => true,
           'add' => true,
           'edit' => true,

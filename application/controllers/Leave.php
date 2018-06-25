@@ -5,7 +5,8 @@ use Ramsey\Uuid\Uuid;
 
 class Leave extends MY_AuthController
 {
-  function new () {
+  function new()
+  {
     $this->checkPermission('leave', 'add');
 
     // form was submitted
@@ -57,7 +58,7 @@ class Leave extends MY_AuthController
 
       $this->load->library('upload', [
         'upload_path' => ROOTPATH . 'public/uploads/',
-        'allowed_types' => 'gif|jpg|png|jpeg|pdf',
+        'allowed_types' => 'gif|jpg|png|jpeg|pdf'
       ]);
 
       $file = null;
@@ -75,12 +76,12 @@ class Leave extends MY_AuthController
         } else {
           $upload_data = $this->upload->data();
           $newName =
-          $upload_data['file_path'] .
-          $this->session->id .
-          '_leave_' .
-          Uuid::uuid4()->toString() .
-          '_' .
-          base64_encode($upload_data['orig_name']) .
+            $upload_data['file_path'] .
+            $this->session->id .
+            '_leave_' .
+            Uuid::uuid4()->toString() .
+            '_' .
+            base64_encode($upload_data['orig_name']) .
             $upload_data['file_ext'];
           rename($upload_data['full_path'], $newName);
           $file = str_replace(ROOTPATH . 'public', '', $newName);
@@ -96,7 +97,7 @@ class Leave extends MY_AuthController
         'end_time' => $endTime,
         'days' => $days,
         'reason' => $reason,
-        'file' => $file,
+        'file' => $file
       ];
       $this->db->insert('leave', $content);
       $content['id'] = $this->db->insert_id();

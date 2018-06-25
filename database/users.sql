@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `leave` (
   FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE IF NOT EXISTS `transports` (
+CREATE TABLE IF NOT EXISTS `expenses` (
   `id` int (11) NOT NULL AUTO_INCREMENT,
   `user_id` int (11) NOT NULL,
   `accepted` tinyint(1) DEFAULT 0,

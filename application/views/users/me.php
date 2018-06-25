@@ -9,8 +9,8 @@ ob_start();
   <?php if ($controller->hasPermission('leave', 'add')): ?>
     <a class="btn btn-outline-primary" href="/leave/new" role="button">Demande de congés</a>
   <?php endif; ?>
-  <?php if ($controller->hasPermission('transports', 'add')): ?>
-    <a class="btn btn-outline-primary" href="/transports/new" role="button">Remboursement frais de transport</a>
+  <?php if ($controller->hasPermission('expenses', 'add')): ?>
+    <a class="btn btn-outline-primary" href="/expenses/new" role="button">Nouvelle note de frais</a>
   <?php endif; ?>
 </h1>
 <p class="lead">Modifiez ici les informations concernant votre compte utilisateur</p>
