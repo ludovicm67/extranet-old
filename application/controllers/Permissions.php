@@ -158,7 +158,7 @@ class Permissions extends MY_AuthController
         ],
       'transports' =>
         (object) [
-          'name' => 'Frais de ransport',
+          'name' => 'Frais de transport',
           'show' => true,
           'add' => true,
           'edit' => true,
