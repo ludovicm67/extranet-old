@@ -43,6 +43,17 @@ ob_start();
 </ul>
 <?php endif; ?>
 
+<?php if (!empty($results->sellsy_contacts)): ?>
+<h2>Contacts</h2>
+<ul class="list-upgraded">
+  <?php foreach ($results->sellsy_contacts as $contact): ?>
+  <li>
+    <a href="/client/<?php echo $contact->client_id; ?>"><?php echo $contact->fullName; ?> de <?php echo $contact->client_name; ?></a>
+  </li>
+  <?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
 <?php if (!empty($results->users)): ?>
 <h2>Utilisateurs</h2>
 <ul class="list-upgraded">
@@ -66,7 +77,6 @@ ob_start();
 <?php endif; ?>
 
 <?php endif; ?>
-
 
 <?php
 $content = ob_get_clean();

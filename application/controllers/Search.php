@@ -10,6 +10,7 @@ class Search extends MY_AuthController
       'projects' => [],
       'users' => [],
       'contacts' => [],
+      'sellsy_contacts' => [],
       'clients' => [],
       'tags' => [],
       'has_query' => false,
@@ -49,6 +50,20 @@ class Search extends MY_AuthController
         $this->db->or_like("CONCAT(lastname, ' ', firstname)", $query);
         $this->db->or_like('mail', $query);
         $res->users = $this->db->get('users')->result();
+      }
+
+      // sellsy_contacts
+      if ($this->hasPermission('clients', 'show')) {
+        $this->db->select(
+          'sellsy_clients.id AS client_id, sellsy_clients.name AS client_name, sellsy_contacts.fullName'
+        );
+        $this->db->order_by('sellsy_clients.sellsy_id', 'desc');
+        $this->db->join(
+          'sellsy_clients',
+          'sellsy_clients.sellsy_id = sellsy_contacts.thirdid'
+        );
+        $this->db->like('sellsy_contacts.fullName', $query);
+        $res->sellsy_contacts = $this->db->get('sellsy_contacts')->result();
       }
 
       // tags

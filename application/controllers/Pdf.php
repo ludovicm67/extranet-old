@@ -37,13 +37,9 @@ class Pdf extends MY_AuthController
 
     $res = $sellsy
       ->Document()
-      ->getPublicLink([
-        'doctype' => $getDoctype,
-        'docid' => $getDocid
-      ])
+      ->getPublicLink(['doctype' => $getDoctype, 'docid' => $getDocid])
       ->getResponse();
 
     var_dump($res);
-
   }
 }
