@@ -78,6 +78,14 @@ ob_start();
         <li><strong>Montant total HT :</strong> <?php echo $order->formatted_totalAmountTaxesFree; ?> HT</li>
         <li><strong>Montant total TTC :</strong> <?php echo $order->formatted_totalAmount; ?> TTC</li>
         <li><strong>Contact :</strong> <?php echo $order->contactName; ?></li>
+        <?php if (!empty($order->publicLinkShort)): ?>
+          <li>
+            <strong>Lien vers le bon de commande :</strong>
+            <a href="<?php echo $order->publicLinkShort; ?>" target="_blank">
+              <?php echo $order->publicLinkShort; ?>
+            </a>
+          </li>
+        <?php endif; ?>
         <li>
           <p><strong>Factures associées :</strong></p>
           <ul>
@@ -90,6 +98,14 @@ ob_start();
                 <li><strong>Montant total TTC :</strong> <?php echo $invoice->formatted_totalAmount; ?> TTC</li>
                 <li><strong>Reste à payer :</strong> <?php echo $invoice->formatted_dueAmount; ?> TTC</li>
                 <li><strong>Contact :</strong> <?php echo $invoice->contactName; ?></li>
+                <?php if (!empty($invoice->publicLinkShort)): ?>
+                  <li>
+                    <strong>Lien vers la facture :</strong>
+                    <a href="<?php echo $invoice->publicLinkShort; ?>" target="_blank">
+                      <?php echo $invoice->publicLinkShort; ?>
+                    </a>
+                  </li>
+                <?php endif; ?>
               </ul>
             </li>
             <?php endforeach; ?>
