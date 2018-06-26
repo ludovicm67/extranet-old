@@ -17,9 +17,9 @@ class Ics extends MY_Controller
     $this->db->join('users', 'users.id = leave.user_id', 'left');
     $leaves = $this->db->get('leave')->result();
 
-    $vCalendar = new Calendar(
-      $this->db->dc->getConfValueDefault('site_name', null, 'Gestion')
-    );
+    $calName = $this->db->dc->getConfValueDefault('site_name', null, 'Gestion');
+    $vCalendar = new Calendar($calName);
+    $vCalendar->setName($calName);
     $vCalendar->setPublishedTTL('PT1H');
 
     foreach ($leaves as $leave) {
