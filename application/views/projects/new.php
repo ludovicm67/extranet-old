@@ -33,7 +33,7 @@ ob_start();
     </div>
   </div>
   <div class="form-group row">
-    <label for="projectContact" class="col-sm-2 col-form-label">Contacts <a data-create-contact-modal href="/contacts/new">(Créer)</a></label>
+    <label for="projectContact" class="col-sm-2 col-form-label">Interlocuteurs <a data-create-contact-modal href="/contacts/new">(Créer)</a></label>
     <div class="col-sm-10">
       <select class="form-control" name="contacts[]" id="projectContact" multiple="multiple">
         <?php foreach ($contacts as $contact): ?>
