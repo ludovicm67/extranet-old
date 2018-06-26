@@ -56,15 +56,56 @@ class DateObject {
   }
 }
 
-// let dateInterval = new DateObject('2018-06-26 12:12:12').allDaysBetween('2018-07-14');
-// weekDays = dateInterval.filter(d => d.isWeekDay());
 
-// for (let i = 0; i < weekDays.length; i++) {
-//   console.log(weekDays[i].format());
-// }
+let leaveStart = document.getElementById('leaveStart');
+let leaveEnd = document.getElementById('leaveEnd');
+let leaveStartTime = document.getElementById('leaveStartTime');
+let leaveEndTime = document.getElementById('leaveEndTime');
+let leaveDays = document.getElementById('leaveDays');
 
+function updateLeaveDays() {
+  let start = leaveStart.value;
+  let end = leaveEnd.value;
 
+  let dateInterval = new DateObject(start).allDaysBetween(end);
+  let weekDays = dateInterval.filter(d => d.isWeekDay());
 
+  let nbDays = weekDays.length;
+  if (parseInt(leaveStartTime.value) > 9) {
+    nbDays -= .5;
+  }
+
+  if (parseInt(leaveEndTime.value) < 18) {
+    nbDays -= .5;
+  }
+
+  leaveDays.value = nbDays;
+}
+
+if (leaveStartTime) {
+  $(leaveStartTime).on('change', function () {
+    updateLeaveDays();
+  });
+}
+
+if (leaveEndTime) {
+  $(leaveEndTime).on('change', function () {
+    updateLeaveDays();
+  });
+}
+
+if (leaveStart && leaveEnd && leaveDays) {
+  leaveStart.addEventListener('change', function () {
+    leaveEnd.setAttribute('min', this.value);
+    if (leaveEnd.value < leaveStart.value) {
+      leaveEnd.value = leaveStart.value;
+    }
+    updateLeaveDays();
+  });
+  leaveEnd.addEventListener('change', function () {
+    updateLeaveDays();
+  })
+}
 
 $(document).ready(function () {
   $('select[data-tags=true]').select2({

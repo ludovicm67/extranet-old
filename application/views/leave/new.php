@@ -13,7 +13,7 @@ ob_start();
       <input type="date" class="form-control" name="start" id="leaveStart" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="<?php echo date('Y-m-d'); ?>">
     </div>
     <div class="col-sm-3">
-      <select name="start_time">
+      <select name="start_time" id="leaveStartTime">
         <option value="09">9h</option>
         <option value="14">14h</option>
       </select>
@@ -25,7 +25,7 @@ ob_start();
       <input type="date" class="form-control" name="end" id="leaveEnd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="<?php echo date('Y-m-d'); ?>">
     </div>
     <div class="col-sm-3">
-      <select name="end_time">
+      <select name="end_time" id="leaveEndTime">
         <option value="18">18h</option>
         <option value="12">12h</option>
       </select>
@@ -35,7 +35,7 @@ ob_start();
     <label for="leaveDays" class="col-sm-2 col-form-label">Nombre de jours</label>
     <div class="col-sm-10">
       <div class="input-group">
-        <input id="leaveDays" type="number" class="form-control" required pattern="[0-9]+([\.,][0-9]+)?" step="0.5" min="0" value="0" name="days">
+        <input id="leaveDays" type="number" class="form-control" required pattern="[0-9]+([\.,][0-9]+)?" step="0.5" min="0" value="1" name="days">
         <div class="input-group-append">
           <span class="input-group-text">jours</span>
         </div>
