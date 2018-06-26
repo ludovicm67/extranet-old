@@ -81,6 +81,8 @@ class Users extends MY_AuthController
         redirect('/users/new');
       }
 
+      $role = $this->input->post('role');
+
       $userFirstname = strip_tags(trim($this->input->post('firstname')));
       $userLastname = strip_tags(trim($this->input->post('lastname')));
       $userPassword = password_hash(
@@ -88,10 +90,8 @@ class Users extends MY_AuthController
         PASSWORD_DEFAULT
       );
       $userMail = strip_tags(trim($this->input->post('mail')));
-      $userRole = ($this->input->post('role') == 0)
-        ? null
-        : $this->input->post('role');
-      $userAdmin = (empty($this->input->post('is_admin'))) ? 0 : 1;
+      $userRole = ($role <= 0) ? null : intval($role);
+      $userAdmin = ($role == -1) ? 1 : 0;
 
       if (empty($userMail)) {
         $this->session->set_flashdata(
@@ -156,14 +156,14 @@ class Users extends MY_AuthController
         );
       }
 
+      $role = $this->input->post('role');
+
       $userFirstname = strip_tags(trim($this->input->post('firstname')));
       $userLastname = strip_tags(trim($this->input->post('lastname')));
       $userMail = strip_tags(trim($this->input->post('mail')));
-      $userRole = ($this->input->post('role') == 0)
-        ? null
-        : $this->input->post('role');
+      $userRole = ($role <= 0) ? null : intval($role);
+      $userAdmin = ($role == -1) ? 1 : 0;
 
-      $userAdmin = (empty($this->input->post('is_admin'))) ? 0 : 1;
       if ($this->session->id == $id) {
         $userAdminMe = ($this->session->is_admin) ? 1 : 0;
         if ($user->is_admin == 1 && $userAdmin == 0) {

@@ -29,6 +29,7 @@ ob_start();
           <?php echo $role->name; ?>
         </option>
         <?php endforeach; ?>
+        <option value="-1"<?php echo ($user->is_admin == 1) ? ' selected="selected"' : ''; ?>>Super administrateur</option>
       </select>
     </div>
   </div>
@@ -42,15 +43,6 @@ ob_start();
     <label for="userPassword" class="col-sm-2 col-form-label">Mot de passe</label>
     <div class="col-sm-10">
       <input type="password" class="form-control" name="password" id="userPassword" placeholder="Mot de passe (laisser vide pour ne pas changer)...">
-    </div>
-  </div>
-  <div class="form-group row">
-    <span class="col-sm-2 col-form-label">Administrateur</span>
-    <div class="col-sm-10">
-      <label for="userIsAdmin" value="1">
-        <input type="checkbox" name="is_admin" id="userIsAdmin"<?php echo ($user->is_admin == 1) ? ' checked="checked"' : ''; ?>>
-        Marquer cet utilisateur comme étant un super-adinistrateur ?
-      </label>
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Modifier</button>
