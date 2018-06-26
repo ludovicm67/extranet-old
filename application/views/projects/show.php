@@ -68,16 +68,34 @@ ob_start();
 
 <?php if (!empty($project->contacts)): ?>
 <h2>Interlocuteurs</h2>
-  <ul class="list-upgraded">
-    <?php foreach ($project->contacts as $contact): ?>
-      <li>
-        <a href="/contact/<?php echo $contact->id; ?>">
-          <?php echo $contact->name; ?>
-          <?php echo (!empty($contact->type)) ? ' (' . $contact->type . ')' : ''; ?>
+<div class="row">
+<?php foreach ($project->contacts as $contact): ?>
+  <div class="card bg-light col-md-4">
+    <div class="card-body">
+      <h5 class="card-title">
+        <a href="/contact/edit/<?php echo $contact->id; ?>" class="float-right">
+          <i class="far fa-edit"></i>
         </a>
-      </li>
-    <?php endforeach; ?>
-  </ul>
+        <a href="/contact/<?php echo $contact->id; ?>"><?php echo $contact->name; ?></a>
+      </h5>
+      <p class="card-text">
+        <?php if (!empty($contact->type)): ?>
+          <?php echo $contact->type; ?><br>
+        <?php endif; ?>
+        <?php if (!empty($contact->mail)): ?>
+          <a href="mailto:<?php echo htmlspecialchars($contact->mail); ?>"><?php echo $contact->mail; ?></a><br>
+        <?php endif; ?>
+        <?php if (!empty($contact->phone)): ?>
+          <a href="tel:<?php echo htmlspecialchars($contact->phone); ?>"><?php echo $contact->phone; ?></a><br>
+        <?php endif; ?>
+        <?php if (!empty($contact->address)): ?>
+          <?php echo $contact->address; ?><br>
+        <?php endif; ?>
+      </p>
+    </div>
+  </div>
+<?php endforeach; ?>
+</div>
 <?php endif; ?>
 
 <?php if (!empty($project->users)): ?>
