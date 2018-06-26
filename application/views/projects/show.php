@@ -38,15 +38,13 @@ ob_start();
   <strong>Fin du projet souhaité :</strong> <?php echo (!empty($project->end_at)) ? (new DateTime($project->end_at))->format('d/m/Y') : ''; ?>
 </p>
 
-<h2>Client principal</h2>
 <?php if (!empty($project->client)): ?>
+  <h2>Client principal</h2>
   <p>Le client principal de ce projet est <a href="/client/<?php echo $project->client->id; ?>"><?php echo $project->client->fullName; ?></a>.</p>
-<?php else: ?>
-  <p>Le projet n'est assigné à aucun client principal.</p>
 <?php endif; ?>
 
-<h2>Interlocuteurs pour ce projet</h2>
 <?php if (!empty($project->contacts)): ?>
+<h2>Interlocuteurs</h2>
   <ul class="list-upgraded">
     <?php foreach ($project->contacts as $contact): ?>
       <li>
@@ -57,12 +55,10 @@ ob_start();
       </li>
     <?php endforeach; ?>
   </ul>
-<?php else: ?>
-  <p>Le projet n'est assigné à aucun interlocuteur.</p>
 <?php endif; ?>
 
-<h2>Utilisateurs assignés à ce projet</h2>
 <?php if (!empty($project->users)): ?>
+<h2>Utilisateurs assignés</h2>
   <ul class="list-upgraded">
     <?php foreach ($project->users as $user): ?>
       <li>
@@ -72,8 +68,6 @@ ob_start();
       </li>
     <?php endforeach; ?>
   </ul>
-<?php else: ?>
-  <p>Le projet n'est assigné à aucun utilisateurs.</p>
 <?php endif; ?>
 
 <?php if (!empty($project->next_action)): ?>
@@ -81,8 +75,8 @@ ob_start();
   <p><?php echo nl2br($project->next_action); ?></p>
 <?php endif; ?>
 
-<h2>Commandes pour ce projet</h2>
 <?php if (!empty($project->orders)): ?>
+<h2>Commandes</h2>
 <div id="accordion">
   <?php foreach ($project->orders as $order): ?>
   <div class="card">
@@ -132,12 +126,10 @@ ob_start();
   </div>
   <?php endforeach; ?>
 </div>
-<?php else: ?>
-  <p>Le projet n'est assigné à aucune commande.</p>
 <?php endif; ?>
 
-<h2>URLs pour ce projet</h2>
 <?php if (!empty($project->urls)): ?>
+<h2>URLs</h2>
   <ul>
     <?php foreach ($project->urls as $url): ?>
       <li>
@@ -154,8 +146,6 @@ ob_start();
       </li>
     <?php endforeach; ?>
   </ul>
-<?php else: ?>
-  <p>Aucune URL spécifiée pour ce projet.</p>
 <?php endif; ?>
 
 <?php
