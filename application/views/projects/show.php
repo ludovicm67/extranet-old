@@ -34,6 +34,10 @@ ob_start();
 
 <p><strong>Maintenance :</strong> <?php echo ($project->maintenance == 0) ? 'non incluse' : 'incluse'; ?></p>
 
+<p<?php echo (!empty($project->end_at) && new DateTime($project->end_at) < new DateTime('now')) ? ' class="text-warning"' : ''; ?>>
+  <strong>Fin du projet souhaité :</strong> <?php echo (!empty($project->end_at)) ? (new DateTime($project->end_at))->format('d/m/Y') : ''; ?>
+</p>
+
 <h2>Client principal</h2>
 <?php if (!empty($project->client)): ?>
   <p>Le client principal de ce projet est <a href="/client/<?php echo $project->client->id; ?>"><?php echo $project->client->fullName; ?></a>.</p>
@@ -76,10 +80,6 @@ ob_start();
   <h2>Prochaine action à effectuer</h2>
   <p><?php echo nl2br($project->next_action); ?></p>
 <?php endif; ?>
-
-<p<?php echo (!empty($project->end_at) && new DateTime($project->end_at) < new DateTime('now')) ? ' class="text-warning"' : ''; ?>>
-  <strong>Fin du projet souhaité :</strong> <?php echo (!empty($project->end_at)) ? (new DateTime($project->end_at))->format('d/m/Y') : ''; ?>
-</p>
 
 <h2>Commandes pour ce projet</h2>
 <?php if (!empty($project->orders)): ?>
