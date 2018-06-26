@@ -39,6 +39,29 @@ ob_start();
 <?php if (!empty($project->client)): ?>
   <h2>Client principal</h2>
   <p>Le client principal de ce projet est <a href="/client/<?php echo $project->client->id; ?>"><?php echo $project->client->fullName; ?></a>.</p>
+  <div class="card-deck">
+  <?php foreach ($project->client->contacts as $contact): ?>
+    <div class="card bg-light">
+      <div class="card-body">
+        <h5 class="card-title"><?php echo $contact->fullName; ?></h5>
+        <p class="card-text">
+          <?php if (!empty($contact->position)): ?>
+            <?php echo $contact->position; ?><br>
+          <?php endif; ?>
+          <?php if (!empty($contact->email)): ?>
+            <a href="mailto:<?php echo htmlspecialchars($contact->email); ?>"><?php echo $contact->email; ?></a><br>
+          <?php endif; ?>
+          <?php if (!empty($contact->tel)): ?>
+            <a href="tel:<?php echo htmlspecialchars($contact->tel); ?>"><?php echo $contact->tel; ?></a><br>
+          <?php endif; ?>
+          <?php if (!empty($contact->mobile)): ?>
+            <a href="tel:<?php echo htmlspecialchars($contact->mobile); ?>"><?php echo $contact->mobile; ?></a><br>
+          <?php endif; ?>
+        </p>
+      </div>
+    </div>
+    <?php endforeach; ?>
+  </div>
 <?php endif; ?>
 
 <?php if (!empty($project->contacts)): ?>

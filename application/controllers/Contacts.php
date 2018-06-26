@@ -34,10 +34,6 @@ class Contacts extends MY_AuthController
     $this->db->select('*');
     $this->db->from('project_contacts');
     $this->db->join('projects', 'projects.id = project_contacts.project_id');
-    $value = $this->input->get('value');
-    if (isset($_GET['value'])) {
-      $this->db->where('value', $value);
-    }
     $this->db->where('contact_id', $contact->id);
     $contact->projects = $this->db->get()->result();
 

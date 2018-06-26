@@ -83,6 +83,11 @@ class Projects extends MY_AuthController
       ($this->isMyProject || $this->hasPermission('clients', 'show'))
     ) {
       $project->client = $clientDB[0];
+      $project->client->contacts = $this->db
+        ->get_where('sellsy_contacts', [
+          'thirdid' => $project->client->sellsy_id
+        ])
+        ->result();
     }
 
     $project->contacts = [];
