@@ -21,10 +21,14 @@ ob_start();
 <ul>
   <li><strong>Nom complet :</strong> <?php echo $user->firstname; ?> <?php echo $user->lastname; ?></li>
   <li><strong>Adresse mail :</strong> <a href="mailto:<?php echo htmlspecialchars($user->mail); ?>"><?php echo $user->mail; ?></a></li>
-  <li><strong>Rôle :</strong> <?php echo ($user->role) ? $user->role : 'Aucun rôle'; ?></li>
-  <?php if ($user->is_admin): ?>
-  <li><strong>Cet utilisateur est un administrateur</strong></li>
-  <?php endif; ?>
+  <li>
+    <strong>Rôle :</strong>
+    <?php if ($user->is_admin): ?>
+      <strong>Super administrateur</strong>
+    <?php else: ?>
+      <?php echo ($user->role) ? $user->role : 'Aucun rôle'; ?>
+    <?php endif; ?>
+  </li>
 </ul>
 
 <h2>Projets assignés à cet utilisateur</h2>

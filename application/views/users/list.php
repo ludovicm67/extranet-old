@@ -17,7 +17,6 @@ ob_start();
       <th scope="col">Nom</th>
       <th scope="col">Adresse mail</th>
       <th scope="col">Rôle</th>
-      <th scope="col">Administrateur ?</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -26,8 +25,13 @@ ob_start();
     <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($user->firstname . ' ' . $user->lastname . ' ' . $user->firstname . ' ' . $user->mail)); ?>">
       <td><a href="/user/<?php echo $user->id; ?>"><?php echo (empty($user->firstname . $user->lastname)) ? 'Utilisateur#' . $user->id : $user->firstname . ' ' . $user->lastname; ?></a></td>
       <td><a href="mailto:<?php echo htmlspecialchars($user->mail); ?>"><?php echo $user->mail; ?></a></td>
-      <td><?php echo ($user->role) ? $user->role : 'Aucun rôle'; ?></td>
-      <td><?php echo ($user->is_admin) ? 'Oui' : 'Non'; ?></td>
+      <td>
+        <?php if ($user->is_admin): ?>
+          <strong>Super administrateur</strong>
+        <?php else: ?>
+          <?php echo ($user->role) ? $user->role : 'Aucun rôle'; ?>
+        <?php endif; ?>
+      </td>
       <td>
         <?php if ($controller->hasPermission('users', 'edit')): ?>
           <a href="/user/edit/<?php echo $user->id; ?>">Modifier</a>
