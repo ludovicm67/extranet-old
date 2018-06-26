@@ -20,6 +20,7 @@ class Ics extends MY_Controller
     $vCalendar = new Calendar(
       $this->db->dc->getConfValueDefault('site_name', null, 'Gestion')
     );
+    $vCalendar->setPublishedTTL('PT1H');
 
     foreach ($leaves as $leave) {
       $flags = [];
