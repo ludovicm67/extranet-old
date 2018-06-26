@@ -32,8 +32,6 @@ ob_start();
 <p><strong>Nom de domaine principal :</strong> <?php echo $project->domain; ?></p>
 <?php endif; ?>
 
-<p><strong>Maintenance :</strong> <?php echo ($project->maintenance == 0) ? 'non incluse' : 'incluse'; ?></p>
-
 <p<?php echo (!empty($project->end_at) && new DateTime($project->end_at) < new DateTime('now')) ? ' class="text-warning"' : ''; ?>>
   <strong>Fin du projet souhaité :</strong> <?php echo (!empty($project->end_at)) ? (new DateTime($project->end_at))->format('d/m/Y') : ''; ?>
 </p>
