@@ -140,8 +140,13 @@ class Leave extends MY_AuthController
     $this->db->where('id', $id);
     $q = $this->db->get('leave');
     if ($q->num_rows() > 0) {
+      $res = $q->result()[0];
+      if ($res->file) {
+        unlink(ROOTPATH . 'public' . $res->file);
+      }
+
       $this->db->delete('leave', ['id' => $id]);
-      $this->writeLog('delete', 'leave', $q->result()[0], $id);
+      $this->writeLog('delete', 'leave', $res, $id);
       $this->session->set_flashdata(
         'success',
         'La demande a bien été supprimée !'
