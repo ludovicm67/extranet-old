@@ -23,7 +23,7 @@ class DateObject {
     return year + '-' + (month[1] ? month : '0' + month[0]) + '-' + (day[1] ? day : '0' + day[0]);
   }
 
-  allDaysBetween(date) {
+  allDaysTo(date) {
     let otherDate = this.initDate(date);
 
     let startDate = null;
@@ -54,6 +54,107 @@ class DateObject {
     let day = this.date.getDay();
     return day === 6 || day === 0;
   }
+
+  isHoliday() {
+    let year = this.date.getFullYear();
+    let month = this.date.getMonth() + 1;
+    let day = this.date.getDate();
+
+    // Easter
+    let G = year % 19;
+    let C = Math.floor(year / 100);
+    let H = (C - Math.floor(C / 4) - Math.floor((8 * C + 13) / 25) + 19 * G + 15) % 30;
+    let I = H - Math.floor(H / 28) * (1 - Math.floor(H / 28) * Math.floor(29 / (H + 1)) * Math.floor((21 - G) / 11));
+    let J = (year * 1 + Math.floor(year / 4) + I + 2 - C + Math.floor(C / 4)) % 7;
+    let L = I - J;
+    let easterMonth = 3 + Math.floor((L + 40) / 44);
+    let easterDay = L + 28 - 31 * Math.floor(easterMonth / 4);
+
+    // Dates based on easter
+    let Paques = new Date(year, easterMonth - 1, easterDay);
+    let VendrediSaint = new Date(year, easterMonth - 1, easterDay - 2);
+    let LundiPaques = new Date(year, easterMonth - 1, easterDay + 1);
+    let Ascension = new Date(year, easterMonth - 1, easterDay + 39);
+    let Pentecote = new Date(year, easterMonth - 1, easterDay + 49);
+    let LundiPentecote = new Date(year, easterMonth - 1, easterDay + 50);
+
+    // Paques
+    if (month == Paques.getMonth() + 1 && day == Paques.getDate()) {
+      return true;
+    }
+
+    // VendrediSaint
+    if (month == VendrediSaint.getMonth() + 1 && day == VendrediSaint.getDate()) {
+      return true;
+    }
+
+    // LundiPaques
+    if (month == LundiPaques.getMonth() + 1 && day == LundiPaques.getDate()) {
+      return true;
+    }
+
+    // Ascension
+    if (month == Ascension.getMonth() + 1 && day == Ascension.getDate()) {
+      return true;
+    }
+
+    // Pentecote
+    if (month == Pentecote.getMonth() + 1 && day == Pentecote.getDate()) {
+      return true;
+    }
+
+    // LundiPentecote
+    if (month == LundiPentecote.getMonth() + 1 && day == LundiPentecote.getDate()) {
+      return true;
+    }
+
+    // Nouvel an
+    if (month == 1 && day == 1) {
+      return true;
+    }
+
+    // Fête du travail
+    if (month == 5 && day == 1) {
+      return true;
+    }
+
+    // Victoire des alliés
+    if (month == 5 && day == 8) {
+      return true;
+    }
+
+    // Fête nationale
+    if (month == 7 && day == 14) {
+      return true;
+    }
+
+    // Assomption
+    if (month == 8 && day == 15) {
+      return true;
+    }
+
+    // Toussaint
+    if (month == 11 && day == 1) {
+      return true;
+    }
+
+    // Armistice
+    if (month == 11 && day == 11) {
+      return true;
+    }
+
+    // Noël
+    if (month == 12 && day == 25) {
+      return true;
+    }
+
+    // Saint-Etienne
+    if (month == 12 && day == 26) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 
@@ -67,10 +168,11 @@ function updateLeaveDays() {
   let start = leaveStart.value;
   let end = leaveEnd.value;
 
-  let dateInterval = new DateObject(start).allDaysBetween(end);
+  let dateInterval = new DateObject(start).allDaysTo(end);
   let weekDays = dateInterval.filter(d => d.isWeekDay());
+  let workDays = weekDays.filter(d => !d.isHoliday());
 
-  let nbDays = weekDays.length;
+  let nbDays = workDays.length;
   if (parseInt(leaveStartTime.value) > 9) {
     nbDays -= .5;
   }
