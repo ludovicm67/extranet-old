@@ -18,7 +18,7 @@ ob_start();
       <th scope="col">Nom</th>
       <th scope="col">Prochaine action à effectuer</th>
       <th scope="col">Maintenance incluse ?</th>
-      <th scope="col">Date de fin</th>
+      <th scope="col">Fin du projet souhaité</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
