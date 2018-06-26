@@ -1,3 +1,71 @@
+class DateObject {
+  constructor(date) {
+    this.date = this.initDate(date);
+  }
+
+  initDate(date) {
+    switch (typeof (date)) {
+      case 'string':
+      case 'number':
+        return new Date(date);
+      case 'object':
+        return date;
+      default:
+        return new Date();
+    }
+  }
+
+  format() {
+    let year = this.date.getFullYear().toString();
+    let month = (this.date.getMonth() + 1).toString();
+    let day = this.date.getDate().toString();
+
+    return year + '-' + (month[1] ? month : '0' + month[0]) + '-' + (day[1] ? day : '0' + day[0]);
+  }
+
+  allDaysBetween(date) {
+    let otherDate = this.initDate(date);
+
+    let startDate = null;
+    let endDate = null;
+
+    if (this.date < otherDate) {
+      startDate = new Date(this.date.toDateString());
+      endDate = new Date(otherDate.toDateString());
+    } else {
+      endDate = new Date(this.date.toDateString());
+      startDate = new Date(otherDate.toDateString());
+    }
+
+    let days = [];
+    while (startDate <= endDate && startDate !== null && endDate !== null) {
+      days.push(new DateObject(startDate.getTime()));
+      startDate.setDate(startDate.getDate() + 1);
+    }
+
+    return days;
+  }
+
+  isWeekDay() {
+    return !this.isWeekEnd();
+  }
+
+  isWeekEnd() {
+    let day = this.date.getDay();
+    return day === 6 || day === 0;
+  }
+}
+
+// let dateInterval = new DateObject('2018-06-26 12:12:12').allDaysBetween('2018-07-14');
+// weekDays = dateInterval.filter(d => d.isWeekDay());
+
+// for (let i = 0; i < weekDays.length; i++) {
+//   console.log(weekDays[i].format());
+// }
+
+
+
+
 $(document).ready(function () {
   $('select[data-tags=true]').select2({
     tags: true,
