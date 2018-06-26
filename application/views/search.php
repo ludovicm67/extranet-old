@@ -33,7 +33,7 @@ ob_start();
 <?php endif; ?>
 
 <?php if (!empty($results->contacts)): ?>
-<h2>Contacts</h2>
+<h2>Interlocuteurs</h2>
 <ul class="list-upgraded">
   <?php foreach ($results->contacts as $contact): ?>
     <li>

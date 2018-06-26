@@ -233,7 +233,9 @@ class Projects extends MY_AuthController
       $projectNextAction = htmlspecialchars(
         trim($this->input->post('next_action'))
       );
-      $projectEndAt = date('Y-m-d', strtotime($this->input->post('end_at')));
+      $projectEndAt = $this->input->post('end_at')
+        ? date('Y-m-d', strtotime($this->input->post('end_at')))
+        : null;
 
       if (!empty($projectName)) {
         $projectContent = [
@@ -408,7 +410,9 @@ class Projects extends MY_AuthController
       $projectNextAction = htmlspecialchars(
         trim($this->input->post('next_action'))
       );
-      $projectEndAt = date('Y-m-d', strtotime($this->input->post('end_at')));
+      $projectEndAt = $this->input->post('end_at')
+        ? date('Y-m-d', strtotime($this->input->post('end_at')))
+        : null;
 
       if (!empty($projectName)) {
         $projectContent = [
