@@ -41,7 +41,7 @@ ob_start();
   <p>Le projet n'est assigné à aucun client principal.</p>
 <?php endif; ?>
 
-<h2>Contacts pour ce projet</h2>
+<h2>Interlocuteurs pour ce projet</h2>
 <?php if (!empty($project->contacts)): ?>
   <ul class="list-upgraded">
     <?php foreach ($project->contacts as $contact): ?>
@@ -54,7 +54,7 @@ ob_start();
     <?php endforeach; ?>
   </ul>
 <?php else: ?>
-  <p>Le projet n'est assigné à aucun contacts.</p>
+  <p>Le projet n'est assigné à aucun interlocuteur.</p>
 <?php endif; ?>
 
 <h2>Utilisateurs assignés à ce projet</h2>
