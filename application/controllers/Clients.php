@@ -70,6 +70,19 @@ class Clients extends MY_AuthController
       ? $this->db->get_where('projects', ['client_id' => $client->id])->result()
       : [];
 
+    $client->subs = $this->db
+      ->select('sellsy_invoices.*')
+      ->join(
+        'sellsy_orders',
+        'sellsy_orders.sellsy_id = sellsy_invoices.parentid',
+        'left'
+      )
+      ->get_where('sellsy_invoices', [
+        'sellsy_orders.sellsy_id' => null,
+        'sellsy_invoices.thirdid' => $client->sellsy_id
+      ])
+      ->result();
+
     $this->view('clients/show', ['client' => $client]);
   }
 }

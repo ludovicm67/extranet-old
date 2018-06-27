@@ -121,5 +121,47 @@ ob_start();
 </div>
 <?php endif; ?>
 
+
+<?php if (!empty($client->subs)): ?>
+<h2>Factures liées aux abonnements</h2>
+<div id="subsAccordion">
+  <?php foreach ($client->subs as $sub): ?>
+  <div class="card">
+    <div class="card-header" id="heading-sub-<?php echo $sub->id; ?>">
+      <h5 class="mb-0">
+        <button class="btn btn-light" data-toggle="collapse" data-target="#collapse-sub-<?php echo $sub->id; ?>" aria-expanded="false">
+          <?php echo $sub->subject; ?>
+        </button>
+        <span class="float-right" style="color: <?php echo $sub->step_hex; ?>;">
+          <?php echo number_format($sub->dueAmount, 2, ',', ' ') . ' ' . $sub->currencysymbol; ?> TTC
+        </span>
+      </h5>
+    </div>
+
+    <div id="collapse-sub-<?php echo $sub->id; ?>" class="collapse" aria-labelledby="heading-sub-<?php echo $sub->id; ?>" data-parent="#subsAccordion">
+      <div class="card-body">
+        <ul>
+          <li><strong>Sujet :</strong> <?php echo $sub->subject; ?></li>
+          <li><strong>Statut :</strong> <span style="color: <?php echo $sub->step_hex; ?>;"><?php echo $sub->step_label; ?></span></li>
+          <li><strong>Montant total HT :</strong> <?php echo $sub->formatted_totalAmountTaxesFree; ?> HT</li>
+          <li><strong>Montant total TTC :</strong> <?php echo $sub->formatted_totalAmount; ?> TTC</li>
+          <li><strong>Reste à payer :</strong> <?php echo $sub->formatted_dueAmount; ?> TTC</li>
+          <li><strong>Contact :</strong> <?php echo $sub->contactName; ?></li>
+          <?php if (!empty($sub->publicLinkShort)): ?>
+            <li>
+              <strong>Lien vers la facture :</strong>
+              <a href="<?php echo $sub->publicLinkShort; ?>" target="_blank">
+                <?php echo $sub->publicLinkShort; ?>
+              </a>
+            </li>
+          <?php endif; ?>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <?php endforeach; ?>
+</div>
+<?php endif; ?>
+
 <?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';
