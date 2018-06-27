@@ -29,6 +29,17 @@ ob_start();
       </select>
     </div>
   </div>
+
+  <div class="form-group row">
+    <label for="expensesType" class="col-sm-2 col-form-label">Type</label>
+    <div class="col-sm-10">
+      <select class="form-control" name="type" id="expensesType">
+        <option value="Transports">Transports</option>
+        <option value="Dépense">Dépense</option>
+      </select>
+    </div>
+  </div>
+
   <div class="form-group row">
     <label for="expensesAmount" class="col-sm-2 col-form-label">Montant</label>
     <div class="col-sm-10">

@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   `year` int(11),
   `month` int(11),
   `amount` decimal(10, 2),
+  `type` varchar(255) DEFAULT "Dépense",
   `file` varchar(255),
   `details` text,
   PRIMARY KEY (`id`),

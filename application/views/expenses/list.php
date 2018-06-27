@@ -15,6 +15,7 @@ ob_start();
   <thead class="thead-dark">
     <tr>
       <th scope="col">Utilisateur</th>
+      <th scope="col">Type</th>
       <th scope="col">Date</th>
       <th scope="col">Montant</th>
       <th scope="col">Commentaire</th>
@@ -25,6 +26,7 @@ ob_start();
     <?php foreach ($content as $c): ?>
     <tr>
       <td><a href="/user/<?php echo $c->user_id; ?>"><?php echo $c->firstname; ?> <?php echo $c->lastname; ?></a></td>
+      <td><?php echo $c->type; ?></td>
       <td><?php echo $c->month . '/' . $c->year; ?></td>
       <td><?php echo number_format($c->amount, 2, ',', ' '); ?>€</td>
       <td><?php echo nl2br($c->details); ?></td>

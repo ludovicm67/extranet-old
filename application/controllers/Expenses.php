@@ -32,6 +32,7 @@ class Expenses extends MY_AuthController
       $year = intval($this->input->post('year'));
       $month = intval($this->input->post('month'));
       $amount = floatval($this->input->post('amount'));
+      $type = htmlspecialchars(trim($this->input->post('type')));
       $details = htmlspecialchars(trim($this->input->post('details')));
       if (empty($year) || $year == 0 || empty($month) || $month == 0) {
         $this->session->set_flashdata(
@@ -86,7 +87,8 @@ class Expenses extends MY_AuthController
         'month' => $month,
         'amount' => $amount,
         'details' => $details,
-        'file' => $file
+        'file' => $file,
+        'type' => $type
       ];
       $this->db->insert('expenses', $content);
       $content['id'] = $this->db->insert_id();
