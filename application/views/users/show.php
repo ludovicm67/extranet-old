@@ -1,14 +1,18 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">
   <a class="btn btn-outline-dark" title="Retour à la liste" href="/users" role="button">
     <i class="fas fa-list"></i>
   </a>
-  <?php echo $user->firstname; ?> <?php echo $user->lastname; ?>
-  <small>(<?php echo $user->mail; ?>)</small>
+  <?php
+  echo $user->firstname;
+  ?> <?php echo $user->lastname; ?>
+  <small>(<?php
+          echo $user->mail;
+          ?>)</small>
   <?php if ($controller->hasPermission('users', 'edit')): ?>
     <a class="btn btn-outline-primary" href="/user/edit/<?php echo $user->id; ?>" role="button">Modifier</a>
   <?php endif; ?>
@@ -19,8 +23,18 @@ ob_start();
 <p class="lead">Affichage des informations à propos de cet utilisateur</p>
 
 <ul>
-  <li><strong>Nom complet :</strong> <?php echo $user->firstname; ?> <?php echo $user->lastname; ?></li>
-  <li><strong>Adresse mail :</strong> <a href="mailto:<?php echo htmlspecialchars($user->mail); ?>"><?php echo $user->mail; ?></a></li>
+  <li><strong>Nom complet :</strong> <?php
+                                     echo $user->firstname;
+                                     ?> <?php
+                                        echo $user->lastname;
+                                        ?></li>
+  <li><strong>Adresse mail :</strong> <a href="mailto:<?php
+                                                      echo htmlspecialchars(
+                                                        $user->mail
+                                                      );
+                                                      ?>"><?php
+                                                          echo $user->mail;
+                                                          ?></a></li>
   <li>
     <strong>Rôle :</strong>
     <?php if ($user->is_admin): ?>
@@ -46,6 +60,5 @@ ob_start();
   <p>Le projet n'est assigné à aucun utilisateurs.</p>
 <?php endif; ?>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

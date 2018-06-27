@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">Rechercher</h1>
 <p class="lead">Recherchez ce dont vous avez besoin !</p>
@@ -78,6 +78,5 @@ ob_start();
 
 <?php endif; ?>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

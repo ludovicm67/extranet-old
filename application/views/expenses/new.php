@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">Nouvelle note de frais</h1>
 <p class="lead">Transmettre une note de frais</p>
@@ -10,7 +10,11 @@ ob_start();
   <div class="form-group row">
     <label for="expensesYear" class="col-sm-2 col-form-label">Année</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" name="year" id="expensesYear" value="<?php echo date('Y'); ?>" required>
+      <input type="number" class="form-control" name="year" id="expensesYear" value="<?php
+                                                                                     echo date(
+                                                                                       'Y'
+                                                                                     );
+                                                                                     ?>" required>
     </div>
   </div>
   <div class="form-group row">
@@ -56,6 +60,5 @@ ob_start();
   <button type="submit" class="btn btn-primary">Envoyer</button>
 </form>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

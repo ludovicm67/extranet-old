@@ -1,10 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">
-  <?php echo $project->name; ?>
+  <?php
+  echo $project->name;
+  ?>
   <?php if ($isMyProject || $controller->hasPermission('projects', 'show')): ?>
     <a class="btn btn-outline-primary" href="/project/<?php echo $project->id; ?>" role="button">Voir le projet</a>
   <?php endif; ?>
@@ -45,6 +47,5 @@ ob_start();
   </tbody>
 </table>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

@@ -1,18 +1,22 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">
-  <a href="/calendar?year=<?php echo $prev->year; ?>&amp;month=<?php
-echo $prev->month;
+  <a href="/calendar?year=<?php
+                          echo $prev->year;
+                          ?>&amp;month=<?php echo $prev->month;
 echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
-?>" class="btn btn-dark"><i class="fas fa-arrow-left"></i></a>
-  <?php echo $o->calendarTranslator->month($now->month) . ' ' . $now->year; ?>
-  <a href="/calendar?year=<?php echo $next->year; ?>&amp;month=<?php
-echo $next->month;
+ ?>" class="btn btn-dark"><i class="fas fa-arrow-left"></i></a>
+  <?php
+  echo $o->calendarTranslator->month($now->month) . ' ' . $now->year;
+  ?>
+  <a href="/calendar?year=<?php
+                          echo $next->year;
+                          ?>&amp;month=<?php echo $next->month;
 echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
-?>" class="btn btn-dark"><i class="fas fa-arrow-right"></i></a>
+ ?>" class="btn btn-dark"><i class="fas fa-arrow-right"></i></a>
   <?php if ($controller->hasPermission('leave', 'add')): ?>
     <a class="btn btn-outline-primary" href="/leave/new" role="button">Demande de congés</a>
   <?php endif; ?>
@@ -101,6 +105,5 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
 </table>
 
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

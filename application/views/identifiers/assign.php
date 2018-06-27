@@ -1,10 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">
-  Ajout d'un identifiant pour <?php echo $project->name; ?>
+  Ajout d'un identifiant pour <?php
+                              echo $project->name;
+                              ?>
 </h1>
 <p class="lead">Renseignez les différents champs pour ajouter un nouvel identifiant pour ce projet</p>
 
@@ -43,6 +45,5 @@ ob_start();
   <button type="submit" class="btn btn-primary">Créer</button>
 </form>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

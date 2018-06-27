@@ -1,9 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
-<h1 class="mt-5">Exporter des contacts <a class="btn btn-outline-primary" href="<?php echo $download_url; ?>" role="button" target="_blank">Télécharger CSV</a></h1>
+<h1 class="mt-5">Exporter des contacts <a class="btn btn-outline-primary" href="<?php
+                                                                                echo $download_url;
+                                                                                ?>" role="button" target="_blank">Télécharger CSV</a></h1>
 <p class="lead">Exportez des contacts en filtrant sur le type et par tags de projets sur lesquels ils sont affectés.</p>
 
 
@@ -37,7 +39,13 @@ ob_start();
 
         <div class="form-group">
           <label for="tagValue" class="form-label">Valeur du tag</label>
-          <input type="text" class="form-control" name="value" value="<?php echo htmlspecialchars($this->input->get('value')); ?>" id="tagValue" placeholder="Filtrer sur la valeur du tag...">
+          <input type="text" class="form-control" name="value" value="<?php
+                                                                      echo htmlspecialchars(
+                                                                        $this->input->get(
+                                                                          'value'
+                                                                        )
+                                                                      );
+                                                                      ?>" id="tagValue" placeholder="Filtrer sur la valeur du tag...">
         </div>
 
         <button type="submit" class="btn btn-primary">Filtrer</button>
@@ -87,6 +95,5 @@ ob_start();
 </div>
 
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

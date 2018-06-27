@@ -1,13 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">
   <a class="btn btn-outline-dark" title="Retour à la liste" href="/projects" role="button">
     <i class="fas fa-list"></i>
   </a>
-  <?php echo $project->name; ?>
+  <?php
+  echo $project->name;
+  ?>
   <?php if ($isMyProject || $controller->hasPermission('project_identifiers', 'show')): ?>
     <a class="btn btn-outline-primary" href="/identifiers/show/<?php echo $project->id; ?>" role="button">Identifiants</a>
   <?php endif; ?>
@@ -32,8 +34,21 @@ ob_start();
 <p><strong>Nom de domaine principal :</strong> <?php echo $project->domain; ?></p>
 <?php endif; ?>
 
-<p<?php echo (!empty($project->end_at) && new DateTime($project->end_at) < new DateTime('now')) ? ' class="text-warning"' : ''; ?>>
-  <strong>Fin du projet souhaité :</strong> <?php echo (!empty($project->end_at)) ? (new DateTime($project->end_at))->format('d/m/Y') : ''; ?>
+<p<?php
+  echo (
+    !empty($project->end_at) &&
+      new DateTime($project->end_at) < new DateTime('now')
+  )
+    ? ' class="text-warning"'
+    : '';
+  ?>>
+  <strong>Fin du projet souhaité :</strong> <?php
+                                            echo (!empty($project->end_at))
+                                              ? (new DateTime(
+                                                $project->end_at
+                                              ))->format('d/m/Y')
+                                              : '';
+                                            ?>
 </p>
 
 <?php if (!empty($project->client)): ?>
@@ -205,6 +220,5 @@ ob_start();
   </ul>
 <?php endif; ?>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

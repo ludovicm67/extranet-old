@@ -1,11 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">
-  Modifier le projet <em><?php echo $project->name; ?></em>
-  <a class="btn btn-outline-primary" href="/project/<?php echo $project->id; ?>" role="button">Retourner au projet sans sauvegarder</a>
+  Modifier le projet <em><?php
+                         echo $project->name;
+                         ?></em>
+  <a class="btn btn-outline-primary" href="/project/<?php
+                                                    echo $project->id;
+                                                    ?>" role="button">Retourner au projet sans sauvegarder</a>
 </h1>
 <p class="lead">Ici vous pouvez modifier les informations concernant le projet</p>
 
@@ -13,13 +17,21 @@ ob_start();
   <div class="form-group row">
     <label for="projectName" class="col-sm-2 col-form-label">Nom</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="name" value="<?php echo htmlspecialchars($project->name); ?>" id="projectName" placeholder="Nom du projet...">
+      <input type="text" class="form-control" name="name" value="<?php
+                                                                 echo htmlspecialchars(
+                                                                   $project->name
+                                                                 );
+                                                                 ?>" id="projectName" placeholder="Nom du projet...">
     </div>
   </div>
   <div class="form-group row">
     <label for="projectDomain" class="col-sm-2 col-form-label">Domaine principal</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="domain" value="<?php echo htmlspecialchars($project->domain); ?>" id="projectDomain" placeholder="Domaine principal du projet (facultatif)...">
+      <input type="text" class="form-control" name="domain" value="<?php
+                                                                   echo htmlspecialchars(
+                                                                     $project->domain
+                                                                   );
+                                                                   ?>" id="projectDomain" placeholder="Domaine principal du projet (facultatif)...">
     </div>
   </div>
   <div class="form-group row">
@@ -76,14 +88,31 @@ ob_start();
   <div class="form-group row">
     <label for="projectNextAction" class="col-sm-2 col-form-label">Prochaine action à effectuer</label>
     <div class="col-sm-10">
-      <textarea class="form-control" name="next_action" id="projectNextAction" placeholder="Prochaine action à effectuer sur le projet..."><?php echo $project->next_action; ?></textarea>
+      <textarea class="form-control" name="next_action" id="projectNextAction" placeholder="Prochaine action à effectuer sur le projet..."><?php
+                                                                                                                                           echo $project->next_action;
+                                                                                                                                           ?></textarea>
     </div>
   </div>
 
   <div class="form-group row">
     <label for="projectEndAt" class="col-sm-2 col-form-label">Fin du projet souhaité</label>
     <div class="col-sm-10">
-      <input type="date" class="form-control" name="end_at" id="projectEndAt" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"<?php echo (!empty($project->end_at)) ? ' value="' . date('Y-m-d', strtotime($project->end_at)) . '"' : ''; ?>>
+      <input type="date" class="form-control" name="end_at" id="projectEndAt" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"<?php
+                                                                                                                  echo (
+                                                                                                                    !empty(
+                                                                                                                      $project->end_at
+                                                                                                                    )
+                                                                                                                  )
+                                                                                                                    ? ' value="' .
+                                                                                                                    date(
+                                                                                                                      'Y-m-d',
+                                                                                                                      strtotime(
+                                                                                                                        $project->end_at
+                                                                                                                      )
+                                                                                                                    ) .
+                                                                                                                    '"'
+                                                                                                                    : '';
+                                                                                                                  ?>>
     </div>
   </div>
 
@@ -238,6 +267,5 @@ ob_start();
   </div>
 </div>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

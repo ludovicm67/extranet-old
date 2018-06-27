@@ -1,10 +1,16 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">Accueil</h1>
-<p class="lead">Bienvenue sur l'interface de gestion de <?php echo $this->db->dc->getConfValueDefault('site_name', null, 'Gestion'); ?>.</p>
+<p class="lead">Bienvenue sur l'interface de gestion de <?php
+                                                        echo $this->db->dc->getConfValueDefault(
+                                                          'site_name',
+                                                          null,
+                                                          'Gestion'
+                                                        );
+                                                        ?>.</p>
 
 <?php if (!empty($projects)): ?>
 <h2>Projets sur lesquels je suis assigné</h2>
@@ -57,6 +63,5 @@ ob_start();
   </tbody>
 </table>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

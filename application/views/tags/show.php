@@ -1,13 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">
   <a class="btn btn-outline-dark" title="Retour à la liste" href="/tags" role="button">
     <i class="fas fa-list"></i>
   </a>
-  <?php echo $tag->name; ?>
+  <?php
+  echo $tag->name;
+  ?>
   <?php if (!empty($this->input->get('value'))): ?>
     <small><?php echo strip_tags($this->input->get('value')); ?></small>
     <a class="btn btn-outline-secondary" href="/tag/<?php echo $tag->id; ?>" role="button">Enlever le filtre</a>
@@ -37,6 +39,5 @@ ob_start();
 <?php endforeach; ?>
 </ul>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

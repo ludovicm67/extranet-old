@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">Initialisation</h1>
 <p class="lead">Aucun utilisateur pour le moment; créons-en un !</p>
@@ -44,6 +44,5 @@ fetch('<?php echo htmlspecialchars($js_request_url); ?>', {
 </script>
 <?php endif; ?>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

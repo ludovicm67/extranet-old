@@ -6,7 +6,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-<title><?php echo $this->db->dc->getConfValueDefault('site_name', null, 'Gestion'); ?></title>
+<title><?php
+       echo $this->db->dc->getConfValueDefault('site_name', null, 'Gestion');
+       ?></title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <link rel="stylesheet" href="/css/style.min.css">
 </head>
@@ -15,7 +17,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="/"><?php echo $this->db->dc->getConfValueDefault('site_name', null, 'Gestion'); ?></a>
+        <a class="navbar-brand" href="/"><?php
+                                         echo $this->db->dc->getConfValueDefault(
+                                           'site_name',
+                                           null,
+                                           'Gestion'
+                                         );
+                                         ?></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -151,13 +159,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
       </div>
     </div>
 
-    <?php echo (isset($content)) ? $content : ''; ?>
+    <?php
+    echo (isset($content)) ? $content : '';
+    ?>
   </main>
 
   <!-- footer -->
   <footer class="footer">
     <div class="container">
-      <p class="text-muted">Page rendue en <strong>{elapsed_time}</strong> secondes. <?php echo (ENVIRONMENT === 'development') ? 'Version de CodeIgniter <strong>' . CI_VERSION . '</strong>' : ''; ?></p>
+      <p class="text-muted">Page rendue en <strong>{elapsed_time}</strong> secondes. <?php
+                                                                                     echo (
+                                                                                       ENVIRONMENT ===
+                                                                                         'development'
+                                                                                     )
+                                                                                       ? 'Version de CodeIgniter <strong>' .
+                                                                                       CI_VERSION .
+                                                                                       '</strong>'
+                                                                                       : '';
+                                                                                     ?></p>
     </div>
   </footer>
 

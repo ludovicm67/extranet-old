@@ -1,13 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">
   <a class="btn btn-outline-dark" title="Retour à la liste" href="/contacts" role="button">
     <i class="fas fa-list"></i>
   </a>
-  <?php echo $contact->name; ?>
+  <?php
+  echo $contact->name;
+  ?>
   <?php if ($controller->hasPermission('contacts', 'edit')): ?>
     <a class="btn btn-outline-primary" href="/contact/edit/<?php echo $contact->id; ?>" role="button">Modifier</a>
   <?php endif; ?>
@@ -58,6 +60,5 @@ ob_start();
 <?php endforeach; ?>
 </ul>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

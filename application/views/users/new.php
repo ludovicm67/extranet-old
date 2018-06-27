@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">Créer un nouvel utilisateur</h1>
 <p class="lead">Entrez ici les informations concernant l'utilisateur</p>
@@ -48,6 +48,5 @@ ob_start();
   <button type="submit" class="btn btn-primary">Créer</button>
 </form>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

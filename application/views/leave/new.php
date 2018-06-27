@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">Nouvelle demande de congés</h1>
 <p class="lead">Demandez une nouvelle période de congés</p>
@@ -10,7 +10,11 @@ ob_start();
   <div class="form-group row">
     <label for="leaveStart" class="col-sm-2 col-form-label">Début</label>
     <div class="col-sm-7">
-      <input type="date" class="form-control" name="start" id="leaveStart" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="<?php echo date('Y-m-d'); ?>">
+      <input type="date" class="form-control" name="start" id="leaveStart" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="<?php
+                                                                                                                                echo date(
+                                                                                                                                  'Y-m-d'
+                                                                                                                                );
+                                                                                                                                ?>">
     </div>
     <div class="col-sm-3">
       <select name="start_time" id="leaveStartTime">
@@ -22,7 +26,11 @@ ob_start();
   <div class="form-group row">
     <label for="leaveEnd" class="col-sm-2 col-form-label">Date de fin</label>
     <div class="col-sm-7">
-      <input type="date" class="form-control" name="end" id="leaveEnd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="<?php echo date('Y-m-d'); ?>">
+      <input type="date" class="form-control" name="end" id="leaveEnd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="<?php
+                                                                                                                            echo date(
+                                                                                                                              'Y-m-d'
+                                                                                                                            );
+                                                                                                                            ?>">
     </div>
     <div class="col-sm-3">
       <select name="end_time" id="leaveEndTime">
@@ -72,6 +80,5 @@ ob_start();
   <button type="submit" class="btn btn-primary">Envoyer</button>
 </form>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

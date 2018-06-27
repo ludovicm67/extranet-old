@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ob_start();
-?>
+ ?>
 
 <h1 class="mt-5">Mot de passe perdu ?</h1>
 <p class="lead">Recevez par mail un lien permettant de définir un nouveau mot de passe.</p>
@@ -16,6 +16,5 @@ ob_start();
   <button type="submit" class="btn btn-primary">Envoyer</button>
 </form>
 
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';
