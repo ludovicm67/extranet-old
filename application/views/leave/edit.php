@@ -4,7 +4,7 @@ ob_start();
  ?>
 
 <h1 class="mt-5">Modification d'une demande de congés</h1>
-<p class="lead">Modifiez une période de congés</p>
+<p class="lead">Modifiez une période de congés (nécessitera une nouvelle validation)</p>
 
 <form method="post" enctype="multipart/form-data">
   <div class="form-group row">

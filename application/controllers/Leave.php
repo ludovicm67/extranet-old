@@ -113,8 +113,6 @@ class Leave extends MY_AuthController
 
   public function edit($id)
   {
-    $this->checkPermission('leave', 'edit');
-
     // check if leave exists
     $this->db->where('id', $id);
     $q = $this->db->get('leave');
@@ -122,6 +120,10 @@ class Leave extends MY_AuthController
       redirect('/leave');
     }
     $leave = $q->result()[0];
+
+    if ($leave->user_id != $this->session->id && !$this->hasPermission('leave', 'edit')) {
+      redirect('/leave');
+    }
 
     // form was submitted
     if (
@@ -198,13 +200,14 @@ class Leave extends MY_AuthController
             base64_encode($upload_data['orig_name']) .
             $upload_data['file_ext'];
           rename($upload_data['full_path'], $newName);
-          unlink(ROOTPATH . 'public' . $leave->file);
+          if (!is_null($leave->file)) {
+            unlink(ROOTPATH . 'public' . $leave->file);
+          }
           $file = str_replace(ROOTPATH . 'public', '', $newName);
         }
       }
 
       $content = [
-        'user_id' => $this->session->id,
         'start' => $startDate,
         'end' => $endDate,
         'details' => $details,
@@ -212,7 +215,8 @@ class Leave extends MY_AuthController
         'end_time' => $endTime,
         'days' => $days,
         'reason' => $reason,
-        'file' => $file
+        'file' => $file,
+        'accepted' => 0
       ];
       $this->db->where('id', $id);
       $this->db->update('leave', $content);

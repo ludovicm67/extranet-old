@@ -54,6 +54,12 @@ ob_start();
           <?php endif; ?>
         <?php endif; ?>
 
+        <?php if ($c->user_id == $this->session->id || $controller->hasPermissions('expenses', 'edit')): ?>
+          <a class="btn btn-dark" href="/expenses/edit/<?php echo $c->id; ?>">
+            <i class="fas fa-edit"></i>
+          </a>
+        <?php endif;?>
+
         <?php if ($c->user_id == $this->session->id || $controller->hasPermissions('expenses', 'delete')): ?>
           <a data-confirm-delete-url class="btn btn-danger" href="/expenses/delete/<?php echo $c->id; ?>">
             <i class="far fa-trash-alt"></i>

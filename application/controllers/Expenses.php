@@ -102,6 +102,105 @@ class Expenses extends MY_AuthController
     $this->view('expenses/new', ['months' => $this->months]);
   }
 
+  public function edit($id)
+  {
+    // check if expense exists
+    $this->db->where('id', $id);
+    $q = $this->db->get('expenses');
+    if ($q->num_rows() <= 0) {
+      redirect('/expenses');
+    }
+    $expense = $q->result()[0];
+
+    if ($expense->user_id != $this->session->id && !$this->hasPermission('expenses', 'edit')) {
+      redirect('/expenses');
+    }
+
+    // form was submitted
+    if (
+      isset($_SERVER['REQUEST_METHOD']) &&
+      $_SERVER['REQUEST_METHOD'] == 'POST'
+    ) {
+      $year = intval($this->input->post('year'));
+      $month = intval($this->input->post('month'));
+      $amount = floatval($this->input->post('amount'));
+      $type = htmlspecialchars(trim($this->input->post('type')));
+      $details = htmlspecialchars(trim($this->input->post('details')));
+      if (empty($year) || $year == 0 || empty($month) || $month == 0) {
+        $this->session->set_flashdata(
+          'error',
+          "Veuillez rensigner le mois et l'année !"
+        );
+        redirect('/expenses/edit/' . $id);
+      }
+      if ($amount < 0) {
+        $this->session->set_flashdata(
+          'error',
+          'Le montant ne peut être négatif !'
+        );
+        redirect('/expenses/edit/' . $id);
+      }
+
+      $this->load->library('upload', [
+        'upload_path' => ROOTPATH . 'public/uploads/',
+        'allowed_types' => 'gif|jpg|png|jpeg|pdf'
+      ]);
+
+      $file = $expense->file;
+      if (
+        isset($_FILES['file']) &&
+        !empty($_FILES['file']) &&
+        !empty($_FILES['file']['name'])
+      ) {
+        if (!$this->upload->do_upload('file')) {
+          $this->session->set_flashdata(
+            'error',
+            "Le justificatif n'a pas pu être uploadé.."
+          );
+          redirect('/expenses/edit/' . $id);
+        } else {
+          $upload_data = $this->upload->data();
+          $newName =
+            $upload_data['file_path'] .
+            $this->session->id .
+            '_' .
+            Uuid::uuid4()->toString() .
+            '_' .
+            base64_encode($upload_data['orig_name']) .
+            $upload_data['file_ext'];
+          rename($upload_data['full_path'], $newName);
+          if (!is_null($expense->file)) {
+            unlink(ROOTPATH . 'public' . $expense->file);
+          }
+          $file = str_replace(ROOTPATH . 'public', '', $newName);
+        }
+      }
+
+      $content = [
+        'year' => $year,
+        'month' => $month,
+        'amount' => $amount,
+        'details' => $details,
+        'file' => $file,
+        'type' => $type,
+        'accepted' => 0
+      ];
+      $this->db->where('id', $id);
+      $this->db->update('expenses', $content);
+      $content['id'] = $id;
+      $this->writeLog('update', 'expenses', $content, $content['id']);
+
+      $this->session->set_flashdata('success', 'La demande a bien été modifiée !');
+
+      redirect('/expenses');
+    }
+
+    $this->view('expenses/edit', [
+      'months' => $this->months,
+      'expense' => $expense
+    ]);
+  }
+
   public function accept($id)
   {
     $this->checkPermission('expenses', 'edit');

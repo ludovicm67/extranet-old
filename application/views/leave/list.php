@@ -56,7 +56,7 @@ ob_start();
           <?php endif; ?>
         <?php endif; ?>
 
-        <?php if ($controller->hasPermissions('leave', 'edit')): ?>
+        <?php if ($c->user_id == $this->session->id || $controller->hasPermissions('leave', 'edit')): ?>
           <a class="btn btn-dark" href="/leave/edit/<?php echo $c->id; ?>">
             <i class="fas fa-edit"></i>
           </a>
