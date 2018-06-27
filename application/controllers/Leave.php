@@ -133,6 +133,25 @@ class Leave extends MY_AuthController
     redirect('/leave');
   }
 
+  public function reject($id)
+  {
+    $this->checkPermission('leave', 'edit');
+
+    $this->db->where('id', $id);
+    $q = $this->db->get('leave');
+    if ($q->num_rows() <= 0) {
+      redirect('/leave');
+    }
+
+    $content = ['accepted' => -1];
+    $this->db->where('id', $id);
+    $this->db->update('leave', $content);
+    $content['id'] = $id;
+    $this->writeLog('update', 'leave', $content, $content['id']);
+    $this->session->set_flashdata('success', 'La demande a bien été refusée !');
+    redirect('/leave');
+  }
+
   public function delete($id)
   {
     $this->checkPermission('leave', 'delete');
@@ -163,7 +182,11 @@ class Leave extends MY_AuthController
       $this->db->where('leave.user_id', $this->session->id);
     }
     $this->db->select('*, leave.id AS id');
-    $this->db->order_by('leave.accepted', 'asc');
+    $this->db->order_by(
+      '(CASE leave.accepted WHEN 0 THEN 1 WHEN 1 THEN 2 WHEN -1 THEN 3 END)',
+      'asc'
+    );
+    $this->db->order_by('leave.start', 'desc');
     $this->db->order_by('leave.id', 'desc');
     $this->db->join('users', 'users.id = leave.user_id', 'left');
     $content = $this->db->get('leave')->result();

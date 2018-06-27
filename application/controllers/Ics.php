@@ -12,6 +12,7 @@ class Ics extends MY_Controller
     header('Content-Disposition: attachment; filename="cal.ics"');
 
     $this->db->select('*, leave.id AS id');
+    $this->db->where('leave.accepted >=', 0);
     $this->db->order_by('leave.accepted', 'asc');
     $this->db->order_by('leave.id', 'desc');
     $this->db->join('users', 'users.id = leave.user_id', 'left');
@@ -27,6 +28,7 @@ class Ics extends MY_Controller
       if ($leave->accepted != 1) {
         $flags[] = '?';
       }
+      $flags[] = mb_strtoupper($leave->reason);
       if (empty($flags)) {
         $flags = '';
       } else {
@@ -36,14 +38,7 @@ class Ics extends MY_Controller
       $vEvent = (new Event())
         ->setDtStart(new \DateTime($leave->start))
         ->setDtEnd(new \DateTime($leave->end))
-        ->setSummary(
-          $flags .
-            $leave->reason .
-            ' de ' .
-            $leave->firstname .
-            ' ' .
-            $leave->lastname
-        );
+        ->setSummary($flags . $leave->firstname . ' ' . $leave->lastname);
       $vCalendar->addComponent($vEvent);
     }
 

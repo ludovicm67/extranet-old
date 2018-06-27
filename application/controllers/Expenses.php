@@ -124,6 +124,25 @@ class Expenses extends MY_AuthController
     redirect('/expenses');
   }
 
+  public function reject($id)
+  {
+    $this->checkPermission('expenses', 'edit');
+
+    $this->db->where('id', $id);
+    $q = $this->db->get('expenses');
+    if ($q->num_rows() <= 0) {
+      redirect('/expenses');
+    }
+
+    $content = ['accepted' => -1];
+    $this->db->where('id', $id);
+    $this->db->update('expenses', $content);
+    $content['id'] = $id;
+    $this->writeLog('update', 'expenses', $content, $content['id']);
+    $this->session->set_flashdata('success', 'La demande a bien été refusée !');
+    redirect('/expenses');
+  }
+
   public function delete($id)
   {
     $this->checkPermission('expenses', 'delete');
@@ -154,7 +173,10 @@ class Expenses extends MY_AuthController
       $this->db->where('users.id', $this->session->id);
     }
     $this->db->select('*, expenses.id AS id');
-    $this->db->order_by('expenses.accepted', 'asc');
+    $this->db->order_by(
+      '(CASE expenses.accepted WHEN 0 THEN 1 WHEN 1 THEN 2 WHEN -1 THEN 3 END)',
+      'asc'
+    );
     $this->db->order_by('expenses.id', 'desc');
     $this->db->join('users', 'users.id = expenses.user_id', 'left');
     $content = $this->db->get('expenses')->result();
