@@ -50,7 +50,7 @@ class Calendar extends MY_AuthController
     ];
 
     $dtStart = new DateTime("$nowYear-$nowMonth-1");
-    $dtEnd = new DateTime($dtStart->format('Y-m-t'));
+    $dtEnd = new DateTime($dtStart->format('Y-m-t 23:59:59'));
 
     if (!$this->hasPermissions('leave', 'show')) {
       $this->db->where('users.id', $this->session->id);
