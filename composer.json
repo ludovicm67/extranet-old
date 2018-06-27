@@ -16,7 +16,8 @@
 		"guzzlehttp/guzzle": "^6.3",
 		"symfony/yaml": "^4.1",
 		"ramsey/uuid": "^3.7",
-		"eluceo/ical": "^0.14.0"
+		"eluceo/ical": "^0.14.0",
+		"dompdf/dompdf": "^0.8.2"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
