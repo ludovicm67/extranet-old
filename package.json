@@ -16,7 +16,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify-es": "^1.0.4",
     "jquery": "^3.3.1",
-    "prettier": "^1.13.5",
+    "prettier": "^1.13.6",
     "select2": "^4.0.6-rc.1"
   },
   "scripts": {
@@ -24,5 +24,8 @@
     "prettier": "prettier"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "select2-bootstrap4-theme": "^1.0.0"
+  }
 }

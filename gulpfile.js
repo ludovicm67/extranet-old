@@ -33,6 +33,7 @@ gulp.task('css', function () {
   return gulp.src([
     'node_modules/bootstrap/dist/css/bootstrap.css',
     'node_modules/select2/dist/css/select2.css',
+    'node_modules/select2-bootstrap4-theme/dist/select2-bootstrap4.css',
     'public/css/**/*.css', '!public/css/**/*.min.css'
   ])
   .pipe(concat('style.min.css'))

@@ -52,3 +52,8 @@ h2 {
 .custom-file-label::after {
   content: 'Parcourir';
 }
+
+.select2-container--bootstrap4 .select2-selection--multiple .select2-selection__choice {
+  padding: 5px;
+  margin-bottom: 5px;
+}

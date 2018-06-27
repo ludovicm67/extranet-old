@@ -210,6 +210,7 @@ if (leaveStart && leaveEnd && leaveDays) {
 }
 
 $(document).ready(function () {
+  $.fn.select2.defaults.set('theme', 'bootstrap4');
   $('select[data-tags=true]').select2({
     tags: true,
     width: '100%',
