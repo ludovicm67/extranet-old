@@ -32,8 +32,16 @@ ob_start();
     <label for="expensesType" class="col-sm-2 col-form-label">Type</label>
     <div class="col-sm-10">
       <select class="form-control" name="type" id="expensesType">
-        <option value="Transports"<?php echo ($expense->type == 'Transports') ? ' selected="selected"' : ''; ?>>Transports</option>
-        <option value="Dépense"<?php echo ($expense->type == 'Dépense') ? ' selected="selected"' : ''; ?>>Dépense</option>
+        <option value="Transports"<?php
+                                  echo ($expense->type == 'Transports')
+                                    ? ' selected="selected"'
+                                    : '';
+                                  ?>>Transports</option>
+        <option value="Dépense"<?php
+                               echo ($expense->type == 'Dépense')
+                                 ? ' selected="selected"'
+                                 : '';
+                               ?>>Dépense</option>
       </select>
     </div>
   </div>
@@ -42,7 +50,9 @@ ob_start();
     <label for="expensesAmount" class="col-sm-2 col-form-label">Montant</label>
     <div class="col-sm-10">
       <div class="input-group">
-        <input id="expensesAmount" type="number" class="form-control" required pattern="[0-9]+([\.,][0-9]+)?" step="0.01" min="0" value="<?php echo $expense->amount; ?>" name="amount">
+        <input id="expensesAmount" type="number" class="form-control" required pattern="[0-9]+([\.,][0-9]+)?" step="0.01" min="0" value="<?php
+                                                                                                                                         echo $expense->amount;
+                                                                                                                                         ?>" name="amount">
         <div class="input-group-append">
           <span class="input-group-text">€</span>
         </div>
@@ -63,7 +73,9 @@ ob_start();
   <div class="form-group row">
     <label for="expensesDetails" class="col-sm-2 col-form-label">Commentaire</label>
     <div class="col-sm-10">
-      <textarea class="form-control" name="details" id="expensesDetails" placeholder="Commentaire..."><?php echo $expense->details; ?></textarea>
+      <textarea class="form-control" name="details" id="expensesDetails" placeholder="Commentaire..."><?php
+                                                                                                      echo $expense->details;
+                                                                                                      ?></textarea>
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Modifier</button>

@@ -41,7 +41,7 @@ ob_start();
           </a>
         <?php endif; ?>
 
-        <?php if ($controller->hasPermissions('expenses', 'edit')): ?>
+        <?php if ($controller->hasPermissions('request_management', 'edit')): ?>
           <?php if ($c->accepted != 1): ?>
             <a class="btn btn-success" href="/expenses/accept/<?php echo $c->id; ?>">
               <i class="fas fa-check"></i>
@@ -58,7 +58,7 @@ ob_start();
           <a class="btn btn-dark" href="/expenses/edit/<?php echo $c->id; ?>">
             <i class="fas fa-edit"></i>
           </a>
-        <?php endif;?>
+        <?php endif; ?>
 
         <?php if ($c->user_id == $this->session->id || $controller->hasPermissions('expenses', 'delete')): ?>
           <a data-confirm-delete-url class="btn btn-danger" href="/expenses/delete/<?php echo $c->id; ?>">

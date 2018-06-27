@@ -121,7 +121,10 @@ class Leave extends MY_AuthController
     }
     $leave = $q->result()[0];
 
-    if ($leave->user_id != $this->session->id && !$this->hasPermission('leave', 'edit')) {
+    if (
+      $leave->user_id != $this->session->id &&
+      !$this->hasPermission('leave', 'edit')
+    ) {
       redirect('/leave');
     }
 
@@ -236,7 +239,7 @@ class Leave extends MY_AuthController
 
   public function accept($id)
   {
-    $this->checkPermission('leave', 'edit');
+    $this->checkPermission('request_management', 'edit');
 
     $this->db->where('id', $id);
     $q = $this->db->get('leave');
@@ -258,7 +261,7 @@ class Leave extends MY_AuthController
 
   public function reject($id)
   {
-    $this->checkPermission('leave', 'edit');
+    $this->checkPermission('request_management', 'edit');
 
     $this->db->where('id', $id);
     $q = $this->db->get('leave');

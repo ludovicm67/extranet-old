@@ -112,7 +112,10 @@ class Expenses extends MY_AuthController
     }
     $expense = $q->result()[0];
 
-    if ($expense->user_id != $this->session->id && !$this->hasPermission('expenses', 'edit')) {
+    if (
+      $expense->user_id != $this->session->id &&
+      !$this->hasPermission('expenses', 'edit')
+    ) {
       redirect('/expenses');
     }
 
@@ -190,7 +193,10 @@ class Expenses extends MY_AuthController
       $content['id'] = $id;
       $this->writeLog('update', 'expenses', $content, $content['id']);
 
-      $this->session->set_flashdata('success', 'La demande a bien été modifiée !');
+      $this->session->set_flashdata(
+        'success',
+        'La demande a bien été modifiée !'
+      );
 
       redirect('/expenses');
     }
@@ -203,7 +209,7 @@ class Expenses extends MY_AuthController
 
   public function accept($id)
   {
-    $this->checkPermission('expenses', 'edit');
+    $this->checkPermission('request_management', 'edit');
 
     $this->db->where('id', $id);
     $q = $this->db->get('expenses');
@@ -225,7 +231,7 @@ class Expenses extends MY_AuthController
 
   public function reject($id)
   {
-    $this->checkPermission('expenses', 'edit');
+    $this->checkPermission('request_management', 'edit');
 
     $this->db->where('id', $id);
     $q = $this->db->get('expenses');

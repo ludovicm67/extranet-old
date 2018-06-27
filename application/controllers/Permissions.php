@@ -164,6 +164,15 @@ class Permissions extends MY_AuthController
           'edit' => true,
           'delete' => true,
           'checked' => []
+        ],
+      'request_management' =>
+        (object) [
+          'name' => 'Gestion des demandes',
+          'show' => false,
+          'add' => false,
+          'edit' => true,
+          'delete' => false,
+          'checked' => []
         ]
     ];
   }

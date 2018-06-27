@@ -43,7 +43,7 @@ ob_start();
           </a>
         <?php endif; ?>
 
-        <?php if ($controller->hasPermissions('leave', 'edit')): ?>
+        <?php if ($controller->hasPermissions('request_management', 'edit')): ?>
           <?php if ($c->accepted != 1): ?>
             <a class="btn btn-success" href="/leave/accept/<?php echo $c->id; ?>">
               <i class="fas fa-check"></i>
