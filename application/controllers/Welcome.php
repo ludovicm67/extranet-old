@@ -1,8 +1,4 @@
 <?php
-use GuzzleHttp\Client;
-use Teknoo\Sellsy\Transport\Guzzle;
-use Teknoo\Sellsy\Sellsy;
-
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Welcome extends MY_AuthController
@@ -19,7 +15,33 @@ class Welcome extends MY_AuthController
       $this->db->where('user_id', $this->session->id);
       $userProjects = $this->db->get()->result();
     }
-    $this->view('welcome_message', ['projects' => $userProjects]);
+
+    $myId = $this->session->id;
+    if (empty($myId)) {
+      $myId = null;
+    }
+    $this->db->order_by('favorite', 'desc');
+    $this->db->order_by('updated_at', 'desc');
+    $this->db->order_by('id', 'desc');
+
+    if (is_null($myId)) {
+      $this->db->select('*, 0 AS favorite');
+    } else {
+      $this->db->select(
+        '*, COALESCE(project_favorites.user_id, 0) AS favorite'
+      );
+      $this->db->join(
+        'project_favorites',
+        'projects.id = project_favorites.project_id AND user_id = ' . $myId
+      );
+    }
+
+    $favProjects = $this->db->get('projects')->result();
+
+    $this->view('welcome_message', [
+      'favProjects' => $favProjects,
+      'projects' => $userProjects
+    ]);
   }
 
   public function logout()

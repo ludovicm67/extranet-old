@@ -12,56 +12,89 @@ ob_start();
                                                         );
                                                         ?>.</p>
 
-<?php if (!empty($projects)): ?>
-<h2>Projets sur lesquels je suis assigné</h2>
-<ul class="list-upgraded">
-  <?php foreach ($projects as $project): ?>
-    <li>
-      <a href="/project/<?php echo $project->id; ?>">
-        <?php echo $project->name; ?>
-      </a>
-    </li>
-  <?php endforeach; ?>
-</ul>
-<?php endif; ?>
+<div class="row">
+  <div class="col-md-3">
+    <div class="card mb-3">
+      <div class="card-header">
+        Mon compte
+      </div>
+      <div class="card-body">
+        <?php if (!empty($this->session->firstname)): ?>
+          <p>Bienvenue <?php echo htmlspecialchars($this->session->firstname); ?> !</p>
+        <?php endif; ?>
+        <ul>
+          <li><a href="/users/me">Modifier mon compte</a></li>
+          <li><a href="/logout">Se déconnecter</a></li>
+        </ul>
+      </div>
+    </div>
 
-<h2>Mettre à jour les informations de la base de données</h2>
-<table class="table table-hover">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Nom</th>
-      <th scope="col">Description</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="searcher-item" data-searcher="init_database">
-      <td><a href="/cron/init_database" target="_blank">/cron/init_database</a></td>
-      <td>générer la base de données (créer l'ensemble des tables requises; ne supprime rien)</td>
-      <td><button class="btn btn-primary request-runner" data-request="/cron/init_database" type="button">Lancer</button></td>
-    </tr>
-    <tr class="searcher-item" data-searcher="sellsy_clients">
-      <td><a href="/cron/sellsy_clients" target="_blank">/cron/sellsy_clients</a></td>
-      <td>récupérer l'ensemble des clients avec leurs contacts associés</td>
-      <td><button class="btn btn-primary request-runner" data-request="/cron/sellsy_clients" type="button">Lancer</button></td>
-    </tr>
-    <tr class="searcher-item" data-searcher="sellsy_contacts">
-      <td><a href="/cron/sellsy_contacts" target="_blank">/cron/sellsy_contacts</a></td>
-      <td>mettre à jour les informations sur l'ensemble des contacts</td>
-      <td><button class="btn btn-primary request-runner" data-request="/cron/sellsy_contacts" type="button">Lancer</button></td>
-    </tr>
-    <tr class="searcher-item" data-searcher="sellsy_orders">
-      <td><a href="/cron/sellsy_orders" target="_blank">/cron/sellsy_orders</a></td>
-      <td>mettre à jour les informations sur l'ensemble des commandes</td>
-      <td><button class="btn btn-primary request-runner" data-request="/cron/sellsy_orders" type="button">Lancer</button></td>
-    </tr>
-    <tr class="searcher-item" data-searcher="sellsy_invoices">
-      <td><a href="/cron/sellsy_invoices" target="_blank">/cron/sellsy_invoices</a></td>
-      <td>mettre à jour les informations sur l'ensemble des factures</td>
-      <td><button class="btn btn-primary request-runner" data-request="/cron/sellsy_invoices" type="button">Lancer</button></td>
-    </tr>
-  </tbody>
-</table>
+    <?php if (!empty($favProjects)): ?>
+    <div class="card mb-3">
+      <div class="card-header">
+        Projets favoris
+      </div>
+      <div class="card-body">
+        <ul>
+          <?php foreach ($favProjects as $project): ?>
+            <li>
+              <a href="/project/<?php echo $project->id; ?>">
+                <?php echo $project->name; ?>
+              </a>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    </div>
+    <?php endif; ?>
+
+    <div class="card mb-3">
+      <div class="card-header">
+        Mettre à jour
+      </div>
+      <div class="card-body">
+        <p>
+          <button class="btn btn-primary request-runner" data-request="/cron/init_database" type="button">Base de données</button>
+        </p>
+        <p>
+          <button class="btn btn-primary request-runner" data-request="/cron/sellsy_clients" type="button">Clients</button>
+        </p>
+        <p>
+          <button class="btn btn-primary request-runner" data-request="/cron/sellsy_contacts" type="button">Contacts</button>
+        </p>
+        <p>
+          <button class="btn btn-primary request-runner" data-request="/cron/sellsy_orders" type="button">Commandes</button>
+        </p>
+        <p>
+          <button class="btn btn-primary request-runner" data-request="/cron/sellsy_invoices" type="button">Factures</button>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-9">
+    <?php if (!empty($projects)): ?>
+    <h2>Mes projets</h2>
+    <ul class="list-upgraded">
+      <?php foreach ($projects as $project): ?>
+        <li>
+          <a href="/project/<?php echo $project->id; ?>">
+            <?php echo $project->name; ?>
+          </a>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+    <?php endif; ?>
+
+    <h2>Demandes en attente</h2>
+
+    <h3>Congés</h3>
+    <p><em>Prochainnement...</em></p>
+
+    <h3>Frais</h3>
+    <p><em>Prochainnement...</em></p>
+  </div>
+</div>
 
 <?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';
