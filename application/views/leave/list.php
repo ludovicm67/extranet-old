@@ -56,6 +56,12 @@ ob_start();
           <?php endif; ?>
         <?php endif; ?>
 
+        <?php if ($controller->hasPermissions('leave', 'edit')): ?>
+          <a class="btn btn-dark" href="/leave/edit/<?php echo $c->id; ?>">
+            <i class="fas fa-edit"></i>
+          </a>
+        <?php endif; ?>
+
         <?php if ($c->user_id == $this->session->id || $controller->hasPermissions('leave', 'delete')): ?>
           <a data-confirm-delete-url class="btn btn-danger" href="/leave/delete/<?php echo $c->id; ?>">
             <i class="far fa-trash-alt"></i>
