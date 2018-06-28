@@ -88,7 +88,7 @@ ob_start();
   <div class="card bg-light col-md-4">
     <div class="card-body">
       <h5 class="card-title">
-        <a href="/contact/edit/<?php echo $contact->id; ?>" class="float-right">
+        <a href="/contact/edit/<?php echo $contact->id; ?>?url_after=/project/<?php echo $project->id; ?>" class="float-right">
           <i class="far fa-edit"></i>
         </a>
         <a href="/contact/<?php echo $contact->id; ?>"><?php echo $contact->name; ?></a>

@@ -6,6 +6,7 @@ class MY_Controller extends CI_Controller
   protected $isLogged = false;
   protected $userInfos = null;
   protected $userRights = null;
+  protected $urlAfter = '/';
 
   public function __construct()
   {
@@ -17,6 +18,10 @@ class MY_Controller extends CI_Controller
       } else {
         $this->session->unset_userdata('logged');
       }
+    }
+
+    if (isset($_GET['url_after'])) {
+      $this->urlAfter = $this->input->get('url_after');
     }
 
     if (

@@ -212,7 +212,9 @@ class Contacts extends MY_AuthController
         'success',
         'Le contact a bien été modifié avec succès !'
       );
-      redirect('/contacts');
+
+      $urlAfter = ($this->urlAfter == '/') ? '/contacts' : $this->urlAfter;
+      redirect($urlAfter);
     }
 
     $this->db->select(['id', 'name']);
