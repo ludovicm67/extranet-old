@@ -93,7 +93,18 @@ CREATE TABLE IF NOT EXISTS `contracts` (
   `type` varchar(255) DEFAULT "CDI",
   `start_at` datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
   `end_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  `days` float,
+  `days` int(11),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `overtime` (
+  `id` int (11) NOT NULL AUTO_INCREMENT,
+  `user_id` int (11) NOT NULL,
+  `month` int(11),
+  `year` int(11),
+  `volume` int(11) DEFAULT 0,
+  `details` text,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
