@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255),
   `role_id` int (11),
   `is_admin` tinyint(1),
+  `default_page` varchar(255) DEFAULT "/",
   PRIMARY KEY (`id`),
   FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
