@@ -87,4 +87,15 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE IF NOT EXISTS `contracts` (
+  `id` int (11) NOT NULL AUTO_INCREMENT,
+  `user_id` int (11) NOT NULL,
+  `type` varchar(255) DEFAULT "CDI",
+  `start_at` datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `end_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `days` float,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;
