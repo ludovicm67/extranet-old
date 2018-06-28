@@ -35,10 +35,10 @@ ob_start();
     <label for="contractStart" class="col-sm-2 col-form-label">Date de début</label>
     <div class="col-sm-10">
       <input type="date" class="form-control" name="start_at" id="contractStart" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="<?php
-                                                                                                                            echo date(
-                                                                                                                              'Y-m-d'
-                                                                                                                            );
-                                                                                                                            ?>">
+                                                                                                                                      echo date(
+                                                                                                                                        'Y-m-d'
+                                                                                                                                      );
+                                                                                                                                      ?>">
     </div>
   </div>
   <div class="form-group row">

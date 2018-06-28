@@ -100,10 +100,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   <?php endif; ?>
                   <?php if ($controller->hasPermissions('expenses', 'show')): ?>
                     <a class="dropdown-item" href="/expenses">Notes de frais</a>
-                  <?php endif;?>
+                  <?php endif; ?>
                   <?php if ($controller->hasPermissions('contracts', 'show')): ?>
                     <a class="dropdown-item" href="/contracts">Contrats</a>
-                  <?php endif;?>
+                  <?php endif; ?>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="/logout">Déconnexion</a>
                 </div>

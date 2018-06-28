@@ -210,6 +210,11 @@ class Leave extends MY_AuthController
         }
       }
 
+      $accepted = 0;
+      if ($this->hasPermission('request_management', 'edit')) {
+        $accepted = $leave->accpted;
+      }
+
       $content = [
         'start' => $startDate,
         'end' => $endDate,
@@ -219,7 +224,7 @@ class Leave extends MY_AuthController
         'days' => $days,
         'reason' => $reason,
         'file' => $file,
-        'accepted' => 0
+        'accepted' => $accepted
       ];
       $this->db->where('id', $id);
       $this->db->update('leave', $content);

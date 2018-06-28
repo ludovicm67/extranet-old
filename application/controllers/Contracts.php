@@ -7,7 +7,9 @@ class Contracts extends MY_AuthController
   {
     $this->checkPermission('contracts', 'show');
 
-    $this->db->select('CONCAT(users.firstname, " ", users.lastname) AS full_name, users.mail, contracts.*');
+    $this->db->select(
+      'CONCAT(users.firstname, " ", users.lastname) AS full_name, users.mail, contracts.*'
+    );
     $this->db->join('users', 'users.id = contracts.user_id');
     $this->db->order_by('start_at', 'desc');
     $contracts = $this->db->get('contracts')->result();
@@ -23,7 +25,10 @@ class Contracts extends MY_AuthController
     if ($q->num_rows() > 0) {
       $this->db->delete('contracts', ['id' => $id]);
       $this->writeLog('delete', 'contracts', $q->result()[0], $id);
-      $this->session->set_flashdata('success', "Le contrat a bien été supprimé !");
+      $this->session->set_flashdata(
+        'success',
+        "Le contrat a bien été supprimé !"
+      );
     } else {
       $this->session->set_flashdata('error', "Le contrat n'existe pas.");
     }
@@ -41,7 +46,9 @@ class Contracts extends MY_AuthController
       $contractEnd = strip_tags(trim($this->input->post('end_at')));
       $contractDays = strip_tags(trim($this->input->post('days')));
 
-      if (empty($contractEnd)) $contractEnd = null;
+      if (empty($contractEnd)) {
+        $contractEnd = null;
+      }
 
       $content = [
         'user_id' => $contractUser,
@@ -54,24 +61,16 @@ class Contracts extends MY_AuthController
       $newId = $this->db->insert_id();
 
       $content['id'] = $newId;
-      $this->writeLog(
-        'insert',
-        'contracts',
-        $content,
-        $newId
-      );
+      $this->writeLog('insert', 'contracts', $content, $newId);
       $this->session->set_flashdata(
         'success',
         "Le contrat a bien été créé avec succès !"
       );
       redirect('/contracts');
-
     }
 
     $users = $this->db->get('users')->result();
-    $this->view('contracts/new', [
-      'users' => $users
-    ]);
+    $this->view('contracts/new', ['users' => $users]);
   }
 
   public function edit($id)
@@ -93,7 +92,9 @@ class Contracts extends MY_AuthController
       $contractEnd = strip_tags(trim($this->input->post('end_at')));
       $contractDays = strip_tags(trim($this->input->post('days')));
 
-      if (empty($contractEnd)) $contractEnd = null;
+      if (empty($contractEnd)) {
+        $contractEnd = null;
+      }
 
       $content = [
         'user_id' => $contractUser,
@@ -106,24 +107,15 @@ class Contracts extends MY_AuthController
       $this->db->update('contracts', $content);
 
       $content['id'] = $id;
-      $this->writeLog(
-        'update',
-        'contracts',
-        $content,
-        $id
-      );
+      $this->writeLog('update', 'contracts', $content, $id);
       $this->session->set_flashdata(
         'success',
         "Le contrat a bien été modifié avec succès !"
       );
       redirect('/contracts');
-
     }
 
     $users = $this->db->get('users')->result();
-    $this->view('contracts/edit', [
-      'contract' => $contract,
-      'users' => $users
-    ]);
+    $this->view('contracts/edit', ['contract' => $contract, 'users' => $users]);
   }
 }

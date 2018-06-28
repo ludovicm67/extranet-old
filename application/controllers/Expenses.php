@@ -179,6 +179,11 @@ class Expenses extends MY_AuthController
         }
       }
 
+      $accepted = 0;
+      if ($this->hasPermission('request_management', 'edit')) {
+        $accepted = $expense->accpted;
+      }
+
       $content = [
         'year' => $year,
         'month' => $month,
@@ -186,7 +191,7 @@ class Expenses extends MY_AuthController
         'details' => $details,
         'file' => $file,
         'type' => $type,
-        'accepted' => 0
+        'accepted' => $accepted
       ];
       $this->db->where('id', $id);
       $this->db->update('expenses', $content);

@@ -4,7 +4,12 @@ ob_start();
  ?>
 
 <h1 class="mt-5">Modifier note de frais</h1>
-<p class="lead">Effectuer des modifications sur une note de frais (nécessitera une nouvelle validation)</p>
+<p class="lead">
+  Effectuer des modifications sur une note de frais
+  <?php if (!$controller->hasPermission('request_management', 'edit')): ?>
+    <em>(nécessitera une nouvelle validation)</em>
+  <?php endif; ?>
+</p>
 
 <form method="post" enctype="multipart/form-data">
   <div class="form-group row">
@@ -60,7 +65,7 @@ ob_start();
     </div>
   </div>
   <div class="form-group row">
-    <label for="expensesFile" class="col-sm-2 col-form-label">Justificatif<br><em>Laisser vide pour ne pas chanegr</em></label>
+    <label for="expensesFile" class="col-sm-2 col-form-label">Justificatif<br><em>Laisser vide pour ne pas changer</em></label>
     <div class="col-sm-10">
       <div class="input-group">
         <div class="custom-file">
