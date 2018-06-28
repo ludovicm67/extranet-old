@@ -21,6 +21,14 @@ ob_start();
                                                                                                                                  ?>">
     </div>
   </div>
+  <div class="form-group row">
+    <label for="overtimeDetails" class="col-sm-2 col-form-label">Commentaire</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="details" id="overtimeDetails" placeholder="Précisions, ..."><?php
+                                                                                                                 echo $details;
+                                                                                                                 ?></textarea>
+    </div>
+  </div>
   <button type="submit" class="btn btn-primary">Valider</button>
 </form>
 

@@ -89,7 +89,7 @@ class Overtime extends MY_AuthController
         $overtime = $this->db
           ->distinct()
           ->select(
-            'users.id as user_id, overtime.volume, CONCAT(users.firstname, " ", users.lastname, " (", users.mail, ")") AS full_name'
+            'users.id as user_id, overtime.volume, overtime.details, CONCAT(users.firstname, " ", users.lastname, " (", users.mail, ")") AS full_name'
           )
           ->join('users', 'users.id = contracts.user_id')
           ->join('overtime', 'overtime.user_id = contracts.user_id')
@@ -131,9 +131,11 @@ class Overtime extends MY_AuthController
           }
           $volume = 0;
           $full_name = $users[0]->full_name;
+          $details = '';
         } else {
           $volume = $overtime[0]->volume;
           $full_name = $overtime[0]->full_name;
+          $details = $overtime[0]->details;
         }
 
         $this->view('overtime/value', [
@@ -141,7 +143,8 @@ class Overtime extends MY_AuthController
           'month' => $getMonth,
           'year' => $getYear,
           'volume' => $volume,
-          'full_name' => $full_name
+          'full_name' => $full_name,
+          'details' => $details
         ]);
         break;
       case 'submitValue':
