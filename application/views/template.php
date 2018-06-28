@@ -95,8 +95,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   <a class="dropdown-item" href="/users/me">Mon compte</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="/calendar">Calendrier</a>
-                  <a class="dropdown-item" href="/leave">Congés</a>
-                  <a class="dropdown-item" href="/expenses">Notes de frais</a>
+                  <?php if ($controller->hasPermissions('leave', 'show')): ?>
+                    <a class="dropdown-item" href="/leave">Congés</a>
+                  <?php endif; ?>
+                  <?php if ($controller->hasPermissions('expenses', 'show')): ?>
+                    <a class="dropdown-item" href="/expenses">Notes de frais</a>
+                  <?php endif;?>
+                  <?php if ($controller->hasPermissions('contracts', 'show')): ?>
+                    <a class="dropdown-item" href="/contracts">Contrats</a>
+                  <?php endif;?>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="/logout">Déconnexion</a>
                 </div>

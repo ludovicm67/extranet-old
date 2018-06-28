@@ -157,6 +157,13 @@ class DateObject {
   }
 }
 
+function nbWorkingDaysBetween(date1, date2) {
+  let dateInterval = new DateObject(date1).allDaysTo(date2);
+  let weekDays = dateInterval.filter(d => d.isWeekDay());
+  let workDays = weekDays.filter(d => !d.isHoliday());
+
+  return workDays.length;
+}
 
 let leaveStart = document.getElementById('leaveStart');
 let leaveEnd = document.getElementById('leaveEnd');
@@ -168,11 +175,7 @@ function updateLeaveDays() {
   let start = leaveStart.value;
   let end = leaveEnd.value;
 
-  let dateInterval = new DateObject(start).allDaysTo(end);
-  let weekDays = dateInterval.filter(d => d.isWeekDay());
-  let workDays = weekDays.filter(d => !d.isHoliday());
-
-  let nbDays = workDays.length;
+  let nbDays = nbWorkingDaysBetween(start, end);
   if (parseInt(leaveStartTime.value) > 9) {
     nbDays -= .5;
   }
@@ -206,6 +209,42 @@ if (leaveStart && leaveEnd && leaveDays) {
   });
   leaveEnd.addEventListener('change', function () {
     updateLeaveDays();
+  })
+}
+
+let contractStart = document.getElementById('contractStart');
+let contractEnd = document.getElementById('contractEnd');
+let contractType = document.getElementById('contractType');
+let contractDays = document.getElementById('contractDays');
+let contractDaysGroup = document.getElementById('contractDaysGroup');
+
+function updateContractDays() {
+  if (contractType.value.toLowerCase() == 'stage') {
+    $(contractDaysGroup).show();
+    if (contractStart && contractEnd && contractStart.value != '' && contractEnd.value != '') {
+      let nbDays = nbWorkingDaysBetween(contractStart.value, contractEnd.value);
+      contractDays.value = nbDays;
+    } else {
+      contractDays.value = '';
+    }
+  } else {
+    contractDays.value = '';
+    $(contractDaysGroup).hide();
+  }
+}
+
+if (contractType && contractDays && contractDaysGroup) {
+  $(contractType).on('change', function () {
+    updateContractDays();
+  });
+}
+
+if (contractStart && contractEnd && contractDays) {
+  contractStart.addEventListener('change', function () {
+    updateContractDays();
+  });
+  contractEnd.addEventListener('change', function () {
+    updateContractDays();
   })
 }
 

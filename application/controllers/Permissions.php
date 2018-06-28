@@ -173,6 +173,15 @@ class Permissions extends MY_AuthController
           'edit' => true,
           'delete' => false,
           'checked' => []
+        ],
+      'contracts' =>
+        (object) [
+          'name' => 'Contrats',
+          'show' => true,
+          'add' => true,
+          'edit' => true,
+          'delete' => true,
+          'checked' => []
         ]
     ];
   }
