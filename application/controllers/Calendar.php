@@ -56,7 +56,10 @@ class Calendar extends MY_AuthController
       $this->db->where('users.id', $this->session->id);
     }
     $this->db->select('*, leave.id AS id');
-    $this->db->order_by('leave.accepted', 'asc');
+    $this->db->order_by(
+      '(CASE leave.accepted WHEN 0 THEN 1 WHEN 1 THEN 2 WHEN -1 THEN 3 END)',
+      'asc'
+    );
     $this->db->order_by('leave.id', 'desc');
     $this->db->where('start <=', $dtEnd->format('Y-m-d H:i:s'));
     $this->db->where('end >=', $dtStart->format('Y-m-d H:i:s'));
@@ -75,7 +78,10 @@ class Calendar extends MY_AuthController
     if ($this->input->get('me') == 1) {
       $this->db->where('user_id', $this->session->id);
     }
-    $this->db->order_by('expenses.accepted', 'asc');
+    $this->db->order_by(
+      '(CASE expenses.accepted WHEN 0 THEN 1 WHEN 1 THEN 2 WHEN -1 THEN 3 END)',
+      'asc'
+    );
     $this->db->order_by('expenses.id', 'desc');
     $this->db->join('users', 'users.id = expenses.user_id', 'left');
     $expenses = $this->db->get('expenses')->result();
