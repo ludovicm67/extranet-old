@@ -23,6 +23,9 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
   <?php if ($controller->hasPermission('expenses', 'add')): ?>
     <a class="btn btn-outline-primary" href="/expenses/new" role="button">Nouvelle note de frais</a>
   <?php endif; ?>
+  <?php if ($controller->hasPermission('overtime', 'add')): ?>
+    <a class="btn btn-outline-primary" href="/overtime?month=<?php echo $now->month; ?>&amp;year=<?php echo $now->year; ?>" role="button">Heure sup</a>
+  <?php endif; ?>
 </h1>
 <p class="lead">Calendrier permettant d'afficher les congés et les notes de frais.</p>
 

@@ -182,6 +182,15 @@ class Permissions extends MY_AuthController
           'edit' => true,
           'delete' => true,
           'checked' => []
+        ],
+      'overtime' =>
+        (object) [
+          'name' => 'Heures supplémentaires',
+          'show' => false,
+          'add' => true,
+          'edit' => false,
+          'delete' => true,
+          'checked' => []
         ]
     ];
   }
