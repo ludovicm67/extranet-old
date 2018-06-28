@@ -7,7 +7,10 @@ class Login extends MY_Controller
   {
     if ($this->session->has_userdata('logged')) {
       if ($this->session->userdata('logged') === true) {
-        redirect('/');
+        $url = (empty($this->session->default_page))
+          ? '/'
+          : $this->session->default_page;
+        redirect($url);
       } else {
         $this->session->unset_userdata('logged');
       }
@@ -33,13 +36,14 @@ class Login extends MY_Controller
             'lastname' => $user->lastname,
             'is_admin' => ($user->is_admin == 1) ? true : false,
             'mail' => $user->mail,
-            'logged' => true
+            'logged' => true,
+            'default_page' => $user->default_page
           ]);
           $this->session->set_flashdata(
             'success',
             'Vous êtes à présents connectés !'
           );
-          redirect('/');
+          redirect($user->default_page);
         } else {
           // bad password
           $this->session->set_flashdata('error', 'Mauvais identifiants !');

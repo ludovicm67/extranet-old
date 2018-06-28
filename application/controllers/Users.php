@@ -3,6 +3,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Users extends MY_AuthController
 {
+  private $pages = [
+    '/' => "Page d'accueil",
+    '/clients' => 'Clients',
+    '/projects' => 'Projets',
+    '/contacts' => 'Interlocuteurs',
+    '/users' => 'Utilisateurs',
+    '/roles' => 'Rôles',
+    '/calendar' => 'Calendrier',
+    '/calendar?me=1' => 'Mon calendrier',
+    '/leave' => 'Congés',
+    '/expenses' => 'Notes de frais',
+    '/contracts' => 'Contrats'
+  ];
+
   public function index()
   {
     $this->checkPermission('users', 'show');
@@ -92,6 +106,10 @@ class Users extends MY_AuthController
       $userMail = strip_tags(trim($this->input->post('mail')));
       $userRole = ($role <= 0) ? null : intval($role);
       $userAdmin = ($role == -1) ? 1 : 0;
+      $userDefaultpage = strip_tags(trim($this->input->post('default_page')));
+      if (empty($userDefaultpage)) {
+        $userDefaultpage = '/';
+      }
 
       if (empty($userMail)) {
         $this->session->set_flashdata(
@@ -114,7 +132,8 @@ class Users extends MY_AuthController
           'password' => $userPassword,
           'mail' => $userMail,
           'role_id' => $userRole,
-          'is_admin' => $userAdmin
+          'is_admin' => $userAdmin,
+          'default_page' => $userDefaultpage
         ];
         $this->db->insert('users', $content);
         $content['id'] = $this->db->insert_id();
@@ -130,7 +149,7 @@ class Users extends MY_AuthController
     $this->db->select(['id', 'name']);
     $roles = $this->db->get('roles')->result();
 
-    $this->view('users/new', ['roles' => $roles]);
+    $this->view('users/new', ['roles' => $roles, 'pages' => $this->pages]);
   }
 
   public function edit($id)
@@ -163,6 +182,10 @@ class Users extends MY_AuthController
       $userMail = strip_tags(trim($this->input->post('mail')));
       $userRole = ($role <= 0) ? null : intval($role);
       $userAdmin = ($role == -1) ? 1 : 0;
+      $userDefaultpage = strip_tags(trim($this->input->post('default_page')));
+      if (empty($userDefaultpage)) {
+        $userDefaultpage = '/';
+      }
 
       if ($this->session->id == $id) {
         $userAdminMe = ($this->session->is_admin) ? 1 : 0;
@@ -200,7 +223,8 @@ class Users extends MY_AuthController
           'password' => $userPassword,
           'mail' => $userMail,
           'role_id' => $userRole,
-          'is_admin' => $userAdmin
+          'is_admin' => $userAdmin,
+          'default_page' => $userDefaultpage
         ];
         $this->db->where('id', $id);
         $this->db->update('users', $content);
@@ -217,7 +241,11 @@ class Users extends MY_AuthController
     $this->db->select(['id', 'name']);
     $roles = $this->db->get('roles')->result();
 
-    $this->view('users/edit', ['user' => $user, 'roles' => $roles]);
+    $this->view('users/edit', [
+      'user' => $user,
+      'roles' => $roles,
+      'pages' => $this->pages
+    ]);
   }
 
   public function me()
@@ -246,6 +274,10 @@ class Users extends MY_AuthController
       $userFirstname = strip_tags(trim($this->input->post('firstname')));
       $userLastname = strip_tags(trim($this->input->post('lastname')));
       $userMail = strip_tags(trim($this->input->post('mail')));
+      $userDefaultpage = strip_tags(trim($this->input->post('default_page')));
+      if (empty($userDefaultpage)) {
+        $userDefaultpage = '/';
+      }
 
       if (empty($userMail)) {
         $this->session->set_flashdata(
@@ -268,7 +300,8 @@ class Users extends MY_AuthController
           'firstname' => $userFirstname,
           'lastname' => $userLastname,
           'password' => $userPassword,
-          'mail' => $userMail
+          'mail' => $userMail,
+          'default_page' => $userDefaultpage
         ];
         $this->db->where('id', $id);
         $this->db->update('users', $content);
@@ -290,6 +323,6 @@ class Users extends MY_AuthController
     $this->db->order_by('expenses.id', 'desc');
     $expenses = $this->db->get('expenses')->result();
 
-    $this->view('users/me', ['user' => $user]);
+    $this->view('users/me', ['user' => $user, 'pages' => $this->pages]);
   }
 }

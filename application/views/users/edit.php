@@ -61,6 +61,16 @@ ob_start();
       <input type="password" class="form-control" name="password" id="userPassword" placeholder="Mot de passe (laisser vide pour ne pas changer)...">
     </div>
   </div>
+  <div class="form-group row">
+    <label for="userDefaultpage" class="col-sm-2 col-form-label">Page par défaut</label>
+    <div class="col-sm-10">
+      <select class="form-control" name="default_page" id="userDefaultpage">
+        <?php foreach ($pages as $u => $p): ?>
+          <option<?php echo ($user->default_page == $u) ? ' selected="selected"' : ''; ?> value="<?php echo htmlspecialchars($u); ?>"><?php echo $p; ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+  </div>
   <button type="submit" class="btn btn-primary">Modifier</button>
 </form>
 

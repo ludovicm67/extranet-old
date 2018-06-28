@@ -45,6 +45,16 @@ ob_start();
       <input type="password" class="form-control" name="password" id="userPassword" placeholder="Mot de passe...">
     </div>
   </div>
+  <div class="form-group row">
+    <label for="userDefaultpage" class="col-sm-2 col-form-label">Page par défaut</label>
+    <div class="col-sm-10">
+      <select class="form-control" name="default_page" id="userDefaultpage">
+        <?php foreach ($pages as $u => $p): ?>
+          <option value="<?php echo htmlspecialchars($u); ?>"><?php echo $p; ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+  </div>
   <button type="submit" class="btn btn-primary">Créer</button>
 </form>
 
