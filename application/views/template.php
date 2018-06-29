@@ -104,6 +104,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   <?php if ($controller->hasPermissions('contracts', 'show')): ?>
                     <a class="dropdown-item" href="/contracts">Contrats</a>
                   <?php endif; ?>
+                  <?php if ($controller->hasPermissions('overtime', 'add')): ?>
+                    <a class="dropdown-item" href="/overtime">Heures sup</a>
+                  <?php endif; ?>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="/logout">Déconnexion</a>
                 </div>

@@ -20,7 +20,7 @@ class Overtime extends MY_AuthController
 
   public function index()
   {
-    $this->checkPermission('overtime', 'edit');
+    $this->checkPermission('overtime', 'add');
 
     $page = 'selectDate';
 
