@@ -48,9 +48,9 @@ th, td {
 
 <h1>
   <?php
-  echo $this->db->dc->getConfValueDefault('site_name', null, 'Gestion');
+  echo $name;
   ?>
-  <small>Juin 2018</small>
+  <small><?php echo $period; ?></small>
 </h1>
 
 <table>
@@ -72,12 +72,12 @@ th, td {
     <tr>
       <td><?php echo $line->name; ?></td>
       <td><?php echo $line->contract; ?></td>
-      <td style="text-align: right;"><?php echo number_format(round(rand(0, 14) * 2) / 2, 2, ',', ' '); ?> h</td>
+      <td style="text-align: right;"><?php echo number_format($line->overtime, 2, ',', ' '); ?> h</td>
       <td style="text-align: right;"><?php echo number_format($line->conges, 1, ',', ' '); ?> jour<?php echo ($line->conges > 1) ? 's' : ''; ?></td>
       <td style="text-align: right;"><?php echo number_format($line->maladie, 1, ',', ' '); ?> jour<?php echo ($line->maladie > 1) ? 's' : ''; ?></td>
       <td style="text-align: right;"><?php echo number_format($line->autre, 1, ',', ' '); ?> jour<?php echo ($line->autre > 1) ? 's' : ''; ?></td>
-      <td style="text-align: right;"><?php echo number_format(rand(0, 142 * 100) / 100, 2, ',', ' '); ?> €</td>
-      <td style="text-align: right;"><?php echo number_format(rand(0, 4242 * 100) / 100, 2, ',', ' '); ?> €</td>
+      <td style="text-align: right;"><?php echo number_format($line->transports, 2, ',', ' '); ?> €</td>
+      <td style="text-align: right;"><?php echo number_format($line->expenses, 2, ',', ' '); ?> €</td>
       <td><?php echo $line->details; ?></td>
     </tr>
     <?php endforeach; ?>

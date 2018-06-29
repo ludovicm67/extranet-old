@@ -156,6 +156,21 @@ class DateObject {
 
 class Pdf extends MY_AuthController
 {
+  private $months = [
+    1 => 'Janvier',
+    2 => 'Février',
+    3 => 'Mars',
+    4 => 'Avril',
+    5 => 'Mai',
+    6 => 'Juin',
+    7 => 'Juillet',
+    8 => 'Août',
+    9 => 'Septembre',
+    10 => 'Octobre',
+    11 => 'Novembre',
+    12 => 'Décembre'
+  ];
+
   public function index()
   {
     redirect('/');
@@ -508,8 +523,17 @@ class Pdf extends MY_AuthController
 
   public function compta()
   {
+    $getYear = intval($this->input->get('year'));
+    $getMonth = intval($this->input->get('month'));
+    $year = !empty($getYear) ? $getYear : date('Y');
+    $month = !empty($getMonth) ? $getMonth : date('n');
+    if ($month < 1) $month = 1;
+    else if ($month > 12) $month = 12;
+
     ob_start();
     $this->view('pdf/compta', [
+      'name' => $this->db->dc->getConfValueDefault('site_name', null, 'Gestion'),
+      'period' => $this->months[$month] . ' ' . $year,
       'lines' => $this->getLines()
     ]);
     $content = ob_get_clean();

@@ -26,6 +26,7 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
   <?php if ($controller->hasPermission('overtime', 'add')): ?>
     <a class="btn btn-outline-primary" href="/overtime?month=<?php echo $now->month; ?>&amp;year=<?php echo $now->year; ?>" role="button">Heure sup</a>
   <?php endif; ?>
+  <a class="btn btn-outline-primary" href="/pdf/compta?month=<?php echo $now->month; ?>&amp;year=<?php echo $now->year; ?>" role="button" target="_blank">PDF compta</a>
 </h1>
 <p class="lead">Calendrier permettant d'afficher les congés et les notes de frais.</p>
 
