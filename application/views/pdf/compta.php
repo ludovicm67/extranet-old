@@ -68,19 +68,18 @@ th, td {
     </tr>
   </thead>
   <tbody>
-    <?php for ($i = 0; $i < 100; $i++): ?>
+    <?php foreach ($lines as $line): ?>
     <tr>
-      <?php $prenoms = ['Ludovic', 'Thomas', 'Marc', 'Luc', 'John', 'Gérard', 'Christian', 'Léa', 'Justine', 'Camille']; $noms = ['Dupond', 'De Super-Loin', 'Muller', 'Doe', 'Dupont', 'Test']; shuffle($prenoms); shuffle($noms); $prenom = $prenoms[0]; $nom = $noms[0]; $contrats = ['CDD', 'CDI', 'Stage', 'Contrat pro', 'Apprentissage']; shuffle($contrats); $contrat = $contrats[0]; $conges = round((rand(0, 14 * 10) / 10) * 2) / 2; $maladie = round((rand(0, 3 * 10) / 10) * 2) / 2; $autre = round((rand(0, 2 * 10) / 10) * 2) / 2; $observation = ''; if ($contrat == 'Stage') { $observation = rand(14, 25) . ' jours de présence'; } else { if (rand(0, 4) == 0) { switch (rand(0, 3)) { case 0: $observation = 'congés'; break; case 1: $observation = 'maladie'; break; case 2: $observation = 'autre'; break; default: $observation = 'congés'; break; } $observation .= ' du ' . rand(1, 10) . '/06 après-midi au ' . rand(18, 30) . '/06 matin'; if (rand(0, 2) == 0) { switch (rand(0, 3)) { case 0: $observation .= ' et congés'; break; case 1: $observation .= ' et maladie'; break; case 2: $observation .= ' et autre'; break; default: $observation = 'congés'; break; } $observation .= ' du ' . rand(1, 10) . ' au ' . rand(18, 30); } } } ?>
-      <td><?php echo $prenom . ' ' . $nom; ?></td>
-      <td><?php echo $contrat; ?></td>
+      <td><?php echo $line->name; ?></td>
+      <td><?php echo $line->contract; ?></td>
       <td style="text-align: right;"><?php echo number_format(round(rand(0, 14) * 2) / 2, 2, ',', ' '); ?> h</td>
-      <td style="text-align: right;"><?php echo number_format($conges, 1, ',', ' '); ?> jour<?php echo ($conges > 1) ? 's' : ''; ?></td>
-      <td style="text-align: right;"><?php echo number_format($maladie, 1, ',', ' '); ?> jour<?php echo ($maladie > 1) ? 's' : ''; ?></td>
-      <td style="text-align: right;"><?php echo number_format($autre, 1, ',', ' '); ?> jour<?php echo ($autre > 1) ? 's' : ''; ?></td>
+      <td style="text-align: right;"><?php echo number_format($line->conges, 1, ',', ' '); ?> jour<?php echo ($line->conges > 1) ? 's' : ''; ?></td>
+      <td style="text-align: right;"><?php echo number_format($line->maladie, 1, ',', ' '); ?> jour<?php echo ($line->maladie > 1) ? 's' : ''; ?></td>
+      <td style="text-align: right;"><?php echo number_format($line->autre, 1, ',', ' '); ?> jour<?php echo ($line->autre > 1) ? 's' : ''; ?></td>
       <td style="text-align: right;"><?php echo number_format(rand(0, 142 * 100) / 100, 2, ',', ' '); ?> €</td>
       <td style="text-align: right;"><?php echo number_format(rand(0, 4242 * 100) / 100, 2, ',', ' '); ?> €</td>
-      <td><?php echo $observation; ?></td>
+      <td><?php echo $line->details; ?></td>
     </tr>
-    <?php endfor; ?>
+    <?php endforeach; ?>
   </tbody>
 </table>
