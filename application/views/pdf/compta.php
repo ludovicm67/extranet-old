@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 }
 
 body {
-  background: #000;
+  background: #fff;
   padding: 20px;
   font-family: sans-serif;
 }
@@ -15,7 +15,7 @@ body {
 h1 {
   margin: 0;
   padding: 50px 20px;
-  color : #fff;
+  color : #000;
 }
 
 small {
