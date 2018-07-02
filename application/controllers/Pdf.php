@@ -439,13 +439,21 @@ class Pdf extends MY_AuthController
       if ($overtime <= 0) $overtime = 0;
 
 
-      $userLeave = array_filter($leave, function ($l) use ($uId) {
-        return $l->user_id == $uId;
-      });
+      if (!empty($leave)) {
+        $userLeave = array_filter($leave, function ($l) use ($uId) {
+          return $l->user_id == $uId;
+        });
+      } else {
+        $userLeave = [];
+      }
 
-      $userExpenses = array_filter($expenses, function ($e) use ($uId) {
-        return $e->user_id == $uId;
-      });
+      if (!empty($expenses)) {
+        $userExpenses = array_filter($expenses, function ($e) use ($uId) {
+          return $e->user_id == $uId;
+        });
+      } else {
+        $userExpenses = [];
+      }
 
       $conges = array_filter($userLeave, function ($l) {
         return mb_strtolower($l->reason) == 'congé';
