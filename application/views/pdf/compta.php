@@ -72,12 +72,36 @@ th, td {
     <tr>
       <td><?php echo $line->name; ?></td>
       <td><?php echo $line->contract; ?></td>
-      <td style="text-align: right;"><?php echo number_format($line->overtime, 2, ',', ' '); ?> h</td>
-      <td style="text-align: right;"><?php echo number_format($line->conges, 1, ',', ' '); ?> jour<?php echo ($line->conges > 1) ? 's' : ''; ?></td>
-      <td style="text-align: right;"><?php echo number_format($line->maladie, 1, ',', ' '); ?> jour<?php echo ($line->maladie > 1) ? 's' : ''; ?></td>
-      <td style="text-align: right;"><?php echo number_format($line->autre, 1, ',', ' '); ?> jour<?php echo ($line->autre > 1) ? 's' : ''; ?></td>
-      <td style="text-align: right;"><?php echo number_format($line->transports, 2, ',', ' '); ?> €</td>
-      <td style="text-align: right;"><?php echo number_format($line->expenses, 2, ',', ' '); ?> €</td>
+      <td style="text-align: right;">
+        <?php if ($line->overtime != 0): ?>
+          <?php echo number_format($line->overtime, 2, ',', ' '); ?> h
+        <?php endif; ?>
+      </td>
+      <td style="text-align: right;">
+        <?php if ($line->conges != 0): ?>
+          <?php echo number_format($line->conges, 1, ',', ' '); ?> jour<?php echo ($line->conges > 1) ? 's' : ''; ?>
+        <?php endif; ?>
+      </td>
+      <td style="text-align: right;">
+        <?php if ($line->maladie != 0): ?>
+          <?php echo number_format($line->maladie, 1, ',', ' '); ?> jour<?php echo ($line->maladie > 1) ? 's' : ''; ?>
+        <?php endif; ?>
+      </td>
+      <td style="text-align: right;">
+        <?php if ($line->autre != 0): ?>
+          <?php echo number_format($line->autre, 1, ',', ' '); ?> jour<?php echo ($line->autre > 1) ? 's' : ''; ?>
+        <?php endif; ?>
+      </td>
+      <td style="text-align: right;">
+        <?php if ($line->transports != 0): ?>
+          <?php echo number_format($line->transports, 2, ',', ' '); ?> €
+        <?php endif; ?>
+      </td>
+      <td style="text-align: right;">
+        <?php if ($line->expenses != 0): ?>
+          <?php echo number_format($line->expenses, 2, ',', ' '); ?> €
+        <?php endif; ?>
+      </td>
       <td><?php echo $line->details; ?></td>
     </tr>
     <?php endforeach; ?>

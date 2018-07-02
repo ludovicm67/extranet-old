@@ -327,7 +327,11 @@ class Pdf extends MY_AuthController
         $e = $endDate->format('j');
       }
 
-      $content .= ' du ' . $s . $startPeriod . ' au ' . $e . $endPeriod;
+      if ($s == $e && $startPeriod == $endPeriod) {
+        $content .= ' le ' . $s . $startPeriod;
+      } else {
+        $content .= ' du ' . $s . $startPeriod . ' au ' . $e . $endPeriod;
+      }
     } else if ($needBefore && !$needAfter) {
       // start
       if ($startDate->format('Y') != $year) {
