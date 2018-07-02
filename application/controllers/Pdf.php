@@ -499,7 +499,7 @@ class Pdf extends MY_AuthController
       $transportsArr = array_filter($userExpenses, function ($e) {
         return mb_strtolower($e->type) == 'transports';
       });
-      if (!is_null($transportsArr)) {
+      if (!empty($transportsArr)) {
         $transports = array_reduce($transportsArr, function ($sum, $o) {
           return $sum + $o->amount;
         }, .0);
@@ -510,12 +510,12 @@ class Pdf extends MY_AuthController
       $expensesArr = array_filter($userExpenses, function ($e) {
         return mb_strtolower($e->type) == 'dépense';
       });
-      if (!is_null($expensesArr)) {
-        $expenses = array_reduce($expensesArr, function ($sum, $o) {
+      if (!empty($expensesArr)) {
+        $expensesSum = array_reduce($expensesArr, function ($sum, $o) {
           return $sum + $o->amount;
         }, .0);
       } else {
-        $expenses = .0;
+        $expensesSum = .0;
       }
 
       if ($stagiaire) {
@@ -536,7 +536,7 @@ class Pdf extends MY_AuthController
         'maladie' => $maladie,
         'autre' => $autre,
         'transports' => $transports,
-        'expenses' => $expenses,
+        'expenses' => $expensesSum,
         'details' => $details
       ];
     }
