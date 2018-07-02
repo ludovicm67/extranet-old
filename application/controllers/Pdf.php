@@ -484,16 +484,27 @@ class Pdf extends MY_AuthController
         return $sum + $this->getNbDays($year, $month, $o->start, $o->end, true);
       }, .0);
 
-      $transports = array_reduce(array_filter($userExpenses, function ($e) {
+      $transportsArr = array_filter($userExpenses, function ($e) {
         return mb_strtolower($e->type) == 'transports';
-      }), function ($sum, $o) {
-        return $sum + $o->amount;
-      }, .0);
-      $expenses = array_reduce(array_filter($userExpenses, function ($e) {
+      });
+      if (!is_null($transportsArr)) {
+        $transports = array_reduce($transportsArr, function ($sum, $o) {
+          return $sum + $o->amount;
+        }, .0);
+      } else {
+        $transports = .0;
+      }
+
+      $expensesArr = array_filter($userExpenses, function ($e) {
         return mb_strtolower($e->type) == 'dépense';
-      }), function ($sum, $o) {
-        return $sum + $o->amount;
-      }, .0);
+      });
+      if (!is_null($expensesArr)) {
+        $expenses = array_reduce($expensesArr, function ($sum, $o) {
+          return $sum + $o->amount;
+        }, .0);
+      } else {
+        $expenses = .0;
+      }
 
       if ($stagiaire) {
         $presence -+ $conges;
