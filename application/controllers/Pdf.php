@@ -362,8 +362,8 @@ class Pdf extends MY_AuthController
   private function getLines() {
     $getYear = intval($this->input->get('year'));
     $getMonth = intval($this->input->get('month'));
-    $year = !empty($getYear) ? $getYear : date('Y');
-    $month = !empty($getMonth) ? $getMonth : date('n');
+    $year = !empty($getYear) ? $getYear : intval(date('Y'));
+    $month = !empty($getMonth) ? $getMonth : intval(date('n'));
 
     // month period
     $start = new DateTime($year . '-' . $month . '-01');
