@@ -44,6 +44,10 @@ th {
 th, td {
   padding: 5px;
 }
+
+.row-2 {
+  background: #eee;
+}
 </style>
 
 <h1>
@@ -68,8 +72,9 @@ th, td {
     </tr>
   </thead>
   <tbody>
+    <?php $i = 0; ?>
     <?php foreach ($lines as $line): ?>
-    <tr>
+    <tr<?php echo (++$i % 2 == 0) ? ' class="row-2"' : ''; ?>>
       <td><?php echo $line->name; ?></td>
       <td><?php echo $line->contract; ?></td>
       <td style="text-align: right;">
