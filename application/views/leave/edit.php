@@ -108,6 +108,12 @@ ob_start();
           <label id="leaveFileLabel" class="custom-file-label" for="leaveFile">Choisir un fichier...</label>
         </div>
       </div>
+      <?php if (!empty($leave->file)): ?>
+      <label>
+        <input type="checkbox" name="delete_file" value="1">
+        Supprimer le justificatif ?
+      </label>
+      <?php endif; ?>
     </div>
   </div>
   <div class="form-group row">

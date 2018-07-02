@@ -129,6 +129,7 @@ class Expenses extends MY_AuthController
       $amount = floatval($this->input->post('amount'));
       $type = htmlspecialchars(trim($this->input->post('type')));
       $details = htmlspecialchars(trim($this->input->post('details')));
+      $deleteFile = isset($_POST['delete_file']);
       if (empty($year) || $year == 0 || empty($month) || $month == 0) {
         $this->session->set_flashdata(
           'error',
@@ -150,6 +151,11 @@ class Expenses extends MY_AuthController
       ]);
 
       $file = $expense->file;
+      if ($deleteFile && !is_null($file)) {
+        unlink(ROOTPATH . 'public' . $expense->file);
+        $file = null;
+      }
+
       if (
         isset($_FILES['file']) &&
         !empty($_FILES['file']) &&
@@ -172,7 +178,7 @@ class Expenses extends MY_AuthController
             base64_encode($upload_data['orig_name']) .
             $upload_data['file_ext'];
           rename($upload_data['full_path'], $newName);
-          if (!is_null($expense->file)) {
+          if (!$deleteFile && !is_null($expense->file)) {
             unlink(ROOTPATH . 'public' . $expense->file);
           }
           $file = str_replace(ROOTPATH . 'public', '', $newName);
@@ -181,7 +187,7 @@ class Expenses extends MY_AuthController
 
       $accepted = 0;
       if ($this->hasPermission('request_management', 'edit')) {
-        $accepted = $expense->accpted;
+        $accepted = $expense->accepted;
       }
 
       $content = [

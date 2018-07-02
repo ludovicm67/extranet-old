@@ -163,6 +163,7 @@ class Leave extends MY_AuthController
       }
 
       $details = htmlspecialchars(trim($this->input->post('details')));
+      $deleteFile = isset($_POST['delete_file']);
       if (!$startDate || !$endDate) {
         $this->session->set_flashdata('error', 'Mauvais format de date !');
         redirect('/leave/edit/' . $id);
@@ -181,6 +182,11 @@ class Leave extends MY_AuthController
       ]);
 
       $file = $leave->file;
+      if ($deleteFile && !is_null($file)) {
+        unlink(ROOTPATH . 'public' . $leave->file);
+        $file = null;
+      }
+
       if (
         isset($_FILES['file']) &&
         !empty($_FILES['file']) &&
@@ -203,7 +209,7 @@ class Leave extends MY_AuthController
             base64_encode($upload_data['orig_name']) .
             $upload_data['file_ext'];
           rename($upload_data['full_path'], $newName);
-          if (!is_null($leave->file)) {
+          if (!$deleteFile && !is_null($leave->file)) {
             unlink(ROOTPATH . 'public' . $leave->file);
           }
           $file = str_replace(ROOTPATH . 'public', '', $newName);
@@ -212,7 +218,7 @@ class Leave extends MY_AuthController
 
       $accepted = 0;
       if ($this->hasPermission('request_management', 'edit')) {
-        $accepted = $leave->accpted;
+        $accepted = $leave->accepted;
       }
 
       $content = [
