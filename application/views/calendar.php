@@ -26,7 +26,23 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
   <?php if ($controller->hasPermission('overtime', 'add')): ?>
     <a class="btn btn-outline-primary" href="/overtime?month=<?php echo $now->month; ?>&amp;year=<?php echo $now->year; ?>" role="button">Heure sup</a>
   <?php endif; ?>
+
+
+
+<div class="btn-group">
   <a class="btn btn-outline-primary" href="/pdf/compta?month=<?php echo $now->month; ?>&amp;year=<?php echo $now->year; ?>" role="button" target="_blank">PDF compta</a>
+  <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" target="_blank" href="/pdf/compta?month=<?php echo $now->month; ?>&amp;year=<?php echo $now->year; ?>">Générer le PDF</a>
+    <a class="dropdown-item" target="_blank" href="/pdf/form?month=<?php echo $now->month; ?>&amp;year=<?php echo $now->year; ?>">Éditer le PDF</a>
+  </div>
+</div>
+
+
+
+
 </h1>
 <p class="lead">Calendrier permettant d'afficher les congés et les notes de frais.</p>
 

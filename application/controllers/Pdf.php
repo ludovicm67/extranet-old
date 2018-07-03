@@ -590,15 +590,28 @@ class Pdf extends MY_AuthController
   }
 
   public function form() {
-    $this->view('pdf/form', $this->getData());
+    if ($this->input->server('REQUEST_METHOD') == 'POST') {
+      if (isset($_POST['lines'])) {
+        foreach ($_POST['lines'] as $key => $value) {
+          $_POST['lines'][$key] = (object) $value;
+        }
+      }
+      $this->compta($_POST);
+    } else {
+      $this->view('pdf/form', $this->getData());
+    }
   }
 
-  public function compta()
+  public function compta($data = null)
   {
     $date = $this->getDate();
 
+    if (is_null($data)) {
+      $data = $this->getData();
+    }
+
     ob_start();
-    $this->view('pdf/compta', $this->getData());
+    $this->view('pdf/compta', $data);
     $content = ob_get_clean();
 
     $dompdf = new Dompdf();

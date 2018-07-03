@@ -26,6 +26,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "popper.js": "^1.14.3",
     "select2-bootstrap4-theme": "^1.0.0"
   }
 }

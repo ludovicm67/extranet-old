@@ -51,10 +51,8 @@ th, td {
 </style>
 
 <h1>
-  <?php
-  echo $name;
-  ?>
-  <small><?php echo $period; ?></small>
+  <?php echo strip_tags($name); ?>
+  <small><?php echo strip_tags($period); ?></small>
 </h1>
 
 <table>
@@ -75,8 +73,8 @@ th, td {
     <?php $i = 0; ?>
     <?php foreach ($lines as $line): ?>
     <tr<?php echo (++$i % 2 == 0) ? ' class="row-2"' : ''; ?>>
-      <td><?php echo $line->name; ?></td>
-      <td><?php echo $line->contract; ?></td>
+      <td><?php echo strip_tags($line->name); ?></td>
+      <td><?php echo strip_tags($line->contract); ?></td>
       <td style="text-align: right;">
         <?php if ($line->overtime != 0): ?>
           <?php echo number_format($line->overtime, 2, ',', ' '); ?> h
@@ -107,7 +105,7 @@ th, td {
           <?php echo number_format($line->expenses, 2, ',', ' '); ?> €
         <?php endif; ?>
       </td>
-      <td><?php echo $line->details; ?></td>
+      <td><?php echo nl2br(htmlspecialchars($line->details)); ?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>
