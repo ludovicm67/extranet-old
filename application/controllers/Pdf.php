@@ -171,6 +171,24 @@ class Pdf extends MY_AuthController
     12 => 'Décembre'
   ];
 
+  private $pdfName;
+
+  public function __construct() {
+    $name = '\n\a\v\e\t\t\e\-';
+    $appName = strtolower(
+      $this->db->dc->getConfValueDefault('site_name', null, 'Gestion')
+    );
+
+    for ($i = 0; isset($appName[$i]); $i++) {
+      $char = $appName[$i];
+      if ($char >= 'a' && $char <= 'z') {
+        $name .= '\\' . $char;
+      }
+    }
+
+    $this->pdfName = $name . '-m-Y';
+  }
+
   public function index()
   {
     redirect('/');
@@ -544,8 +562,7 @@ class Pdf extends MY_AuthController
     return $lines;
   }
 
-  public function compta()
-  {
+  private function getDate() {
     $getYear = intval($this->input->get('year'));
     $getMonth = intval($this->input->get('month'));
     $year = !empty($getYear) ? $getYear : date('Y');
@@ -553,18 +570,44 @@ class Pdf extends MY_AuthController
     if ($month < 1) $month = 1;
     else if ($month > 12) $month = 12;
 
-    ob_start();
-    $this->view('pdf/compta', [
+    return (object) [
+      'month' => $month,
+      'year' => $year,
+      'dateTime' => new DateTime("$year-$month")
+    ];
+  }
+
+  private function getData() {
+    $date = $this->getDate();
+    $month = $date->month;
+    $year = $date->year;
+
+    return [
       'name' => $this->db->dc->getConfValueDefault('site_name', null, 'Gestion'),
       'period' => $this->months[$month] . ' ' . $year,
       'lines' => $this->getLines()
-    ]);
+    ];
+  }
+
+  public function form() {
+    $this->view('pdf/form', $this->getData());
+  }
+
+  public function compta()
+  {
+    $date = $this->getDate();
+
+    ob_start();
+    $this->view('pdf/compta', $this->getData());
     $content = ob_get_clean();
 
     $dompdf = new Dompdf();
     $dompdf->loadHtml($content);
     $dompdf->setPaper('A4', 'landscape');
     $dompdf->render();
-    $dompdf->stream('compta.pdf', ['compress' => 1, 'Attachment' => 0]);
+    $dompdf->stream($date->dateTime->format($this->pdfName) . '.pdf', [
+      'compress' => 1,
+      'Attachment' => 0
+    ]);
   }
 }
