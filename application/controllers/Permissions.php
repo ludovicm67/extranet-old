@@ -191,6 +191,15 @@ class Permissions extends MY_AuthController
           'edit' => false,
           'delete' => true,
           'checked' => []
+        ],
+      'pdf' =>
+        (object) [
+          'name' => 'PDF',
+          'show' => true,
+          'add' => false,
+          'edit' => true,
+          'delete' => false,
+          'checked' => []
         ]
     ];
   }
