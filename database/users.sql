@@ -110,4 +110,14 @@ CREATE TABLE IF NOT EXISTS `overtime` (
   FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE IF NOT EXISTS `pay` (
+  `id` int (11) NOT NULL AUTO_INCREMENT,
+  `user_id` int (11) NOT NULL,
+  `month` int(11),
+  `year` int(11),
+  `file` varchar(255),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;
