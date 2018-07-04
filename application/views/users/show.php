@@ -58,5 +58,22 @@ ob_start();
 </ul>
 <?php endif; ?>
 
+<?php if (!empty($pay)): ?>
+<h2>Fiches de paie</h2>
+<ul>
+  <?php foreach ($pay as $p): ?>
+  <li>
+    <a href="<?php echo htmlspecialchars($p->file); ?>" target="_blank">
+      <?php echo $months[$p->month]; ?> <?php echo $p->year; ?>
+    </a>
+    <?php if ($controller->hasPermission('pay', 'delete')): ?>
+      &middot;
+      <a data-confirm-delete-url href="/pay/delete/<?php echo $p->id; ?>">Supprimer</a>
+    <?php endif; ?>
+  </li>
+  <?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
 <?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';

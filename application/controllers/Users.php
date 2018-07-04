@@ -3,6 +3,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Users extends MY_AuthController
 {
+  private $months = [
+    1 => 'Janvier',
+    2 => 'Février',
+    3 => 'Mars',
+    4 => 'Avril',
+    5 => 'Mai',
+    6 => 'Juin',
+    7 => 'Juillet',
+    8 => 'Août',
+    9 => 'Septembre',
+    10 => 'Octobre',
+    11 => 'Novembre',
+    12 => 'Décembre'
+  ];
+
   private $pages = [
     '/' => "Page d'accueil",
     '/clients' => 'Clients',
@@ -51,7 +66,20 @@ class Users extends MY_AuthController
       $user->projects = $this->db->get()->result();
     }
 
-    $this->view('users/show', ['user' => $user]);
+    $pay = [];
+    if ($id == $this->session->id || $this->hasPermission('pay', 'show')) {
+      $this->db->where('user_id', $id);
+      $this->db->order_by('year', 'desc');
+      $this->db->order_by('month', 'desc');
+      $this->db->order_by('id', 'desc');
+      $pay = $this->db->get('pay')->result();
+    }
+
+    $this->view('users/show', [
+      'user' => $user,
+      'pay' => $pay,
+      'months' => $this->months
+    ]);
   }
 
   public function delete($id)
@@ -323,6 +351,17 @@ class Users extends MY_AuthController
     $this->db->order_by('expenses.id', 'desc');
     $expenses = $this->db->get('expenses')->result();
 
-    $this->view('users/me', ['user' => $user, 'pages' => $this->pages]);
+    $this->db->where('user_id', $id);
+    $this->db->order_by('year', 'desc');
+    $this->db->order_by('month', 'desc');
+    $this->db->order_by('id', 'desc');
+    $pay = $this->db->get('pay')->result();
+
+    $this->view('users/me', [
+      'user' => $user,
+      'pages' => $this->pages,
+      'pay' => $pay,
+      'months' => $this->months
+    ]);
   }
 }

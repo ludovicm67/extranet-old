@@ -200,6 +200,15 @@ class Permissions extends MY_AuthController
           'edit' => true,
           'delete' => false,
           'checked' => []
+        ],
+      'pay' =>
+        (object) [
+          'name' => 'Fiches de paie',
+          'show' => true,
+          'add' => true,
+          'edit' => false,
+          'delete' => true,
+          'checked' => []
         ]
     ];
   }

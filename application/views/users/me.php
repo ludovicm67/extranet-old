@@ -65,5 +65,18 @@ ob_start();
   <button type="submit" class="btn btn-primary">Modifier</button>
 </form>
 
+<?php if (!empty($pay)): ?>
+<h2>Mes fiches de paie</h2>
+<ul class="list-upgraded">
+  <?php foreach ($pay as $p): ?>
+  <li>
+    <a href="<?php echo htmlspecialchars($p->file); ?>" target="_blank">
+      <?php echo $months[$p->month]; ?> <?php echo $p->year; ?>
+    </a>
+  </li>
+  <?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
 <?php $content = ob_get_clean();
 require_once VIEWPATH . 'template.php';
