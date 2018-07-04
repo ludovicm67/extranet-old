@@ -45,8 +45,8 @@ ob_start();
   </li>
 </ul>
 
-<h2>Projets assignés à cet utilisateur</h2>
 <?php if (!empty($user->projects)): ?>
+<h2>Projets assignés à cet utilisateur</h2>
 <ul class="list-upgraded">
   <?php foreach ($user->projects as $project): ?>
     <li>
@@ -56,8 +56,6 @@ ob_start();
     </li>
   <?php endforeach; ?>
 </ul>
-<?php else: ?>
-  <p>Le projet n'est assigné à aucun utilisateurs.</p>
 <?php endif; ?>
 
 <?php $content = ob_get_clean();
