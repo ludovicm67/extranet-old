@@ -293,6 +293,14 @@ class Pdf extends MY_AuthController
 
       if ($s == $e && $startPeriod == $endPeriod) {
         $content .= ' le ' . $s . $startPeriod;
+      } else if ($s == $e && empty($startPeriod) && !empty($endPeriod)) {
+        $txtAfter = $endPeriod;
+        if (trim($txtAfter) == 'midi') {
+          $txtAfter = ' matin';
+        }
+        $content .= ' le ' . $s . $txtAfter;
+      } else if ($s == $e && !empty($startPeriod) && empty($endPeriod)) {
+        $content .= ' le ' . $s . $startPeriod;
       } else {
         $content .= ' du ' . $s . $startPeriod . ' au ' . $e . $endPeriod;
       }
