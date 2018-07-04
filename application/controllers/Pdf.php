@@ -194,60 +194,6 @@ class Pdf extends MY_AuthController
     redirect('/');
   }
 
-  public function document()
-  {
-    $getDoctype = $this->input->get('doctype'); // ex. 'order'
-    $getDocid = $this->input->get('docid');
-
-    if (empty($getDoctype) || empty($getDocid)) {
-      redirect('/');
-      return;
-    }
-
-    $guzzleClient = new Client();
-    $transportBridge = new Guzzle($guzzleClient);
-
-    $sellsy = new Sellsy(
-      'https://apifeed.sellsy.com/0/',
-      $this->db->dc->getConfValueDefault('access_token', 'sellsy'),
-      $this->db->dc->getConfValueDefault('access_token_secret', 'sellsy'),
-      $this->db->dc->getConfValueDefault('consumer_token', 'sellsy'),
-      $this->db->dc->getConfValueDefault('consumer_token_secret', 'sellsy')
-    );
-
-    $sellsy->setTransport($transportBridge);
-
-    $res = $sellsy
-      ->Document()
-      ->getPublicLink(['doctype' => $getDoctype, 'docid' => $getDocid])
-      ->getResponse();
-
-    var_dump($res);
-  }
-
-  public function test()
-  {
-    $guzzleClient = new Client();
-    $transportBridge = new Guzzle($guzzleClient);
-
-    $sellsy = new Sellsy(
-      'https://apifeed.sellsy.com/0/',
-      $this->db->dc->getConfValueDefault('access_token', 'sellsy'),
-      $this->db->dc->getConfValueDefault('access_token_secret', 'sellsy'),
-      $this->db->dc->getConfValueDefault('consumer_token', 'sellsy'),
-      $this->db->dc->getConfValueDefault('consumer_token_secret', 'sellsy')
-    );
-
-    $sellsy->setTransport($transportBridge);
-
-    $res = $sellsy
-      ->AccountPrefs()
-      ->getAbo([])
-      ->getResponse();
-
-    var_dump($res);
-  }
-
   private function getNbDays($year = null, $month = null, $contractStart = null, $contractEnd = null, $includeHours = false) {
     if (is_null($year)) {
       $year = intval(date('Y'));
@@ -590,6 +536,8 @@ class Pdf extends MY_AuthController
   }
 
   public function form() {
+    $this->checkPermission('pdf', 'edit');
+
     if ($this->input->server('REQUEST_METHOD') == 'POST') {
       if (isset($_POST['lines'])) {
         foreach ($_POST['lines'] as $key => $value) {
@@ -604,6 +552,8 @@ class Pdf extends MY_AuthController
 
   public function compta($data = null)
   {
+    $this->checkPermission('pdf', 'show');
+
     $date = $this->getDate();
 
     if (is_null($data)) {

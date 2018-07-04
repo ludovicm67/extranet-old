@@ -28,7 +28,7 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
   <?php endif; ?>
 
 
-
+<?php if ($controller->hasPermission('pdf', 'show')): ?>
 <div class="btn-group">
   <a class="btn btn-outline-primary" href="/pdf/compta?month=<?php echo $now->month; ?>&amp;year=<?php echo $now->year; ?>" role="button" target="_blank">PDF compta</a>
   <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -36,11 +36,12 @@ echo ($this->input->get('me') == 1) ? '&amp;me=1' : '';
   </button>
   <div class="dropdown-menu">
     <a class="dropdown-item" target="_blank" href="/pdf/compta?month=<?php echo $now->month; ?>&amp;year=<?php echo $now->year; ?>">Générer le PDF</a>
-    <a class="dropdown-item" target="_blank" href="/pdf/form?month=<?php echo $now->month; ?>&amp;year=<?php echo $now->year; ?>">Éditer le PDF</a>
+    <?php if ($controller->hasPermission('pdf', 'edit')): ?>
+      <a class="dropdown-item" target="_blank" href="/pdf/form?month=<?php echo $now->month; ?>&amp;year=<?php echo $now->year; ?>">Éditer le PDF</a>
+    <?php endif; ?>
   </div>
 </div>
-
-
+<?php endif; ?>
 
 
 </h1>
