@@ -82,7 +82,7 @@ class Cron extends MY_Controller
     do {
       $clientsRequest = $this->sellsy
         ->Client()
-        ->getList(['pagination' => ['nbperpage' => 100, 'pagenum' => $pagenum]])
+        ->getList(['pagination' => ['nbperpage' => 5000, 'pagenum' => $pagenum]])
         ->getResponse();
       $nbpages = $clientsRequest['infos']['nbpages'];
 
@@ -322,7 +322,7 @@ class Cron extends MY_Controller
     do {
       $contactsRequest = $this->sellsy
         ->Peoples()
-        ->getList(['pagination' => ['nbperpage' => 100, 'pagenum' => $pagenum]])
+        ->getList(['pagination' => ['nbperpage' => 5000, 'pagenum' => $pagenum]])
         ->getResponse();
       $nbpages = $contactsRequest['infos']['nbpages'];
 
@@ -388,7 +388,7 @@ class Cron extends MY_Controller
         ->Document()
         ->getList([
           'doctype' => 'order',
-          'pagination' => ['nbperpage' => 100, 'pagenum' => $pagenum]
+          'pagination' => ['nbperpage' => 5000, 'pagenum' => $pagenum]
         ])
         ->getResponse();
       $nbpages = $ordersRequest['infos']['nbpages'];
@@ -760,7 +760,7 @@ class Cron extends MY_Controller
         ->Document()
         ->getList([
           'doctype' => 'invoice',
-          'pagination' => ['nbperpage' => 100, 'pagenum' => $pagenum]
+          'pagination' => ['nbperpage' => 5000, 'pagenum' => $pagenum]
         ])
         ->getResponse();
       $nbpages = $invoicesRequest['infos']['nbpages'];

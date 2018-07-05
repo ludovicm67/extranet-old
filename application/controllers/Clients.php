@@ -55,9 +55,11 @@ class Clients extends MY_AuthController
         if ($this->hasPermission('invoices', 'show')) {
           $orders[$invoice->parentid]->invoices[] = $invoice;
         }
-        $orders[$invoice->parentid]->remainingOrderAmount -= floatval(
-          $invoice->totalAmountTaxesFree
-        );
+        if ($invoice->isDeposit != 'Y') {
+          $orders[$invoice->parentid]->remainingOrderAmount -= floatval(
+            $invoice->totalAmountTaxesFree
+          );
+        }
         $orders[$invoice->parentid]->remainingDueAmount += floatval(
           $invoice->dueAmount
         );
