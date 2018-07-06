@@ -31,9 +31,21 @@ ob_start();
 </p>
 
 <?php if ($project->domain): ?>
-<p><strong>Nom de domaine principal :</strong> <?php echo $project->domain; ?></p>
+<p>
+  <strong>Nom de domaine principal :</strong>
+  <?php if (strpos($project->domain, '://') === false): ?>
+    <a href="http://<?php echo htmlspecialchars($project->domain); ?>" target="_blank">
+      http://<?php echo $project->domain; ?>
+    </a>
+  <?php else: ?>
+    <a href="<?php echo htmlspecialchars($project->domain); ?>" target="_blank">
+      <?php echo $project->domain; ?>
+    </a>
+  <?php endif; ?>
+</p>
 <?php endif; ?>
 
+<?php if (!empty($project->end_at)): ?>
 <p<?php
   echo (
     !empty($project->end_at) &&
@@ -50,6 +62,7 @@ ob_start();
                                               : '';
                                             ?>
 </p>
+<?php endif; ?>
 
 <?php if (!empty($project->client)): ?>
   <h2>Client principal</h2>
