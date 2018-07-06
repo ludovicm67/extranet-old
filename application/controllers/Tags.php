@@ -25,7 +25,7 @@ class Tags extends MY_AuthController
 
     $tag->projects = [];
     if ($this->hasPermission('projects', 'show')) {
-      $this->db->select('*, 0 as value');
+      $this->db->select('*');
       $this->db->from('project_tags');
       $this->db->join('projects', 'projects.id = project_tags.project_id');
       $value = $this->input->get('value');
@@ -35,7 +35,13 @@ class Tags extends MY_AuthController
       $this->db->where('tag_id', $tag->id);
       $projects = $this->db->get()->result();
       foreach ($projects as $p) {
-        $tag->projects[$p->project_id] = $p;
+        if (!isset($tag->projects[$p->project_id])) {
+          $tag->projects[$p->project_id] = (object) [
+            'values' => [],
+            'name' => $p->name,
+          ];
+        }
+        $tag->projects[$p->project_id]->values[] = $p->value;
       }
     }
 

@@ -32,9 +32,12 @@ ob_start();
 <p class="lead">Affichage des projets utilisant ce tag</p>
 
 <ul class="list-upgraded">
-  <?php foreach ($tag->projects as $project): ?>
+  <?php foreach ($tag->projects as $projectId => $project): ?>
   <li>
-    <a href="/project/<?php echo $project->id; ?>"><?php echo $project->name; ?></a>
+    <a href="/project/<?php echo $projectId; ?>">
+      <span class="float-right"><?php echo implode(', ', $project->values); ?></span>
+      <?php echo $project->name; ?>
+    </a>
   </li>
 <?php endforeach; ?>
 </ul>
