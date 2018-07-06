@@ -9,7 +9,15 @@ ob_start();
     <a class="btn btn-outline-primary" href="/projects/new" role="button">Ajouter</a>
   <?php endif; ?>
 </h1>
-<p class="lead">Page listant les différents projets</p>
+<p class="lead">
+  Page listant les différents projets
+  <?php if (count($projects) == 1): ?>
+    (un projet)
+  <?php endif; ?>
+  <?php if (count($projects) > 1): ?>
+    (<?php echo count($projects); ?> projets)
+  <?php endif; ?>
+</p>
 
 <table class="table table-hover">
   <thead class="thead-dark">
