@@ -27,8 +27,8 @@ ob_start();
           <?php if (!empty($contact->position)): ?>
             <?php echo $contact->position; ?><br>
           <?php endif; ?>
-          <?php if (!empty($contact->email)): ?>
-            <a href="mailto:<?php echo htmlspecialchars($contact->email); ?>"><?php echo $contact->email; ?></a><br>
+          <?php if (!empty($contact->mail)): ?>
+            <a href="mailto:<?php echo htmlspecialchars($contact->mail); ?>"><?php echo $contact->mail; ?></a><br>
           <?php endif; ?>
           <?php if (!empty($contact->tel)): ?>
             <a href="tel:<?php echo htmlspecialchars($contact->tel); ?>"><?php echo $contact->tel; ?></a><br>

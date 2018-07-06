@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int (11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(255),
   `lastname` varchar(255),
-  `mail` varchar(255) NOT NULL UNIQUE,
+  `email` varchar(255) NOT NULL UNIQUE,
   `password` varchar(255),
   `role_id` int (11),
   `is_admin` tinyint(1),

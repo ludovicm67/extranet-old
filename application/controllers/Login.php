@@ -19,7 +19,7 @@ class Login extends MY_Controller
     $password = strip_tags(trim($this->input->post('password')));
     $mail = strip_tags(trim($this->input->post('mail')));
     if (!empty($password) && !empty($mail)) {
-      $this->db->where('mail', $mail);
+      $this->db->where('email', $mail);
       $q = $this->db->get('users')->result();
       if (count($q) <= 0) {
         $this->session->set_flashdata('error', 'Mauvais identifiants !');
@@ -35,7 +35,7 @@ class Login extends MY_Controller
             'firstname' => $user->firstname,
             'lastname' => $user->lastname,
             'is_admin' => ($user->is_admin == 1) ? true : false,
-            'mail' => $user->mail,
+            'email' => $user->email,
             'logged' => true,
             'default_page' => $user->default_page
           ]);

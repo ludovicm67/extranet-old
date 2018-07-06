@@ -37,7 +37,7 @@ class Setup extends MY_Controller
         'firstname' => $userFirstname,
         'lastname' => $userLastname,
         'password' => $userPassword,
-        'mail' => $userMail,
+        'email' => $userMail,
         'role_id' => $userRole,
         'is_admin' => $userAdmin
       ]);

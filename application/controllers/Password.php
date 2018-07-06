@@ -13,7 +13,7 @@ class Password extends MY_Controller
     $mail = htmlspecialchars(strip_tags(trim($this->input->post('mail'))));
 
     if (!empty($mail)) {
-      $this->db->where('mail', $mail);
+      $this->db->where('email', $mail);
       $q = $this->db->get('users');
       if ($q->num_rows() <= 0) {
         $this->session->set_flashdata(
@@ -45,7 +45,7 @@ class Password extends MY_Controller
         ),
         $this->db->dc->getConfValueDefault('site_name', null, 'Gestion')
       );
-      $this->email->to($user->mail);
+      $this->email->to($user->email);
       $this->email->subject('Réinitialisation du mot de passe');
       $this->email->message(
         "Utilisez le lien suivant pour réinitialiser votre mot de passe : " .

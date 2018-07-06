@@ -48,7 +48,7 @@ class Search extends MY_AuthController
         $this->db->join('roles', 'roles.id = users.role_id', 'left');
         $this->db->like("CONCAT(firstname, ' ', lastname)", $query);
         $this->db->or_like("CONCAT(lastname, ' ', firstname)", $query);
-        $this->db->or_like('mail', $query);
+        $this->db->or_like('email', $query);
         $res->users = $this->db->get('users')->result();
       }
 

@@ -11,7 +11,7 @@ ob_start();
   echo $user->firstname;
   ?> <?php echo $user->lastname; ?>
   <small>(<?php
-          echo $user->mail;
+          echo $user->email;
           ?>)</small>
   <?php if ($controller->hasPermission('users', 'edit')): ?>
     <a class="btn btn-outline-primary" href="/user/edit/<?php echo $user->id; ?>" role="button">Modifier</a>
@@ -30,10 +30,10 @@ ob_start();
                                         ?></li>
   <li><strong>Adresse mail :</strong> <a href="mailto:<?php
                                                       echo htmlspecialchars(
-                                                        $user->mail
+                                                        $user->email
                                                       );
                                                       ?>"><?php
-                                                          echo $user->mail;
+                                                          echo $user->email;
                                                           ?></a></li>
   <li>
     <strong>Rôle :</strong>

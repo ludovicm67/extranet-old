@@ -146,7 +146,7 @@ class Users extends MY_AuthController
         );
         redirect('/users/new');
       }
-      $this->db->where('mail', $userMail);
+      $this->db->where('email', $userMail);
       $q = $this->db->get('users');
       if ($q->num_rows() > 0) {
         $this->session->set_flashdata(
@@ -158,7 +158,7 @@ class Users extends MY_AuthController
           'firstname' => $userFirstname,
           'lastname' => $userLastname,
           'password' => $userPassword,
-          'mail' => $userMail,
+          'email' => $userMail,
           'role_id' => $userRole,
           'is_admin' => $userAdmin,
           'default_page' => $userDefaultpage
@@ -237,7 +237,7 @@ class Users extends MY_AuthController
       }
 
       $this->db->where('id !=', $id);
-      $this->db->where('mail', $userMail);
+      $this->db->where('email', $userMail);
       $q = $this->db->get('users');
       if ($q->num_rows() > 0) {
         $this->session->set_flashdata(
@@ -249,7 +249,7 @@ class Users extends MY_AuthController
           'firstname' => $userFirstname,
           'lastname' => $userLastname,
           'password' => $userPassword,
-          'mail' => $userMail,
+          'email' => $userMail,
           'role_id' => $userRole,
           'is_admin' => $userAdmin,
           'default_page' => $userDefaultpage
@@ -316,7 +316,7 @@ class Users extends MY_AuthController
       }
 
       $this->db->where('id !=', $id);
-      $this->db->where('mail', $userMail);
+      $this->db->where('email', $userMail);
       $q = $this->db->get('users');
       if ($q->num_rows() > 0) {
         $this->session->set_flashdata(
@@ -328,7 +328,7 @@ class Users extends MY_AuthController
           'firstname' => $userFirstname,
           'lastname' => $userLastname,
           'password' => $userPassword,
-          'mail' => $userMail,
+          'email' => $userMail,
           'default_page' => $userDefaultpage
         ];
         $this->db->where('id', $id);

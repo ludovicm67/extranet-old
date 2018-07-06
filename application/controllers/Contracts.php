@@ -8,7 +8,7 @@ class Contracts extends MY_AuthController
     $this->checkPermission('contracts', 'show');
 
     $this->db->select(
-      'CONCAT(users.firstname, " ", users.lastname) AS full_name, users.mail, contracts.*'
+      'CONCAT(users.firstname, " ", users.lastname) AS full_name, users.email, contracts.*'
     );
     $this->db->join('users', 'users.id = contracts.user_id');
     $this->db->order_by('start_at', 'desc');

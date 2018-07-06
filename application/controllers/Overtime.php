@@ -63,7 +63,7 @@ class Overtime extends MY_AuthController
         $overtime = $this->db
           ->distinct()
           ->select(
-            'users.id as user_id, CONCAT(users.firstname, " ", users.lastname, " (", users.mail, ")") AS full_name'
+            'users.id as user_id, CONCAT(users.firstname, " ", users.lastname, " (", users.email, ")") AS full_name'
           )
           ->join('users', 'users.id = contracts.user_id')
           ->join('overtime', 'overtime.user_id = contracts.user_id', 'left')
@@ -89,7 +89,7 @@ class Overtime extends MY_AuthController
         $overtime = $this->db
           ->distinct()
           ->select(
-            'users.id as user_id, overtime.volume, overtime.details, CONCAT(users.firstname, " ", users.lastname, " (", users.mail, ")") AS full_name'
+            'users.id as user_id, overtime.volume, overtime.details, CONCAT(users.firstname, " ", users.lastname, " (", users.email, ")") AS full_name'
           )
           ->join('users', 'users.id = contracts.user_id')
           ->join('overtime', 'overtime.user_id = contracts.user_id')
@@ -108,7 +108,7 @@ class Overtime extends MY_AuthController
           $users = $this->db
             ->distinct()
             ->select(
-              'users.id as user_id, CONCAT(users.firstname, " ", users.lastname, " (", users.mail, ")") AS full_name'
+              'users.id as user_id, CONCAT(users.firstname, " ", users.lastname, " (", users.email, ")") AS full_name'
             )
             ->join('users', 'users.id = contracts.user_id')
             ->join('overtime', 'overtime.user_id = contracts.user_id', 'left')

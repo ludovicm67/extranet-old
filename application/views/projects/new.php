@@ -57,7 +57,7 @@ ob_start();
     <div class="col-sm-10">
       <select class="form-control" name="users[]" id="projectUsers" multiple="multiple">
         <?php foreach ($users as $user): ?>
-        <option value="<?php echo $user->id; ?>"><?php echo $user->firstname . ' ' . $user->lastname . ' (' . $user->mail . ')'; ?></option>
+        <option value="<?php echo $user->id; ?>"><?php echo $user->firstname . ' ' . $user->lastname . ' (' . $user->email . ')'; ?></option>
         <?php endforeach; ?>
       </select>
     </div>

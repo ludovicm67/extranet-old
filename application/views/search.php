@@ -59,7 +59,7 @@ ob_start();
 <ul class="list-upgraded">
   <?php foreach ($results->users as $user): ?>
   <li>
-    <a href="/user/<?php echo $user->id; ?>"><?php echo $user->firstname; ?> <?php echo $user->lastname; ?> (<?php echo $user->mail; ?>)</a>
+    <a href="/user/<?php echo $user->id; ?>"><?php echo $user->firstname; ?> <?php echo $user->lastname; ?> (<?php echo $user->email; ?>)</a>
   </li>
   <?php endforeach; ?>
 </ul>

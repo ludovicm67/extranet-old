@@ -50,7 +50,7 @@ ob_start();
     <div class="col-sm-10">
       <input type="email" class="form-control" name="mail" id="userMail" value="<?php
                                                                                 echo htmlspecialchars(
-                                                                                  $user->mail
+                                                                                  $user->email
                                                                                 );
                                                                                 ?>" placeholder="Adresse mail...">
     </div>

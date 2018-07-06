@@ -78,7 +78,7 @@ ob_start();
       <select class="form-control" name="users[]" id="projectUsers" multiple="multiple">
         <?php foreach ($users as $user): ?>
         <option value="<?php echo $user->id; ?>"<?php echo (in_array($user->id, $project->users)) ? ' selected="selected"' : ''; ?>>
-          <?php echo $user->firstname . ' ' . $user->lastname . ' (' . $user->mail . ')'; ?>
+          <?php echo $user->firstname . ' ' . $user->lastname . ' (' . $user->email . ')'; ?>
         </option>
         <?php endforeach; ?>
       </select>

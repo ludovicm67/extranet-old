@@ -22,9 +22,9 @@ ob_start();
   </thead>
   <tbody>
     <?php foreach ($users as $user): ?>
-    <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($user->firstname . ' ' . $user->lastname . ' ' . $user->firstname . ' ' . $user->mail)); ?>">
+    <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($user->firstname . ' ' . $user->lastname . ' ' . $user->firstname . ' ' . $user->email)); ?>">
       <td><a href="/user/<?php echo $user->id; ?>"><?php echo (empty($user->firstname . $user->lastname)) ? 'Utilisateur#' . $user->id : $user->firstname . ' ' . $user->lastname; ?></a></td>
-      <td><a href="mailto:<?php echo htmlspecialchars($user->mail); ?>"><?php echo $user->mail; ?></a></td>
+      <td><a href="mailto:<?php echo htmlspecialchars($user->email); ?>"><?php echo $user->email; ?></a></td>
       <td>
         <?php if ($user->is_admin): ?>
           <strong>Super administrateur</strong>

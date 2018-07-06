@@ -132,7 +132,7 @@ ob_start();
     <?php foreach ($project->users as $user): ?>
       <li>
         <a href="/user/<?php echo $user->id; ?>">
-          <?php echo $user->firstname . ' ' . $user->lastname . ' (' . $user->mail . ')'; ?>
+          <?php echo $user->firstname . ' ' . $user->lastname . ' (' . $user->email . ')'; ?>
         </a>
       </li>
     <?php endforeach; ?>

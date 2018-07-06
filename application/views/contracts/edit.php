@@ -13,7 +13,7 @@ ob_start();
       <select class="form-control" name="user_id" id="contractUser" required>
         <?php foreach ($users as $user): ?>
         <option<?php echo ($user->id == $contract->user_id) ? ' selected="selected"' : ''; ?> value="<?php echo $user->id; ?>">
-          <?php echo $user->firstname . ' ' . $user->lastname . ' (' . $user->mail . ')'; ?>
+          <?php echo $user->firstname . ' ' . $user->lastname . ' (' . $user->email . ')'; ?>
         </option>
         <?php endforeach; ?>
       </select>
