@@ -137,14 +137,20 @@ class Projects extends MY_AuthController
         if ($this->isMyProject || $this->hasPermission('invoices', 'show')) {
           $orders[$invoice->parentid]->invoices[] = $invoice;
         }
-        if ($invoice->isDeposit != 'Y') {
+        // if ($invoice->isDeposit != 'Y') {
           $orders[$invoice->parentid]->remainingOrderAmount -= floatval(
             $invoice->totalAmountTaxesFree
           );
-        }
+        // }
         $orders[$invoice->parentid]->remainingDueAmount += floatval(
           $invoice->dueAmount
         );
+      }
+    }
+
+    foreach ($orders as $k => $order) {
+      if ($order->remainingOrderAmount < 0) {
+        $orders[$k]->remainingOrderAmount = .0;
       }
     }
 
