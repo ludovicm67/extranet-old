@@ -4,7 +4,15 @@ ob_start();
  ?>
 
 <h1 class="mt-5">Liste des clients</h1>
-<p class="lead">Page listant les différents clients</p>
+<p class="lead">
+  Page listant les différents clients
+  <?php if (count($clients) == 1): ?>
+    (un client)
+  <?php endif; ?>
+  <?php if (count($clients) > 1): ?>
+    (<?php echo count($clients); ?> clients)
+  <?php endif; ?>
+</p>
 
 <ul class="list-upgraded">
   <?php foreach ($clients as $client): ?>
