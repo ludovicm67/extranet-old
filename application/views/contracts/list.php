@@ -23,8 +23,8 @@ ob_start();
   </thead>
   <tbody>
     <?php foreach ($contracts as $contract): ?>
-    <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($contract->type . ' ' . $contract->full_name . ' (' . $contract->mail . ')')); ?>">
-      <td><a href="/user/<?php echo $contract->user_id; ?>"><?php echo $contract->full_name . ' (' . $contract->mail . ')'; ?></a></td>
+    <tr class="searcher-item" data-searcher="<?php echo strtolower(htmlspecialchars($contract->type . ' ' . $contract->full_name . ' (' . $contract->email . ')')); ?>">
+      <td><a href="/user/<?php echo $contract->user_id; ?>"><?php echo $contract->full_name . ' (' . $contract->email . ')'; ?></a></td>
       <td>
         <?php echo $contract->type; ?>
         <?php if ($contract->type == 'Stage' && !empty($contract->days)): ?>
