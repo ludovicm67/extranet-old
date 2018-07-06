@@ -105,6 +105,7 @@ class Projects extends MY_AuthController
     $orders = [];
     if ($this->isMyProject || $this->hasPermission('orders', 'show')) {
       $this->db->select('*');
+      $this->db->order_by('displayedDate', 'desc');
       $this->db->from('project_orders');
       $this->db->join(
         'sellsy_orders',
@@ -136,9 +137,11 @@ class Projects extends MY_AuthController
         if ($this->isMyProject || $this->hasPermission('invoices', 'show')) {
           $orders[$invoice->parentid]->invoices[] = $invoice;
         }
-        $orders[$invoice->parentid]->remainingOrderAmount -= floatval(
-          $invoice->totalAmountTaxesFree
-        );
+        if ($invoice->isDeposit != 'Y') {
+          $orders[$invoice->parentid]->remainingOrderAmount -= floatval(
+            $invoice->totalAmountTaxesFree
+          );
+        }
         $orders[$invoice->parentid]->remainingDueAmount += floatval(
           $invoice->dueAmount
         );

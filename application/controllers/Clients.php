@@ -29,6 +29,7 @@ class Clients extends MY_AuthController
     $orders = [];
     if ($this->hasPermission('orders', 'show')) {
       $ordersDB = $this->db
+        ->order_by('displayedDate', 'desc')
         ->get_where('sellsy_orders', ['thirdid' => $client->sellsy_id])
         ->result();
       foreach ($ordersDB as $o) {

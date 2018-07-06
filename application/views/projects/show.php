@@ -166,6 +166,7 @@ ob_start();
     <div id="collapse<?php echo $order->id; ?>" class="collapse" aria-labelledby="heading<?php echo $order->id; ?>" data-parent="#accordion">
       <div class="card-body">
         <ul>
+        <li><strong>Date :</strong> <?php echo $order->displayedDate; ?></li>
         <li><strong>Client :</strong> <?php echo $order->thirdname; ?></li>
         <li><strong>Sujet :</strong> <?php echo $order->subject; ?></li>
         <li><strong>Statut :</strong> <span style="color: <?php echo $order->step_hex; ?>;"><?php echo $order->step_label; ?></span></li>
