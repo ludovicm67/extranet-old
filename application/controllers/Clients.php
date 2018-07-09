@@ -47,6 +47,7 @@ class Clients extends MY_AuthController
     if (count($ordersIds) > 0) {
       $invoices = $this->db
         ->where_in('parentid', $ordersIds)
+        ->order_by('displayedDate', 'desc')
         ->get('sellsy_invoices')
         ->result();
       foreach ($invoices as $invoice) {

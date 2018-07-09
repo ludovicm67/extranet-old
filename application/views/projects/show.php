@@ -187,6 +187,7 @@ ob_start();
             <?php foreach ($order->invoices as $invoice): ?>
             <li>
               <ul>
+                <li><strong>Date :</strong> <?php echo $invoice->displayedDate; ?></li>
                 <li><strong>Sujet :</strong> <?php echo $invoice->subject; ?></li>
                 <li><strong>Statut :</strong> <span style="color: <?php echo $invoice->step_hex; ?>;"><?php echo $invoice->step_label; ?></span></li>
                 <li><strong>Montant total HT :</strong> <?php echo $invoice->formatted_totalAmountTaxesFree; ?> HT</li>

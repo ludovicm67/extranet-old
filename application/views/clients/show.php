@@ -95,6 +95,7 @@ ob_start();
             <?php foreach ($order->invoices as $invoice): ?>
             <li>
               <ul>
+                <li><strong>Date :</strong> <?php echo $invoice->displayedDate; ?></li>
                 <li><strong>Sujet :</strong> <?php echo $invoice->subject; ?></li>
                 <li><strong>Statut :</strong> <span style="color: <?php echo $invoice->step_hex; ?>;"><?php echo $invoice->step_label; ?></span></li>
                 <li><strong>Montant total HT :</strong> <?php echo $invoice->formatted_totalAmountTaxesFree; ?> HT</li>
@@ -142,6 +143,7 @@ ob_start();
     <div id="collapse-sub-<?php echo $sub->id; ?>" class="collapse" aria-labelledby="heading-sub-<?php echo $sub->id; ?>" data-parent="#subsAccordion">
       <div class="card-body">
         <ul>
+          <li><strong>Date :</strong> <?php echo $invoice->displayedDate; ?></li>
           <li><strong>Sujet :</strong> <?php echo $sub->subject; ?></li>
           <li><strong>Statut :</strong> <span style="color: <?php echo $sub->step_hex; ?>;"><?php echo $sub->step_label; ?></span></li>
           <li><strong>Montant total HT :</strong> <?php echo $sub->formatted_totalAmountTaxesFree; ?> HT</li>
