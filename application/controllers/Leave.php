@@ -107,7 +107,7 @@ class Leave extends MY_AuthController
 
 
       // find all users that can handle requests and send them a mail
-      $managers = $this->db->query("SELECT id, email FROM users WHERE role_id IN(SELECT role_id FROM rights WHERE name = 'request_management' AND edit = 1) OR is_admin = 1");
+      $managers = $this->db->query("SELECT id, email FROM users WHERE role_id IN(SELECT role_id FROM rights WHERE name = 'request_management' AND edit = 1) OR is_admin = 1")->result();
       $mailContent = "Une nouvelle demande de congé du " . $startDate . " au " . $endDate . " a été soumise par " . $this->session->email . ".";
       if (!empty($details)) {
         $mailContent .= " Commentaire :" . $details;
