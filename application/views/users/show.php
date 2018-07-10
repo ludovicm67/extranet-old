@@ -60,6 +60,14 @@ ob_start();
 
 <?php if (!empty($pay)): ?>
 <h2>Fiches de paie</h2>
+<?php if (!empty($this->db->dc->getConfValueDefault('password', 'pay'))) : ?>
+<p>
+  <small>
+    Le mot de passe pour lire les pdf est le suivant :
+    <code><?php echo $this->db->dc->getConfValueDefault('password', 'pay'); ?></code>
+  </small>
+</p>
+<?php endif; ?>
 <ul>
   <?php foreach ($pay as $p): ?>
   <li>
