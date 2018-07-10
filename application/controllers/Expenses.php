@@ -227,6 +227,7 @@ class Expenses extends MY_AuthController
     if ($q->num_rows() <= 0) {
       redirect('/expenses');
     }
+    $c = $q->result()[0];
 
     $content = ['accepted' => 1];
     $this->db->where('id', $id);
@@ -237,6 +238,28 @@ class Expenses extends MY_AuthController
       'success',
       'La demande a bien été acceptée !'
     );
+
+    $this->db->where('id', $c->user_id);
+    $q = $this->db->get('users');
+    if ($q->num_rows() > 0) {
+      $user = $q->result()[0];
+      $this->load->library('email');
+      $this->email->from(
+        $this->db->dc->getConfValueDefault(
+          'email_from',
+          null,
+          'noreply@example.com'
+        ),
+        $this->db->dc->getConfValueDefault('site_name', null, 'Gestion')
+      );
+      $this->email->to($user->email);
+      $this->email->subject('[EXTRANET] Demande de remboursement de frais acceptée !');
+      $this->email->message(
+        "Votre demande de remboursement de frais pour la période " . $c->month . "/" . $c->year . " a bien été acceptée. Rendez-vous sur l'extranet pour plus de détails."
+      );
+      $this->email->send();
+    }
+
     redirect('/expenses');
   }
 

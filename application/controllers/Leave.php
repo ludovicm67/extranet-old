@@ -257,6 +257,7 @@ class Leave extends MY_AuthController
     if ($q->num_rows() <= 0) {
       redirect('/leave');
     }
+    $c = $q->result()[0];
 
     $content = ['accepted' => 1];
     $this->db->where('id', $id);
@@ -267,6 +268,28 @@ class Leave extends MY_AuthController
       'success',
       'La demande a bien été acceptée !'
     );
+
+    $this->db->where('id', $c->user_id);
+    $q = $this->db->get('users');
+    if ($q->num_rows() > 0) {
+      $user = $q->result()[0];
+      $this->load->library('email');
+      $this->email->from(
+        $this->db->dc->getConfValueDefault(
+          'email_from',
+          null,
+          'noreply@example.com'
+        ),
+        $this->db->dc->getConfValueDefault('site_name', null, 'Gestion')
+      );
+      $this->email->to($user->email);
+      $this->email->subject('[EXTRANET] Demande de congés acceptée !');
+      $this->email->message(
+        "Votre demande de congés du " . (new DateTime($c->start))->format('d/m/Y H\hi') . " au " . (new DateTime($c->end))->format('d/m/Y H\hi') . " a bien été acceptée. Rendez-vous sur l'extranet pour plus de détails."
+      );
+      $this->email->send();
+    }
+
     redirect('/leave');
   }
 

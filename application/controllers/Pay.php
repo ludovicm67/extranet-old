@@ -37,6 +37,17 @@ class Pay extends MY_AuthController
         redirect('/pay');
       }
 
+      $this->db->where('id', $userId);
+      $q = $this->db->get('users');
+      if ($q->num_rows() <= 0) {
+        $this->session->set_flashdata(
+          'error',
+          "Aucun compte utilisateur associé trouvé !"
+        );
+        redirect('/pay');
+      }
+      $user = $q->result()[0];
+
       $this->load->library('upload', [
         'upload_path' => ROOTPATH . 'public/uploads/',
         'allowed_types' => 'gif|jpg|png|jpeg|pdf'
@@ -86,6 +97,22 @@ class Pay extends MY_AuthController
       $this->db->insert('pay', $content);
       $content['id'] = $this->db->insert_id();
       $this->writeLog('insert', 'pay', $content, $content['id']);
+
+      $this->load->library('email');
+      $this->email->from(
+        $this->db->dc->getConfValueDefault(
+          'email_from',
+          null,
+          'noreply@example.com'
+        ),
+        $this->db->dc->getConfValueDefault('site_name', null, 'Gestion')
+      );
+      $this->email->to($user->email);
+      $this->email->subject('[EXTRANET] Fiche de paie déposée !');
+      $this->email->message(
+        "Une fiche de paie a été déposée pour votre compte. Rendez-vous sur Moi>Mon compte pour la consulter."
+      );
+      $this->email->send();
 
       $this->session->set_flashdata(
         'success',
