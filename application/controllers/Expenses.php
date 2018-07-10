@@ -96,6 +96,29 @@ class Expenses extends MY_AuthController
 
       $this->session->set_flashdata('success', 'La demande a bien été crée !');
 
+
+      // find all users that can handle requests and send them a mail
+      $managers = $this->db->query("SELECT id, email FROM users WHERE role_id IN(SELECT role_id FROM rights WHERE name = 'request_management' AND edit = 1) OR is_admin = 1");
+      $mailContent = "Une nouvelle demande de remboursement de frais pour la période du mois " . $month . "/" . $year . " pour un montant de " . $amount . "€ a été soumise par " . $this->session->email . ".";
+      if (!empty($details)) {
+        $mailContent .= " Commentaire :" . $details;
+      }
+      foreach ($managers as $user) {
+        $this->load->library('email');
+        $this->email->from(
+          $this->db->dc->getConfValueDefault(
+            'email_from',
+            null,
+            'noreply@example.com'
+          ),
+          $this->db->dc->getConfValueDefault('site_name', null, 'Gestion')
+        );
+        $this->email->to($user->email);
+        $this->email->subject('[EXTRANET] Une demande de remboursement de frais a été soumise !');
+        $this->email->message($mailContent);
+        $this->email->send();
+      }
+
       redirect('/expenses');
     }
 
