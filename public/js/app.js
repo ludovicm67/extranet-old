@@ -392,7 +392,10 @@ $(document).ready(function () {
 
   $('[data-confirm-delete-url]').click(function (e) {
     e.preventDefault();
-    $('#modalDeleteUrl').attr('href', $(e.target).attr('href'));
+    $('#modalDeleteUrl').attr(
+      'href',
+      $(e.target).closest('[data-confirm-delete-url]').attr('href')
+    );
     $('#confirmDelete').modal();
   });
 
